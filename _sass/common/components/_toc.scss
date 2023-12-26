@@ -1,0 +1,126 @@
+@use "sass:math";
+
+ul.toc {
+  display: block;
+  margin: 0;
+  @include css-var(color, "var(--text-color)");
+  list-style-type: none;
+  & > li {
+    margin: math.div(map-get($spacers, 1), 2) 0;
+    a { /* stylelint-disable-line selector-max-type */
+      display: inline-block;
+      margin: math.div(map-get($spacers, 1), 4) 0;
+      text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
+    }
+  }
+  .toc-h1,
+  .toc-h2,
+  .toc-h3,
+  .toc-h4,
+  .toc-h5,
+  .toc-h6 {
+    a {
+      @extend .link, .link--highlight-text;
+    }
+    &.active {
+      a {
+        @extend .link, .link--primary;
+      }
+    }
+  }
+
+  .toc-h2,
+  .toc-h3,
+  .toc-h4,
+  .toc-h5,
+  .toc-h6 {
+    &, a {
+      font-size: map-get($base, font-size-xs);
+      font-weight: map-get($base, font-weight);
+      line-height: map-get($base, line-height-xs);
+    }
+  }
+  .toc-h1 {
+    @include split-line(bottom);
+    padding: map-get($spacers, 2) 0 map-get($spacers, 1) 0;
+    margin-bottom: map-get($spacers, 2);
+    @include css-var(color, "var(--text-color-d)");
+    &, a {
+      font-size: map-get($base, font-size-sm);
+      font-weight: map-get($base, font-weight-bold);
+      line-height: map-get($base, line-height-sm);
+    }
+    a {
+      @extend .link, .link--highlight-text-d;
+    }
+  }
+  .toc-h2 {
+    &, a {
+      font-weight: map-get($base, font-weight-bold);
+    }
+  }
+  .toc-h3 {
+    margin-left: map-get($spacers, 3);
+  }
+  .toc-h4 {
+    margin-left: map-get($spacers, 3) * 2;
+  }
+  .toc-h5,
+  .toc-h6 {
+    margin-left: map-get($spacers, 3) * 3;
+  }
+  .toc-h6 {
+    @include css-var(color, "var(--text-color-l)");
+    a {
+      @extend .link, .link--highlight-text-l;
+    }
+  }
+}
+
+ul.toc--ellipsis {
+  & > li {
+    @include overflow(hidden);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+ul.toc--navigator {
+  & > li {
+    a { /* stylelint-disable-line selector-max-type */
+      padding-left: map-get($spacers, 2);
+      margin: map-get($spacers, 1) 0;
+    }
+    &.active {
+      a { /* stylelint-disable-line selector-max-type */
+        margin-left: -4px;
+        @include split-line(left, 4px, "main-color-1");
+      }
+    }
+  }
+  .toc-h2,
+  .toc-h3,
+  .toc-h4 {
+    @include css-var(color, "var(--text-color-l)");
+    a {
+      @extend .link, .link--text-l;
+    }
+  }
+  .toc-h1 {
+    &, a {
+      font-size: map-get($base, font-size);
+      line-height: map-get($base, line-height);
+    }
+    @include css-var(color, "var(--text-color)");
+    a {
+      @extend .link, .link--text-d;
+    }
+  }
+  .toc-h2 {
+    &, a {
+      font-size: map-get($base, font-size-sm);
+      font-weight: map-get($base, font-weight-bold);
+      line-height: map-get($base, line-height-sm);
+    }
+  }
+}

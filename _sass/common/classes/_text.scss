@@ -1,0 +1,37 @@
+@mixin text-light {
+  @include css-var(color, "var(--text-color-theme-light)");
+  h1, h2, h3 {
+    @include css-var(color, "var(--text-color-theme-light-d)");
+  }
+  h4, h5 {
+    @include css-var(color, "var(--text-color-theme-light)");
+  }
+  h6 {
+    @include css-var(color, "var(--text-color-theme-light-l)");
+  }
+  a:not(.button) {
+    @extend .link, .link--highlight-theme-light;
+  }
+}
+@mixin text-dark {
+  @include css-var(color, "var(--text-color-theme-dark)");
+  h1, h2, h3 {
+    @include css-var(color, "var(--text-color-theme-dark-d)");
+  }
+  h4, h5 {
+    @include css-var(color, "var(--text-color-theme-dark)");
+  }
+  h6 {
+    @include css-var(color, "var(--text-color-theme-dark-l)");
+  }
+  a:not(.button) {
+    @extend .link, .link--highlight-theme-dark;
+  }
+}
+
+.text--light {
+  @include text-light();
+}
+.text--dark {
+  @include text-dark();
+}
