@@ -1,10 +1,12 @@
 ---
-title: 关于书籍翻译
+title: About Book Translation
 key: 关于
 tags: ["About"]
 aside:
     toc: true
 ---
+
+关于书籍翻译 <!--more-->
 
 ## 书籍来源
 
