@@ -1,7 +1,7 @@
 ---
 title: 关于书籍翻译
-key: translate
-comment: true
+key: 关于
+tags: ["About"]
 aside:
     toc: true
 ---
