@@ -1,6 +1,6 @@
 ---
 title: Deep Learning with TensorFlow - Second Edition
-key: 翻译书籍-英语
+key: 使用 TensorFlow 进行深度学习 - 第二版
 tags: ["Translate"]
 aside:
     toc: true
@@ -22,7 +22,7 @@ Google翻译
 
 ## 译文摘抄
 
-Chapter 1. Getting Started with Deep Learning\
+Chapter 1. Getting Started with Deep Learning\
 第 1 章深度学习入门
 
 This chapter explains some of the basic concepts of Machine Learning (ML) and Deep Learning (DL) that will be used in all the subsequent chapters. We will start with a brief introduction to ML. Then we will move to DL, which is a branch of ML based on a set of algorithms that attempt to model high-level abstractions in data.\

@@ -1,6 +1,6 @@
 ---
 title: About Book Translation
-key: 关于
+key: 关于书籍翻译
 tags: ["About"]
 aside:
     toc: true
