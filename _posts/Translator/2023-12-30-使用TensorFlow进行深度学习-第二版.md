@@ -1,6 +1,6 @@
 ---
 title: Deep Learning with TensorFlow - Second Edition
-key: 使用 TensorFlow 进行深度学习 - 第二版
+key: 使用TensorFlow
 tags: ["Translate"]
 aside:
     toc: true
