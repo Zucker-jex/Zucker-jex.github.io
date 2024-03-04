@@ -1,6 +1,6 @@
 ---
 title: Ready or Not popular maps
-key: Ready or Not（严正以待）热门地图
+key: popular maps
 tags: ["Daily"]
 aside:
     toc: true
