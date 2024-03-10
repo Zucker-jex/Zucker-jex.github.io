@@ -3,7 +3,7 @@ title: Ready or Not popular maps
 key: popular maps
 tags: ["Daily"]
 aside:
-  toc: true
+    toc: true
 ---
 
 Ready or Not（严正以待）热门地图 <!--more-->
