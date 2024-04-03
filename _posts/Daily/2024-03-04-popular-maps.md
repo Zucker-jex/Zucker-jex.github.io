@@ -19,3 +19,4 @@ Ready or Not（严正以待）热门地图 <!--more-->
 目前转存储：
 
 - [OneDrive](https://zuckertech-my.sharepoint.com/:f:/g/personal/jex_zuckertech_onmicrosoft_com/El9LOp1Q6FRLpq2hB_cis5cBKur6wbpE7-9aV6Ds-2Ttgw?e=ctzhwn)
+- [百度网盘](https://pan.baidu.com/s/1PVQlwTiTnqTWgQ1AaSwdBA?pwd=3jdv)
