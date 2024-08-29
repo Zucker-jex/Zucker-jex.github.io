@@ -1,0 +1,66 @@
+{%- include snippets/get-sources.html -%}
+{%- assign _sources = __return -%}
+
+{%- include snippets/assign.html target=site.data.variables.default.mathjax_autoNumber
+source0=site.mathjax_autoNumber source1=page.mathjax_autoNumber -%}
+{%- assign _mathjax_autoNumber = __return -%}
+
+<script>
+	MathJax = {
+		loader: { load: ['[tex]/physics'] },
+		tex: {
+			tags: 'ams',
+			inlineMath: [['$', '$'], ['\\(', '\\)']],
+			macros: {
+				ii: "\\mathrm{i}",
+				ee: "\\mathrm{e}",
+				pp: "\\partial",
+				arctanh: "\\mathinner{\\rm arctanh}",
+				obra: ["\\mathinner{\\left({#1}\\right|}", 1],
+				oket: ["\\mathinner{\\left|{#1}\\right)}", 1],
+				obraket: ["\\mathinner{\\left({#1}\\middle|{#2}\\right)}", 2],
+			},
+			packages: { '[+]': ['physics'] }
+		},
+	};
+
+	MathJax.startup = {
+		ready() {
+			MathJax.startup.defaultReady();
+			MathJax.startup.promise.then(() => {
+				$('mjx-math[width="full"]').parent().wrap("<div class='mathjax-block'></div>");
+				// $('mjx-math:not([width])').parent().wrap("<span class='mathjax-inline'></span>");
+			});
+		}
+	};
+
+	// {%- if _mathjax_autoNumber == true -%}
+	// 	// _config.TeX = { equationNumbers: { autoNumber: "all" } };
+	// 	// _config.TeX.equationNumbers = { autoNumber: "all" };
+	// {%- endif -%}
+	// // MathJax.Hub.Config(_config);
+</script>
+<script id="MathJax-script" src="{{ _sources.mathjax }}" async></script>
+
+<style>
+	.mathjax-block {
+		max-width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+	}
+
+	/*
+	.mathjax-inline {
+		display: inline-flex;
+		overflow-x: auto;
+		overflow-y: hidden;
+		max-width: 100%;
+	} */
+
+	mjx-container {
+		min-width: 0 !important;
+		overflow-x: auto;
+		overflow-y: hidden;
+		max-width: 100%;
+	}
+</style>

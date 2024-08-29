@@ -1,0 +1,21 @@
+.article__content {
+  code.success {
+    @include css-var(color, "var(--text-color-function)");
+    @include css-var(background-color, "var(--green-color)");
+  }
+
+  code.info {
+    @include css-var(color, "var(--text-color-function)");
+    @include css-var(background-color, "var(--blue-color)");
+  }
+
+  code.warning {
+    @include css-var(color, "var(--text-color-function)");
+    @include css-var(background-color, "var(--yellow-color)");
+  }
+
+  code.error {
+    @include css-var(color, "var(--text-color-function)");
+    @include css-var(background-color, "var(--red-color)");
+  }
+}
