@@ -14,11 +14,10 @@ show_title: false
 - As an amateur programmer, I enjoy tinkering with Linux and hardware.
 - I am a fan of otaku culture, passionate about Japanese animation, light novels, and more.
 - I'm also a beginner player of music games.
-- I play "Rainbow Six Siege".
 
 ### Educational Background
 
-- University: Beijing Institute of Technology, Zhuhai
+- University: Beijing Institute of Technology, Zhuhai College
 
 ### Programming Languages
 
