@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conway's Game of Life</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; display: flex; flex-direction: column; align-items: center; }
+        h1 { color: #333; }
+        .controls { margin-bottom: 10px; }
+        .controls label, .controls input, .controls button { margin: 5px; }
+        #gameCanvas { border: 1px solid black; background-color: #fff; }
+        .button { padding: 10px 20px; border: none; background-color: #007BFF; color: white; cursor: pointer; }
+        .button:hover { background-color: #0056b3; }
+        .slider { width: 100px; }
+    </style>
+</head>
+<body>
+    <h1>Conway's Game of Life</h1>
+    <div class="controls">
+        <label for="width">Width:</label>
+        <input type="number" id="width" value="256">
+        <label for="height">Height:</label>
+        <input type="number" id="height" value="256">
+        <button class="button" onclick="initializeGame()">Set Map</button>
+        <button class="button" onclick="randomizeGrid()">Randomize</button>
+        <button class="button" onclick="pauseGame()">Pause</button>
+        <button class="button" onclick="clearGrid()">Clear</button>
+        <label for="speed">Speed:</label>
+        <input type="range" id="speed" min="1" max="10" value="5" class="slider" oninput="updateSpeed(this.value)">
+        <button class="button" onclick="history.back()">Back</button>
+    </div>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const cellSize = 5;
+        let width = 256;
+        let height = 256;
+        let canvas, ctx;
+        let grid;
+        let speed = 5;
+        let animationFrameId;
+        let isPaused = false;
+
+        function initializeGame() {
+            width = parseInt(document.getElementById('width').value);
+            height = parseInt(document.getElementById('height').value);
+            canvas = document.getElementById('gameCanvas');
+            canvas.width = width * cellSize;
+            canvas.height = height * cellSize;
+            ctx = canvas.getContext('2d');
+            grid = createGrid(width, height);
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            isPaused = false;
+            requestAnimationFrame(updateGame);
+        }
+
+        function createGrid(width, height) {
+            let grid = new Array(height);
+            for (let y = 0; y < height; y++) {
+                grid[y] = new Array(width).fill(0);
+            }
+            return grid;
+        }
+
+        function randomizeGrid() {
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    grid[y][x] = Math.random() > 0.5 ? 1 : 0;
+                }
+            }
+            drawGrid(grid);
+        }
+
+        function updateGame() {
+            if (!isPaused) {
+                grid = nextGeneration(grid);
+                drawGrid(grid);
+            }
+            animationFrameId = setTimeout(() => requestAnimationFrame(updateGame), 1000 / speed);
+        }
+
+        function nextGeneration(grid) {
+            let newGrid = createGrid(width, height);
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    let aliveNeighbors = countAliveNeighbors(grid, x, y);
+                    if (grid[y][x] === 1) {
+                        newGrid[y][x] = aliveNeighbors === 2 || aliveNeighbors === 3 ? 1 : 0;
+                    } else {
+                        newGrid[y][x] = aliveNeighbors === 3 ? 1 : 0;
+                    }
+                }
+            }
+            return newGrid;
+        }
+
+        function countAliveNeighbors(grid, x, y) {
+            let count = 0;
+            for (let dy = -1; dy <= 1; dy++) {
+                for (let dx = -1; dx <= 1; dx++) {
+                    if (dx === 0 && dy === 0) continue;
+                    let nx = x + dx;
+                    let ny = y + dy;
+                    if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                        count += grid[ny][nx];
+                    }
+                }
+            }
+            return count;
+        }
+
+        function drawGrid(grid) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    if (grid[y][x] === 1) {
+                        ctx.fillStyle = 'black';
+                        ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                    }
+                }
+            }
+            drawGridLines();
+        }
+
+        function drawGridLines() {
+            ctx.strokeStyle = '#ddd';
+            for (let x = 0; x <= width; x++) {
+                ctx.beginPath();
+                ctx.moveTo(x * cellSize, 0);
+                ctx.lineTo(x * cellSize, height * cellSize);
+                ctx.stroke();
+            }
+            for (let y = 0; y <= height; y++) {
+                ctx.beginPath();
+                ctx.moveTo(0, y * cellSize);
+                ctx.lineTo(width * cellSize, y * cellSize);
+                ctx.stroke();
+            }
+        }
+
+        function updateSpeed(value) {
+            speed = value;
+        }
+
+        function pauseGame() {
+            isPaused = !isPaused;
+        }
+
+        function clearGrid() {
+            grid = createGrid(width, height);
+            drawGrid(grid);
+        }
+    </script>
+</body>
+</html>
