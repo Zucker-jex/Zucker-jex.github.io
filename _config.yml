@@ -122,7 +122,7 @@ comments:
 
   ## Disqus
   disqus:
-    shortname: zuckers-blog
+    shortname: "zuckers-blog"
 
   ## Gitalk
   # please refer to https://github.com/gitalk/gitalk for more info.
