@@ -1,90 +1,54 @@
 header:
   - titles:
-      # @start locale config
-      en      : &EN       Archive
-      en-GB   : *EN
-      en-US   : *EN
-      en-CA   : *EN
-      en-AU   : *EN
-      zh-Hans : &ZH_HANS  归档
-      zh      : *ZH_HANS
-      zh-CN   : *ZH_HANS
-      zh-SG   : *ZH_HANS
-      zh-Hant : &ZH_HANT  歸檔
-      zh-TW   : *ZH_HANT
-      zh-HK   : *ZH_HANT
-      ko      : &KO       아카이브
-      ko-KR   : *KO
-      fr      : &FR       Archives
-      fr-BE   : *FR
-      fr-CA   : *FR
-      fr-CH   : *FR
-      fr-FR   : *FR
-      fr-LU   : *FR
-      # @end locale config
+      en    : &EN       Archive
+      zh-Hans: &ZH_HANS 归档
+      zh-Hant: &ZH_HANT 歸檔
+      ja    : &JA       アーカイブ
+      fr    : &FR       Archives
+      de    : &DE       Archiv
     url: /archive.html
 
   # - titles:
-  #     en      : &EN       Guestbook
-  #     en-GB   : *EN
-  #     en-US   : *EN
-  #     en-CA   : *EN
-  #     en-AU   : *EN
-  #     zh-Hans : &ZH_HANS  留言板
-  #     zh      : *ZH_HANS
-  #     zh-CN   : *ZH_HANS
-  #     zh-SG   : *ZH_HANS
-  #     zh-Hant : &ZH_HANT  留言板
-  #     zh-TW   : *ZH_HANT
-  #     zh-HK   : *ZH_HANT
-
+  #     en    : &EN       Guestbook
+  #     zh-Hans: &ZH_HANS 留言板
+  #     zh-Hant: &ZH_HANT 留言板
+  #     ja    : &JA       ゲストブック
+  #     fr    : &FR       Livre d'or
+  #     de    : &DE       Gästebuch
   #   url: /guestbook.html
 
   - titles:
-      en      : &EN       LifeViewer
-      en-GB   : *EN
-      en-US   : *EN
-      en-CA   : *EN
-      en-AU   : *EN
-      zh-Hans : &ZH_HANS  LifeViewer
-      zh      : *ZH_HANS
-      zh-CN   : *ZH_HANS
-      zh-SG   : *ZH_HANS
-      zh-Hant : &ZH_HANT  LifeViewer
-      zh-TW   : *ZH_HANT
-      zh-HK   : *ZH_HANT
-
+      en    : &EN       LifeViewer
+      zh-Hans: *EN
+      zh-Hant: *EN
+      ja    : *EN
+      fr    : *EN
+      de    : *EN
     url: /LifeViewer.html
 
   - titles:
-      en      : &EN       Game of Life
-      en-GB   : *EN
-      en-US   : *EN
-      en-CA   : *EN
-      en-AU   : *EN
-      zh-Hans : &ZH_HANS  生命游戏
-      zh      : *ZH_HANS
-      zh-CN   : *ZH_HANS
-      zh-SG   : *ZH_HANS
-      zh-Hant : &ZH_HANT  生命遊戲
-      zh-TW   : *ZH_HANT
-      zh-HK   : *ZH_HANT
-
+      en    : &EN       Game of Life
+      zh-Hans: &ZH_HANS 生命游戏
+      zh-Hant: &ZH_HANT 生命遊戲
+      ja    : &JA       ライフゲーム
+      fr    : &FR       Jeu de la vie
+      de    : &DE       Spiel des Lebens
     url: /game_of_life.html
 
   - titles:
-      # @start locale config
-      en      : &EN       Profile
-      en-GB   : *EN
-      en-US   : *EN
-      en-CA   : *EN
-      en-AU   : *EN
-      zh-Hans : &ZH_HANS  简介
-      zh      : *ZH_HANS
-      zh-CN   : *ZH_HANS
-      zh-SG   : *ZH_HANS
-      zh-Hant : &ZH_HANT  簡介
-      zh-TW   : *ZH_HANT
-      zh-HK   : *ZH_HANT
-      # @end locale config
+      en    : &EN       Random Selector
+      zh-Hans: &ZH_HANS 随机选择器
+      zh-Hant: &ZH_HANT 隨機選擇器
+      ja    : &JA       ランダムセレクター
+      fr    : &FR       Sélecteur aléatoire
+      de    : &DE       Zufallsauswahl
+    url: /random.html
+
+  - titles:
+      en    : &EN       Profile
+      zh-Hans: &ZH_HANS 简介
+      zh-Hant: &ZH_HANT 簡介
+      ja    : &JA       プロフィール
+      fr    : &FR       Profil
+      de    : &DE       Profil
     url: /profile.html

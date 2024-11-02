@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+        }
+        h1 {
+            color: #333;
+        }
+        .inputs-wrapper {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            justify-items: center;
+            margin-bottom: 20px;
+        }
+        .inputs-wrapper.few-inputs {
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        }
+        input[type="text"] {
+            margin: 5px 0;
+            padding: 8px;
+            width: 80%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input[type="range"] {
+            width: 200px;
+            margin: 10px 0;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 200px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            border: none;
+            background-color: #0056b3;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        #random-binary {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Random Selector</h1>
+    <label for="count">Number of Inputs:</label>
+    <input type="range" id="count" name="count" min="2" max="16" value="2" oninput="updateInputFields()">
+    <div class="inputs-wrapper" id="inputs"></div>
+    <button onclick="selectRandomString()">Select Random</button>
+    <div id="result"></div>
+    <button id="random-binary" onclick="toggleBinary()">Click to Randomly Show 0 or 1</button>
+
+    <script>
+        function updateInputFields() {
+            const num = document.getElementById('count').value;
+            const container = document.getElementById('inputs');
+            container.innerHTML = '';
+            container.classList.toggle('few-inputs', num < 4);
+            for (let i = 0; i < num; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = `Input String ${i + 1}`;
+                container.appendChild(input);
+            }
+        }
+
+        function selectRandomString() {
+            const inputs = document.querySelectorAll('#inputs input');
+            const strings = Array.from(inputs).map(input => input.value).filter(value => value.trim() !== '');
+            if (strings.length === 0) {
+                alert('Please enter at least one valid string');
+                return;
+            }
+            const randomIndex = Math.floor(Math.random() * strings.length);
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `Randomly Selected String: ${strings[randomIndex]}`;
+        }
+
+        function toggleBinary() {
+            const randomBinary = Math.round(Math.random());
+            const binaryButton = document.getElementById('random-binary');
+            binaryButton.textContent = `${randomBinary}`;
+        }
+
+        updateInputFields();
+        toggleBinary();
+    </script>
+
+</body>
+</html>
