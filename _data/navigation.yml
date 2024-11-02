@@ -8,14 +8,14 @@ header:
       de    : &DE       Archiv
     url: /archive.html
 
-  # - titles:
-  #     en    : &EN       Guestbook
-  #     zh-Hans: &ZH_HANS 留言板
-  #     zh-Hant: &ZH_HANT 留言板
-  #     ja    : &JA       ゲストブック
-  #     fr    : &FR       Livre d'or
-  #     de    : &DE       Gästebuch
-  #   url: /guestbook.html
+  - titles:
+      en    : &EN       Guestbook
+      zh-Hans: &ZH_HANS 留言板
+      zh-Hant: &ZH_HANT 留言板
+      ja    : &JA       ゲストブック
+      fr    : &FR       Livre d'or
+      de    : &DE       Gästebuch
+    url: /guestbook.html
 
   - titles:
       en    : &EN       LifeViewer
@@ -27,21 +27,21 @@ header:
     url: /LifeViewer.html
 
   - titles:
-      en    : &EN       Game of Life
-      zh-Hans: &ZH_HANS 生命游戏
-      zh-Hant: &ZH_HANT 生命遊戲
-      ja    : &JA       ライフゲーム
-      fr    : &FR       Jeu de la vie
-      de    : &DE       Spiel des Lebens
+      en    : &EN       GOL
+      zh-Hans: &ZH_HANS 生游
+      zh-Hant: &ZH_HANT 生遊
+      ja    : &JA       ラゲ
+      fr    : &FR       JDLV
+      de    : &DE       SDL
     url: /game_of_life.html
 
   - titles:
-      en    : &EN       Random Selector
-      zh-Hans: &ZH_HANS 随机选择器
-      zh-Hant: &ZH_HANT 隨機選擇器
-      ja    : &JA       ランダムセレクター
-      fr    : &FR       Sélecteur aléatoire
-      de    : &DE       Zufallsauswahl
+      en    : &EN       RS
+      zh-Hans: &ZH_HANS 随选
+      zh-Hant: &ZH_HANT 隨選
+      ja    : &JA       ラセ
+      fr    : &FR       SA
+      de    : &DE       ZA
     url: /random.html
 
   - titles:
