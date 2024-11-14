@@ -45,12 +45,12 @@ header:
     url: /random.html
 
   - titles:
-      en    : &EN       x86DOC
-      zh-Hans: &ZH_HANS x86DOC
-      zh-Hant: &ZH_HANT x86DOC
-      ja    : &JA       x86DOC
-      fr    : &FR       x86DOC
-      de    : &DE       x86DOC
+      en    : &EN       x86doc
+      zh-Hans: &ZH_HANS x86doc
+      zh-Hant: &ZH_HANT x86doc
+      ja    : &JA       x86doc
+      fr    : &FR       x86doc
+      de    : &DE       x86doc
     url: /x86doc/index.html
 
   - titles:
