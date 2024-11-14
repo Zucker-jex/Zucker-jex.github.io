@@ -1,0 +1,65 @@
+table {
+    border-collapse: collapse
+}
+
+th, td {
+    padding: 0px 10px;
+    border: 1px #ddd solid;
+    vertical-align: top
+}
+
+svg {
+    display: block;
+    margin: 0px auto
+}
+
+svg + h3 {
+    text-align: center;
+}
+
+table.opcodes {
+    font: 10pt "Courier New", monospace;
+}
+
+.notes {
+    font-size: 9pt;
+}
+
+h1 {
+    color:#0860a8;
+}
+
+h2 {
+    color:#0860a8;
+}
+
+h3 {
+    color:#0860a8;
+}
+
+strong {
+    color:#0860a8;
+}
+
+a:link {
+    text-decoration: none;
+    color:#0860a8;
+}
+
+/* visited link */
+a:visited {
+    text-decoration: none;
+    color:#0860a8;
+}
+
+/* mouse over link */
+a:hover {
+    text-decoration: underline;
+    color:#0860a8;
+}
+
+/* selected link */
+a:active {
+    text-decoration: none;
+    color:#0860a8;
+}

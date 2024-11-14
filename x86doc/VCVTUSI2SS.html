@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VCVTUSI2SS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VCVTUSI2SS—Convert Unsigned Integer to Scalar Single-Precision Floating-Point Value </title>
+<meta name="Description" content="VCVTUSI2SS—Convert Unsigned Integer to Scalar Single-Precision Floating-Point Value " />
+<meta content="VCVTUSI2SS, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VCVTUSI2SS—Convert Unsigned Integer to Scalar Single-Precision Floating-Point Value</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.NDS.LIG.F3.0F.W0 7B /r</p>
+<p>VCVTUSI2SS xmm1, xmm2, r/m32{er}</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Convert one signed doubleword integer from r/m32 to one single-precision floating-point value in xmm1.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.LIG.F3.0F.W1 7B /r</p>
+<p>VCVTUSI2SS xmm1, xmm2, r/m64{er}</p></td>
+<td>T1S</td>
+<td>V/N.E.<sup>1</sup></td>
+<td>AVX512F</td>
+<td>Convert one signed quadword integer from r/m64 to one single-precision floating-point value in xmm1.</td></tr></table>
+<p><strong>NOTES: 1. For this specific instruction, EVEX.W in non-64 bit is ignored; the instructions behaves as if the W0 version is</strong></p>
+<p>used.</p>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>T1S</td>
+<td>ModRM:reg (w)</td>
+<td>VEX.vvvv</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Converts a unsigned doubleword integer (or unsigned quadword integer if operand size is 64 bits) in the source operand (second operand) to a single-precision floating-point value in the destination operand (first operand). The source operand can be a general-purpose register or a memory location. The destination operand is an XMM register. The result is stored in the low doubleword of the destination operand. When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits.</p>
+<p>The second source operand can be a general-purpose register or a 32/64-bit memory location. The first source and destination operands are XMM registers. Bits (127:32) of the XMM register destination are copied from corre-sponding bits in the first source operand. Bits (MAX_VL-1:128) of the destination register are zeroed.</p>
+<p>EVEX.W1 version: promotes the instruction to use 64-bit input value in 64-bit mode.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VCVTUSI2SS (EVEX encoded version)</strong>
+<pre>
+IF (SRC2 *is register*) AND (EVEX.b = 1)
+    THEN
+    SET_RM(EVEX.RC);
+    ELSE
+    SET_RM(MXCSR.RM);
+FI;
+IF 64-Bit Mode And OperandSize = 64
+    THEN
+    DEST[31:0] (cid:197) Convert_UInteger_To_Single_Precision_Floating_Point(SRC[63:0]);
+    ELSE
+    DEST[31:0] (cid:197) Convert_UInteger_To_Single_Precision_Floating_Point(SRC[31:0]);
+FI;
+DEST[127:32] (cid:197) SRC1[127:32]
+DEST[MAX_VL-1:128] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VCVTUSI2SS __m128 _mm_cvtu32_ss( __m128 s, unsigned a);
+VCVTUSI2SS __m128 _mm_cvt_roundu32_ss( __m128 s, unsigned a, int r);
+VCVTUSI2SS __m128 _mm_cvtu64_ss( __m128 s, unsigned __int64 a);
+VCVTUSI2SS __m128 _mm_cvt_roundu64_ss( __m128 s, unsigned __int64 a, int r);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>Precision</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type E3NF.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VCVTUSI2SS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

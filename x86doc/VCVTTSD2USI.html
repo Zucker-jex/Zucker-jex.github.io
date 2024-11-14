@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VCVTTSD2USI.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VCVTTSD2USI—Convert with Truncation Scalar Double-Precision Floating-Point Value to Unsigned Integer </title>
+<meta name="Description" content="VCVTTSD2USI—Convert with Truncation Scalar Double-Precision Floating-Point Value to Unsigned Integer " />
+<meta content="VCVTTSD2USI, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VCVTTSD2USI—Convert with Truncation Scalar Double-Precision Floating-Point Value to Unsigned Integer</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.LIG.F2.0F.W0 78 /r</p>
+<p>VCVTTSD2USI r32, xmm1/m64{sae}</p></td>
+<td>T1F</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Convert one double-precision floating-point value from xmm1/m64 to one unsigned doubleword integer r32 using truncation.</td></tr>
+<tr>
+<td>
+<p>EVEX.LIG.F2.0F.W1 78 /r</p>
+<p>VCVTTSD2USI r64, xmm1/m64{sae}</p></td>
+<td>T1F</td>
+<td>V/N.E.<sup>1</sup></td>
+<td>AVX512F</td>
+<td>Convert one double-precision floating-point value from xmm1/m64 to one unsigned quadword integer zero-extended into r64 using truncation.</td></tr></table>
+<p><strong>NOTES: 1. For this specific instruction, EVEX.W in non-64 bit is ignored; the instructions behaves as if the W0 version is</strong></p>
+<p>used.</p>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>T1F</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Converts with truncation a double-precision floating-point value in the source operand (the second operand) to an unsigned doubleword integer (or unsigned quadword integer if operand size is 64 bits) in the destination operand (the first operand). The source operand can be an XMM register or a 64-bit memory location. The destination operand is a general-purpose register. When the source operand is an XMM register, the double-precision floating-point value is contained in the low quadword of the register.</p>
+<p>When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register. If a converted result cannot be represented in the destination format, the floating-point invalid exception is raised, and if this exception is masked, the integer value 2<sup>w</sup> – 1 is returned, where w represents the number of bits in the destination format.</p>
+<p>EVEX.W1 version: promotes the instruction to produce 64-bit data in 64-bit mode.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VCVTTSD2USI (EVEX encoded version)</strong>
+<pre>
+IF 64-Bit Mode and OperandSize = 64
+    THEN
+    DEST[63:0] (cid:197) Convert_Double_Precision_Floating_Point_To_UInteger_Truncate(SRC[63:0]);
+    ELSE
+    DEST[31:0] (cid:197) Convert_Double_Precision_Floating_Point_To_UInteger_Truncate(SRC[63:0]);
+FI
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VCVTTSD2USI unsigned int _mm_cvttsd_u32(__m128d);
+VCVTTSD2USI unsigned int _mm_cvtt_roundsd_u32(__m128d, int sae);
+VCVTTSD2USI unsigned __int64 _mm_cvttsd_u64(__m128d);
+VCVTTSD2USI unsigned __int64 _mm_cvtt_roundsd_u64(__m128d, int sae);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>Invalid, Precision</p>
+<h2>Other Exceptions</h2>
+<p>EVEX-encoded instructions, see Exceptions Type E3NF.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VCVTTSD2USI.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

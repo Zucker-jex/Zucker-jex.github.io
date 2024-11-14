@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VPMOVDW_VPMOVSDW_VPMOVUSDW.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VPMOVDW/VPMOVSDW/VPMOVUSDW—Down Convert DWord to Word </title>
+<meta name="Description" content="VPMOVDW/VPMOVSDW/VPMOVUSDW—Down Convert DWord to Word " />
+<meta content="VPMOVDW/VPMOVSDW/VPMOVUSDW, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VPMOVDW/VPMOVSDW/VPMOVUSDW—Down Convert DWord to Word</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.128.F3.0F38.W0 33 /<em>r</em></p>
+<p>VPMOVDW <em>xmm1/m64 {k1}{z}, xmm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Converts 4 packed double-word integers from <em>xmm2</em> into 4 packed word integers in <em>xmm1/m64 </em>with truncation under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.F3.0F38.W0 23 /<em>r</em></p>
+<p>VPMOVSDW <em>xmm1/m64 {k1}{z}, xmm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Converts 4 packed signed double-word integers from <em>xmm2</em> into 4 packed signed word integers in <em>ymm1/m64 </em>using<em> </em>signed saturation under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.F3.0F38.W0 13 /<em>r</em></p>
+<p>VPMOVUSDW <em>xmm1/m64 {k1}{z}, xmm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Converts 4 packed unsigned double-word integers from <em>xmm2</em> into 4 packed unsigned word integers in <em>xmm1/m64 </em>using<em> </em>unsigned saturation under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.F3.0F38.W0 33 /<em>r</em></p>
+<p>VPMOVDW <em>xmm1/m128 {k1}{z}, ymm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Converts 8 packed double-word integers from <em>ymm2</em> into 8 packed word integers in <em>xmm1/m128 </em>with truncation under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.F3.0F38.W0 23 /<em>r</em></p>
+<p>VPMOVSDW <em>xmm1/m128 {k1}{z}, ymm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Converts 8 packed signed double-word integers from <em>ymm2</em> into 8 packed signed word integers in <em>xmm1/m128 </em>using<em> </em>signed saturation under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.F3.0F38.W0 13 /<em>r</em></p>
+<p>VPMOVUSDW <em>xmm1/m128 {k1}{z}, ymm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Converts 8 packed unsigned double-word integers from <em>ymm2</em> into 8 packed unsigned word integers in <em>xmm1/m128 </em>using<em> </em>unsigned saturation under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.F3.0F38.W0 33 /<em>r</em></p>
+<p>VPMOVDW <em>ymm1/m256 {k1}{z}, zmm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Converts 16 packed double-word integers from <em>zmm2</em> into 16 packed word integers in <em>ymm1/m256 </em>with truncation under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.F3.0F38.W0 23 /<em>r</em></p>
+<p>VPMOVSDW <em>ymm1/m256 {k1}{z}, zmm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Converts 16 packed signed double-word integers from <em>zmm2</em> into 16 packed signed word integers in <em>ymm1/m256 </em>using<em> </em>signed saturation under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.F3.0F38.W0 13 /<em>r</em></p>
+<p>VPMOVUSDW <em>ymm1/m256 {k1}{z}, zmm2</em></p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Converts 16 packed unsigned double-word integers from <em>zmm2</em> into 16 packed unsigned word integers in <em>ymm1/m256 </em>using<em> </em>unsigned saturation under writemask k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>HVM</td>
+<td>ModRM:r/m (w)</td>
+<td>ModRM:reg (r)</td>
+<td>NA</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>VPMOVDW down converts 32-bit integer elements in the source operand (the second operand) into packed words using truncation. VPMOVSDW converts signed 32-bit integers into packed signed words using signed saturation. VPMOVUSDW convert unsigned double-word values into unsigned word values using unsigned saturation.</p>
+<p>The source operand is a ZMM/YMM/XMM register. The destination operand is a YMM/XMM/XMM register or a 256/128/64-bit memory location.</p>
+<p>Down-converted word elements are written to the destination operand (the first operand) from the least-significant word. Word elements of the destination operand are updated according to the writemask. Bits (MAX_VL-1:256/128/64) of the register destination are zeroed.</p>
+<p>EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VPMOVDW instruction (EVEX encoded versions) when dest is a register</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    m (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197) TruncateDoubleWordToWord (SRC[m+31:m])
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+15:i] remains unchanged*
+            ELSE *zeroing-masking*
+            ; zeroing-masking
+            DEST[i+15:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:VL/2] (cid:197) 0;
+</pre>
+<strong>VPMOVDW instruction (EVEX encoded versions) when dest is memory</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    m (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197) TruncateDoubleWordToWord (SRC[m+31:m])
+        ELSE
+        *DEST[i+15:i] remains unchanged*
+        ; merging-masking
+    FI;
+ENDFOR
+</pre>
+<strong>VPMOVSDW instruction (EVEX encoded versions) when dest is a register</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    m (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197) SaturateSignedDoubleWordToWord (SRC[m+31:m])
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+15:i] remains unchanged*
+            ELSE *zeroing-masking*
+            ; zeroing-masking
+            DEST[i+15:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:VL/2] (cid:197) 0;
+</pre>
+<strong>VPMOVSDW instruction (EVEX encoded versions) when dest is memory</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    m (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197) SaturateSignedDoubleWordToWord (SRC[m+31:m])
+        ELSE
+        *DEST[i+15:i] remains unchanged*
+        ; merging-masking
+    FI;
+ENDFOR
+</pre>
+<strong>VPMOVUSDW instruction (EVEX encoded versions) when dest is a register</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    m (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197) SaturateUnsignedDoubleWordToWord (SRC[m+31:m])
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+15:i] remains unchanged*
+            ELSE *zeroing-masking*
+            ; zeroing-masking
+            DEST[i+15:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:VL/2] (cid:197) 0;
+</pre>
+<strong>VPMOVUSDW instruction (EVEX encoded versions) when dest is memory</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    m (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197) SaturateUnsignedDoubleWordToWord (SRC[m+31:m])
+        ELSE
+        *DEST[i+15:i] remains unchanged*
+        ; merging-masking
+    FI;
+ENDFOR
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VPMOVDW __m256i _mm512_cvtepi32_epi16( __m512i a);
+VPMOVDW __m256i _mm512_mask_cvtepi32_epi16(__m256i s, __mmask16 k, __m512i a);
+VPMOVDW __m256i _mm512_maskz_cvtepi32_epi16( __mmask16 k, __m512i a);
+VPMOVDW void _mm512_mask_cvtepi32_storeu_epi16(void * d, __mmask16 k, __m512i a);
+VPMOVSDW __m256i _mm512_cvtsepi32_epi16( __m512i a);
+VPMOVSDW __m256i _mm512_mask_cvtsepi32_epi16(__m256i s, __mmask16 k, __m512i a);
+VPMOVSDW __m256i _mm512_maskz_cvtsepi32_epi16( __mmask16 k, __m512i a);
+VPMOVSDW void _mm512_mask_cvtsepi32_storeu_epi16(void * d, __mmask16 k, __m512i a);
+VPMOVUSDW __m256i _mm512_cvtusepi32_epi16 __m512i a);
+VPMOVUSDW __m256i _mm512_mask_cvtusepi32_epi16(__m256i s, __mmask16 k, __m512i a);
+VPMOVUSDW __m256i _mm512_maskz_cvtusepi32_epi16( __mmask16 k, __m512i a);
+VPMOVUSDW void _mm512_mask_cvtusepi32_storeu_epi16(void * d, __mmask16 k, __m512i a);
+VPMOVUSDW __m128i _mm256_cvtusepi32_epi16(__m256i a);
+VPMOVUSDW __m128i _mm256_mask_cvtusepi32_epi16(__m128i a, __mmask8 k, __m256i b);
+VPMOVUSDW __m128i _mm256_maskz_cvtusepi32_epi16( __mmask8 k, __m256i b);
+VPMOVUSDW void _mm256_mask_cvtusepi32_storeu_epi16(void * , __mmask8 k, __m256i b);
+VPMOVUSDW __m128i _mm_cvtusepi32_epi16(__m128i a);
+VPMOVUSDW __m128i _mm_mask_cvtusepi32_epi16(__m128i a, __mmask8 k, __m128i b);
+VPMOVUSDW __m128i _mm_maskz_cvtusepi32_epi16( __mmask8 k, __m128i b);
+VPMOVUSDW void _mm_mask_cvtusepi32_storeu_epi16(void * , __mmask8 k, __m128i b);
+VPMOVSDW __m128i _mm256_cvtsepi32_epi16(__m256i a);
+VPMOVSDW __m128i _mm256_mask_cvtsepi32_epi16(__m128i a, __mmask8 k, __m256i b);
+VPMOVSDW __m128i _mm256_maskz_cvtsepi32_epi16( __mmask8 k, __m256i b);
+VPMOVSDW void _mm256_mask_cvtsepi32_storeu_epi16(void * , __mmask8 k, __m256i b);
+VPMOVSDW __m128i _mm_cvtsepi32_epi16(__m128i a);
+VPMOVSDW __m128i _mm_mask_cvtsepi32_epi16(__m128i a, __mmask8 k, __m128i b);
+VPMOVSDW __m128i _mm_maskz_cvtsepi32_epi16( __mmask8 k, __m128i b);
+VPMOVSDW void _mm_mask_cvtsepi32_storeu_epi16(void * , __mmask8 k, __m128i b);
+VPMOVDW __m128i _mm256_cvtepi32_epi16(__m256i a);
+VPMOVDW __m128i _mm256_mask_cvtepi32_epi16(__m128i a, __mmask8 k, __m256i b);
+VPMOVDW __m128i _mm256_maskz_cvtepi32_epi16( __mmask8 k, __m256i b);
+VPMOVDW void _mm256_mask_cvtepi32_storeu_epi16(void * , __mmask8 k, __m256i b);
+VPMOVDW __m128i _mm_cvtepi32_epi16(__m128i a);
+VPMOVDW __m128i _mm_mask_cvtepi32_epi16(__m128i a, __mmask8 k, __m128i b);
+VPMOVDW __m128i _mm_maskz_cvtepi32_epi16( __mmask8 k, __m128i b);
+VPMOVDW void _mm_mask_cvtepi32_storeu_epi16(void * , __mmask8 k, __m128i b);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<table>
+<tr>
+<td>EVEX-encoded instruction, see Exceptions Type E6.</td></tr>
+<tr>
+<td>If EVEX.vvvv != 1111B.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VPMOVDW_VPMOVSDW_VPMOVUSDW.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

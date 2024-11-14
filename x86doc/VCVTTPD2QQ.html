@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VCVTTPD2QQ.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VCVTTPD2QQ—Convert with Truncation Packed Double-Precision Floating-Point Values to Packed Quadword Integers </title>
+<meta name="Description" content="VCVTTPD2QQ—Convert with Truncation Packed Double-Precision Floating-Point Values to Packed Quadword Integers " />
+<meta content="VCVTTPD2QQ, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VCVTTPD2QQ—Convert with Truncation Packed Double-Precision Floating-Point Values to Packed Quadword Integers</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F.W1 7A /r</p>
+<p>VCVTTPD2QQ xmm1 {k1}{z}, xmm2/m128/m64bcst</p></td>
+<td>FV</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512DQ</p></td>
+<td>Convert two packed double-precision floating-point values from zmm2/m128/m64bcst to two packed quadword integers in zmm1 using truncation with writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F.W1 7A /r</p>
+<p>VCVTTPD2QQ ymm1 {k1}{z}, ymm2/m256/m64bcst</p></td>
+<td>FV</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512DQ</p></td>
+<td>Convert four packed double-precision floating-point values from ymm2/m256/m64bcst to four packed quadword integers in ymm1 using truncation with writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F.W1 7A /r</p>
+<p>VCVTTPD2QQ zmm1 {k1}{z}, zmm2/m512/m64bcst{sae}</p></td>
+<td>FV</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Convert eight packed double-precision floating-point values from zmm2/m512 to eight packed quadword integers in zmm1 using truncation with writemask k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>FV</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Converts with truncation packed double-precision floating-point values in the source operand (second operand) to packed quadword integers in the destination operand (first operand).</p>
+<p>EVEX encoded versions: The source operand is a ZMM/YMM/XMM register or a 512/256/128-bit memory location. The destination operand is a ZMM/YMM/XMM register conditionally updated with writemask k1.</p>
+<p>When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register. If a converted result cannot be represented in the destination format, the floating-point invalid exception is raised, and if this exception is masked, the indefinite integer value (2<sup>w-1</sup>, where w represents the number of bits in the destination format) is returned.</p>
+<p>Note: EVEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VCVTTPD2QQ (EVEX encoded version) when src operand is a register</strong>
+<pre>
+(KL, VL) = (2, 128), (4, 256), (8, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 64
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+63:i] (cid:197)
+        Convert_Double_Precision_Floating_Point_To_QuadInteger_Truncate(SRC[i+63:i])
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+63:i] remains unchanged*
+            ELSE
+            ; zeroing-masking
+            DEST[i+63:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:VL] (cid:197) 0
+</pre>
+<strong>VCVTTPD2QQ (EVEX encoded version) when src operand is a memory source</strong>
+<pre>
+(KL, VL) = (2, 128), (4, 256), (8, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 64
+    IF k1[j] OR *no writemask*
+        THEN
+        IF (EVEX.b == 1)
+            THEN
+            DEST[i+63:i] (cid:197)
+            Convert_Double_Precision_Floating_Point_To_QuadInteger_Truncate(SRC[63:0])
+            ELSE
+            DEST[i+63:i] (cid:197) Convert_Double_Precision_Floating_Point_To_QuadInteger_Truncate(SRC[i+63:i])
+        FI;
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+63:i] remains unchanged*
+            ELSE
+            ; zeroing-masking
+            DEST[i+63:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:VL] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VCVTTPD2QQ __m512i _mm512_cvttpd_epi64( __m512d a);
+VCVTTPD2QQ __m512i _mm512_mask_cvttpd_epi64( __m512i s, __mmask8 k, __m512d a);
+VCVTTPD2QQ __m512i _mm512_maskz_cvttpd_epi64( __mmask8 k, __m512d a);
+VCVTTPD2QQ __m512i _mm512_cvtt_roundpd_epi64( __m512d a, int sae);
+VCVTTPD2QQ __m512i _mm512_mask_cvtt_roundpd_epi64( __m512i s, __mmask8 k, __m512d a, int sae);
+VCVTTPD2QQ __m512i _mm512_maskz_cvtt_roundpd_epi64( __mmask8 k, __m512d a, int sae);
+VCVTTPD2QQ __m256i _mm256_mask_cvttpd_epi64( __m256i s, __mmask8 k, __m256d a);
+VCVTTPD2QQ __m256i _mm256_maskz_cvttpd_epi64( __mmask8 k, __m256d a);
+VCVTTPD2QQ __m128i _mm_mask_cvttpd_epi64( __m128i s, __mmask8 k, __m128d a);
+VCVTTPD2QQ __m128i _mm_maskz_cvttpd_epi64( __mmask8 k, __m128d a);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>Invalid, Precision</p>
+<h2>Other Exceptions</h2>
+<table>
+<tr>
+<td>EVEX-encoded instructions, see Exceptions Type E2.</td></tr>
+<tr>
+<td>If EVEX.vvvv != 1111B.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VCVTTPD2QQ.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

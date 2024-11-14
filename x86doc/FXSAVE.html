@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/FXSAVE.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>FXSAVE—Save x87 FPU, MMX Technology, and SSE State </title>
+<meta name="Description" content="FXSAVE—Save x87 FPU, MMX Technology, and SSE State " />
+<meta content="FXSAVE, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>FXSAVE—Save x87 FPU, MMX Technology, and SSE State</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64-Bit Mode</th>
+<th>Compat/Leg Mode</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>0F AE /0</p>
+<p>FXSAVE <em>m512byte</em></p></td>
+<td>M</td>
+<td>Valid</td>
+<td>Valid</td>
+<td>Save the x87 FPU, MMX, XMM, and MXCSR register state to <em>m512byte</em>.</td></tr>
+<tr>
+<td>
+<p>REX.W+ 0F AE /0</p>
+<p>FXSAVE64 <em>m512byte</em></p></td>
+<td>M</td>
+<td>Valid</td>
+<td>N.E.</td>
+<td>Save the x87 FPU, MMX, XMM, and MXCSR register state to <em>m512byte</em>.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>M</td>
+<td>ModRM:r/m (w)</td>
+<td>NA</td>
+<td>NA</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Saves the current state of the x87 FPU, MMX technology, XMM, and MXCSR registers to a 512-byte memory loca-tion specified in the destination operand. The content layout of the 512 byte region depends on whether the processor is operating in non-64-bit operating modes or 64-bit sub-mode of IA-32e mode.</p>
+<p>Bytes 464:511 are available to software use. The processor does not write to bytes 464:511 of an FXSAVE area.</p>
+<p>The operation of FXSAVE in non-64-bit modes is described first.</p>
+<h2>Non-64-Bit Mode Operation</h2>
+<p>Table 3-43 shows the layout of the state information in memory when the processor is operating in legacy modes.</p>
+<h3>Table 3-43.  Non-64-bit-Mode Layout of FXSAVE and FXRSTOR</h3>
+<h3>Memory Region</h3>
+<svg width="766.755015" viewBox="45.899990 312447.030000 511.170010 320.009995" height="480.0149925">
+<text y="312457.806" x="57.12" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">15</text>
+<text y="312457.806" x="81.6558" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">14</text>
+<text y="312457.806" x="115.2546" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">13</text>
+<text y="312457.806" x="137.5134" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="13.3308">12</text>
+<text y="312457.806" x="175.6041" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">11</text>
+<text y="312457.806" x="195.6399" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">10</text>
+<text y="312457.806" x="235.8987" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">9</text>
+<text y="312457.806" x="254.8536" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="7.8129">8</text>
+<text y="312457.806" x="292.8894" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">7</text>
+<text y="312457.806" x="316.4073" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">6</text>
+<text y="312457.806" x="348.2052" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">5</text>
+<text y="312457.806" x="381.021" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">4</text>
+<text y="312457.806" x="415.4559" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">3</text>
+<text y="312457.806" x="441.1968" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">2</text>
+<text y="312457.806" x="476.9547" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">1</text>
+<text y="312457.806" x="495.9096" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">0</text>
+<rect y="312463.02" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="16.02" width="58.08"></rect>
+<text y="312473.509279" x="124.0283145" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="17.9991532">FCS</text>
+<text y="312473.509279" x="201.9914474" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="36.4962709">FIP[31:0]</text>
+<text y="312473.509279" x="298.1348115" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="18.5514411">FOP</text>
+<rect y="312463.02" x="336.48" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="16.02" width="29.04"></rect>
+<text y="312473.8002" x="375.18" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="17.208">FTW</text>
+<text y="312473.509279" x="421.14" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="20.00368666">FSW</text>
+<text y="312473.509279" x="478.97721859" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="20.54692066">FCW</text>
+<text y="312473.766" x="534.9" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="5.535">0</text>
+<text y="312489.529279" x="72.54" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="62.9789284">MXCSR_MASK</text>
+<text y="312489.529279" x="204.002628" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="32.5125549">MXCSR</text>
+<rect y="312479.04" x="278.34" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="15.96" width="58.14"></rect>
+<text y="312489.529279" x="360.2433609" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="17.9900993">FDS</text>
+<text y="312489.529279" x="439.9357887" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="40.4890408">FDP[31:0]</text>
+<text y="312489.786" x="532.14" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">16</text>
+<rect y="312495.0" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="16.02" width="174.36"></rect>
+<text y="312505.549279" x="349.7736879" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="39.0042012">ST0/MM0</text>
+<text y="312505.806" x="532.14" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">32</text>
+<rect y="312511.02" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="16.02" width="174.36"></rect>
+<text y="312521.509279" x="349.7736879" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="39.0042012">ST1/MM1</text>
+<text y="312521.766" x="532.14" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">48</text>
+<rect y="312527.04" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="15.96" width="174.36"></rect>
+<text y="312537.529279" x="349.7736879" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="39.0042012">ST2/MM2</text>
+<text y="312537.786" x="532.14" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">64</text>
+<rect y="312543.0" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="16.02" width="174.36"></rect>
+<text y="312553.549179" x="349.7736879" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="39.0042012">ST3/MM3</text>
+<text y="312553.8059" x="532.14" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">80</text>
+<rect y="312559.02" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="16.02" width="174.36"></rect>
+<text y="312569.509179" x="349.7736879" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="39.0042012">ST4/MM4</text>
+<text y="312569.7659" x="532.14" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="11.0529">96</text>
+<rect y="312575.04" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="15.96" width="174.36"></rect>
+<text y="312585.529179" x="349.7736879" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="39.0042012">ST5/MM5</text>
+<text y="312585.7859" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">112</text>
+<rect y="312591.0" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="16.02" width="174.36"></rect>
+<text y="312601.549179" x="349.7736879" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="39.0042012">ST6/MM6</text>
+<text y="312601.8059" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">128</text>
+<rect y="312607.02" x="45.9" style="fill:rgba(0,0,0,0);stroke:rgb(0,0,0);stroke-width:1pt;" height="16.02" width="174.36"></rect>
+<text y="312617.509279" x="349.7736879" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="39.0042012">ST7/MM7</text>
+<text y="312617.766" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">144</text>
+<text y="312633.529179" x="269.1" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="26.03448945">XMM0</text>
+<text y="312633.7859" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">160</text>
+<text y="312649.549179" x="269.1" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="26.03448945">XMM1</text>
+<text y="312649.8059" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">176</text>
+<text y="312665.509279" x="269.1" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="26.03448945">XMM2</text>
+<text y="312665.766" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">192</text>
+<text y="312681.529179" x="269.1" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="26.03448945">XMM3</text>
+<text y="312681.7859" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">208</text>
+<text y="312697.549179" x="269.1" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="26.03448945">XMM4</text>
+<text y="312697.8059" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">224</text>
+<text y="312713.509179" x="269.1" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="26.03448945">XMM5</text>
+<text y="312713.7659" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">240</text>
+<text y="312729.529279" x="269.1" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="26.03448945">XMM6</text>
+<text y="312729.786" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">256</text>
+<text y="312745.549179" x="269.1" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="26.03448945">XMM7</text>
+<text y="312745.8059" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">272</text>
+<text y="312761.7659" x="529.3799" style="font-size:9.000000pt" lengthAdjust="spacingAndGlyphs" textLength="16.5708">288</text>
+<text y="312473.509279" x="64.68" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="20.461814">Rsvd</text>
+<text y="312473.509279" x="340.74" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="20.51885357">Rsvd</text>
+<text y="312489.529279" x="295.68" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="23.4586549">Rsrvd</text>
+<text y="312505.549279" x="113.82" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="38.48360195">Reserved</text>
+<text y="312521.509279" x="113.82" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="38.48360195">Reserved</text>
+<text y="312537.529279" x="113.82" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="38.48360195">Reserved</text>
+<text y="312553.549179" x="113.82" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="38.48360195">Reserved</text>
+<text y="312569.509179" x="113.82" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="38.48360195">Reserved</text>
+<text y="312585.529179" x="113.82" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="38.48360195">Reserved</text>
+<text y="312601.549179" x="113.82" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="38.48360195">Reserved</text>
+<text y="312617.509279" x="113.82" style="font-size:9.053900pt" lengthAdjust="spacingAndGlyphs" textLength="38.48360195">Reserved</text></svg>
+<p>Reserved</p>
+<h3>Table 3-43.  Non-64-bit-Mode Layout of FXSAVE and FXRSTOR</h3>
+<h3>Memory Region (Contd.)</h3>
+<table>
+<tr>
+<td>
+<p><strong>15</strong></p>
+<p><strong>14</strong></p></td>
+<td>
+<p><strong>13</strong></p>
+<p><strong> 12</strong></p></td>
+<td>
+<p><strong>11</strong></p>
+<p><strong>10</strong></p></td>
+<td>
+<p><strong>9</strong></p>
+<p><strong> 8</strong></p></td>
+<td>
+<p><strong>7</strong></p>
+<p><strong>6</strong></p></td>
+<th>5</th>
+<th>4</th>
+<td>
+<p><strong>3</strong></p>
+<p><strong>2</strong></p></td>
+<td>
+<p><strong>1</strong></p>
+<p><strong>0</strong></p></td>
+<td></td></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>304</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>320</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>336</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>352</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>368</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>384</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>400</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>416</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>432</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>448</th></tr>
+<tr>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<th>464</th></tr>
+<tr>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<td>Available</td>
+<th>480</th></tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Available</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<th>496</th></tr></table>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>The destination operand contains the first byte of the memory image, and it must be aligned on a 16-byte boundary. A misaligned destination operand will result in a general-protection (#GP) exception being generated (or in some cases, an alignment check exception [#AC]).</p>
+<p>The FXSAVE instruction is used when an operating system needs to perform a context switch or when an exception handler needs to save and examine the current state of the x87 FPU, MMX technology, and/or XMM and MXCSR registers.</p>
+<p>The fields in Table 3-43 are defined in Table 3-44.</p>
+<h3>Table 3-44.  Field Definitions</h3>
+<p><strong>Field</strong></p>
+<p><strong>Definition</strong></p>
+<p>FCW</p>
+<p>x87 FPU Control Word (16 bits). See Figure 8-6 in the <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1</em>, for the layout of the x87 FPU control word.</p>
+<p>FSW</p>
+<p>x87 FPU Status Word (16 bits). See Figure 8-4 in the <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1</em>, for the layout of the x87 FPU status word.</p>
+<p>Abridged FTW</p>
+<p>x87 FPU Tag Word (8 bits). The tag information saved here is abridged, as described in the following paragraphs.</p>
+<p>FOP</p>
+<p>x87 FPU Opcode (16 bits). The lower 11 bits of this field contain the opcode, upper 5 bits are reserved. See Figure 8-8 in the <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1</em>, for the layout of the x87 FPU opcode field.</p>
+<p>FIP</p>
+<p>x87 FPU Instruction Pointer Offset (64 bits). The contents of this field differ depending on the current addressing mode (32-bit, 16-bit, or 64-bit) of the processor when the FXSAVE instruction was executed:</p>
+<p>32-bit mode — 32-bit IP offset.</p>
+<p>16-bit mode — low 16 bits are IP offset; high 16 bits are reserved.</p>
+<p>64-bit mode with REX.W — 64-bit IP offset.</p>
+<p>64-bit mode without REX.W — 32-bit IP offset.</p>
+<p>See “x87 FPU Instruction and Operand (Data) Pointers” in Chapter 8 of the <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1</em>, for a description of the x87 FPU instruction pointer.</p>
+<h3>Table 3-44.  Field Definitions  (Contd.)</h3>
+<p><strong>Field</strong></p>
+<p><strong>Definition</strong></p>
+<p>FCS</p>
+<p>x87 FPU Instruction Pointer Selector (16 bits). If CPUID.(EAX=07H,ECX=0H):EBX[bit 13] = 1, the processor deprecates FCS and FDS, and this field is saved as 0000H.</p>
+<p>FDP</p>
+<p>x87 FPU Instruction Operand (Data) Pointer Offset (64 bits). The contents of this field differ depending on the current addressing mode (32-bit, 16-bit, or 64-bit) of the processor when the FXSAVE instruction was executed:</p>
+<p>32-bit mode — 32-bit DP offset.</p>
+<p>16-bit mode — low 16 bits are DP offset; high 16 bits are reserved.</p>
+<p>64-bit mode with REX.W — 64-bit DP offset.</p>
+<p>64-bit mode without REX.W — 32-bit DP offset.</p>
+<p>See “x87 FPU Instruction and Operand (Data) Pointers” in Chapter 8 of the <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1</em>, for a description of the x87 FPU operand pointer.</p>
+<p>FDS</p>
+<p>x87 FPU Instruction Operand (Data) Pointer Selector (16 bits). If CPUID.(EAX=07H,ECX=0H):EBX[bit 13] = 1, the processor deprecates FCS and FDS, and this field is saved as 0000H.</p>
+<p>MXCSR</p>
+<p>MXCSR Register State (32 bits). See Figure 10-3 in the <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1</em>, for the layout of the MXCSR register. If the OSFXSR bit in control register CR4 is not set, the FXSAVE instruction may not save this register. This behavior is implementation dependent.</p>
+<p>MXCSR_</p>
+<p>MXCSR_MASK (32 bits). This mask can be used to adjust values written to the MXCSR register,</p>
+<p>MASK</p>
+<p>ensuring that reserved bits are set to 0. Set the mask bits and flags in MXCSR to the mode of operation desired for SSE and SSE2 SIMD floating-point instructions. See “Guidelines for Writing to the MXCSR Register” in Chapter 11 of the <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1</em>, for instructions for how to determine and use the MXCSR_MASK value.</p>
+<p>ST0/MM0 through</p>
+<p>x87 FPU or MMX technology registers. These 80-bit fields contain the x87 FPU data registers or the</p>
+<p>ST7/MM7</p>
+<p>MMX technology registers, depending on the state of the processor prior to the execution of the FXSAVE instruction. If the processor had been executing x87 FPU instruction prior to the FXSAVE instruction, the x87 FPU data registers are saved; if it had been executing MMX instructions (or SSE or SSE2 instructions that operated on the MMX technology registers), the MMX technology registers are saved. When the MMX technology registers are saved, the high 16 bits of the field are reserved.</p>
+<p>XMM0 through XMM7</p>
+<p>XMM registers (128 bits per field). If the OSFXSR bit in control register CR4 is not set, the FXSAVE instruction may not save these registers. This behavior is implementation dependent.</p>
+<p>The FXSAVE instruction saves an abridged version of the x87 FPU tag word in the FTW field (unlike the FSAVE instruction, which saves the complete tag word). The tag information is saved in physical register order (R0 through R7), rather than in top-of-stack (TOS) order. With the FXSAVE instruction, however, only a single bit (1 for valid or 0 for empty) is saved for each tag. For example, assume that the tag word is currently set as follows:</p>
+<p>R7</p>
+<p>R6</p>
+<p>R5</p>
+<p>R4</p>
+<p>R3</p>
+<p>R2</p>
+<p>R1</p>
+<p>R0</p>
+<p>11</p>
+<p>xx</p>
+<p>xx</p>
+<p>xx</p>
+<p>11</p>
+<p>11</p>
+<p>11</p>
+<p>11</p>
+<p>Here, 11B indicates empty stack elements and “xx” indicates valid (00B), zero (01B), or special (10B).</p>
+<p>For this example, the FXSAVE instruction saves only the following 8 bits of information:</p>
+<p>R7</p>
+<p>R6</p>
+<p>R5</p>
+<p>R4</p>
+<p>R3</p>
+<p>R2</p>
+<p>R1</p>
+<p>R0</p>
+<p>0</p>
+<p>1</p>
+<p>1</p>
+<p>1</p>
+<p>0</p>
+<p>0</p>
+<p>0</p>
+<p>0</p>
+<p>Here, a 1 is saved for any valid, zero, or special tag, and a 0 is saved for any empty tag.</p>
+<p>The operation of the FXSAVE instruction differs from that of the FSAVE instruction, the as follows:</p>
+<p>used by an application program to pass a “clean” x87 FPU state to a procedure, since it retains the current state. To clean the x87 FPU state, an application must explicitly execute an FINIT instruction after an FXSAVE instruction to reinitialize the x87 FPU state.</p>
+<p>The FSAVE format for FTW can be recreated from the FTW valid bits and the stored 80-bit FP data (assuming the stored data was not the contents of MMX technology registers) using Table 3-45.</p>
+<h3>Table 3-45.  Recreating FSAVE Format</h3>
+<table>
+<tr>
+<td>
+<p><strong>Exponent</strong></p>
+<p><strong>all 1’s</strong></p></td>
+<td>
+<p><strong>Exponent</strong></p>
+<p><strong>all 0’s</strong></p></td>
+<td>
+<p><strong>Fraction</strong></p>
+<p><strong>all 0’s</strong></p></td>
+<td>
+<p><strong>J and M</strong></p>
+<p><strong>bits</strong></p></td>
+<th>FTW valid bit</th>
+<th>x87 FTW</th></tr>
+<tr>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>0x</p>
+<p>1x</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>10</p>
+<p>Special</p>
+<p>00</p>
+<p>Valid</p></td></tr>
+<tr>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>00</p>
+<p>10</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>10</p>
+<p>Special</p>
+<p>00</p>
+<p>Valid</p></td></tr>
+<tr>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>0x</p>
+<p>1x</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>10</p>
+<p>Special</p>
+<p>10</p>
+<p>Special</p></td></tr>
+<tr>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>00</p>
+<p>10</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>01</p>
+<p>Zero</p>
+<p>10</p>
+<p>Special</p></td></tr>
+<tr>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>1x</p>
+<p>1x</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>10</p>
+<p>Special</p>
+<p>10</p>
+<p>Special</p></td></tr>
+<tr>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>0</p>
+<p>0</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>00</p>
+<p>10</p></td>
+<td>
+<p>1</p>
+<p>1</p></td>
+<td>
+<p>10</p>
+<p>Special</p>
+<p>10</p>
+<p>Special</p></td></tr>
+<tr>
+<td>For all legal combinations above.</td>
+<td></td>
+<td></td>
+<td></td>
+<td>0</td>
+<td>
+<p>11</p>
+<p>Empty</p></td></tr></table>
+<p>The J-bit is defined to be the 1-bit binary integer to the left of the decimal place in the significand. The M-bit is defined to be the most significant bit of the fractional portion of the significand (i.e., the bit immediately to the right of the decimal place).</p>
+<p>When the M-bit is the most significant bit of the fractional portion of the significand, it must be 0 if the fraction is all 0’s.</p>
+<h2>IA-32e Mode Operation</h2>
+<p>In compatibility sub-mode of IA-32e mode, legacy SSE registers, XMM0 through XMM7, are saved according to the legacy FXSAVE map. In 64-bit mode, all of the SSE registers, XMM0 through XMM15, are saved. Additionally, there are two different layouts of the FXSAVE map in 64-bit mode, corresponding to FXSAVE64 (which requires REX.W=1) and FXSAVE (REX.W=0). In the FXSAVE64 map (Table 3-46), the FPU IP and FPU DP pointers are 64-bit wide. In the FXSAVE map for 64-bit mode (Table 3-47), the FPU IP and FPU DP pointers are 32-bits.</p>
+<h3>Table 3-46.  Layout of the 64-bit-mode FXSAVE64 Map</h3>
+<h3>(requires REX.W = 1)</h3>
+<p>15</p>
+<p>14</p>
+<p>13</p>
+<p>12</p>
+<p>11</p>
+<p>10</p>
+<p>9</p>
+<p>8</p>
+<p>7</p>
+<p>6</p>
+<p>5</p>
+<p>4</p>
+<p>3</p>
+<p>2</p>
+<p>1</p>
+<p>0</p>
+<p>FIP</p>
+<p>FOP</p>
+<p>FTW</p>
+<p>FSW</p>
+<p>FCW</p>
+<p><strong>0</strong></p>
+<p>Reserved</p>
+<p>MXCSR_MASK</p>
+<p>MXCSR</p>
+<p>FDP</p>
+<p><strong>16</strong></p>
+<p>Reserved</p>
+<p>ST0/MM0</p>
+<p><strong>32</strong></p>
+<p>Reserved</p>
+<p>ST1/MM1</p>
+<p><strong>48</strong></p>
+<p>Reserved</p>
+<p>ST2/MM2</p>
+<p><strong>64</strong></p>
+<p>Reserved</p>
+<p>ST3/MM3</p>
+<p><strong>80</strong></p>
+<p>Reserved</p>
+<p>ST4/MM4</p>
+<p><strong>96</strong></p>
+<p>Reserved</p>
+<p>ST5/MM5</p>
+<p><strong>112</strong></p>
+<p>Reserved</p>
+<p>ST6/MM6</p>
+<p><strong>128</strong></p>
+<p>Reserved</p>
+<p>ST7/MM7</p>
+<p><strong>144</strong></p>
+<p>XMM0</p>
+<p><strong>160</strong></p>
+<p>XMM1</p>
+<p><strong>176</strong></p>
+<p>XMM2</p>
+<p><strong>192</strong></p>
+<p>XMM3</p>
+<p><strong>208</strong></p>
+<p>XMM4</p>
+<p><strong>224</strong></p>
+<p>XMM5</p>
+<p><strong>240</strong></p>
+<p>XMM6</p>
+<p><strong>256</strong></p>
+<p>XMM7</p>
+<p><strong>272</strong></p>
+<p>XMM8</p>
+<p><strong>288</strong></p>
+<p>XMM9</p>
+<p><strong>304</strong></p>
+<p>XMM10</p>
+<p><strong>320</strong></p>
+<p>XMM11</p>
+<p><strong>336</strong></p>
+<p>XMM12</p>
+<p><strong>352</strong></p>
+<p>XMM13</p>
+<p><strong>368</strong></p>
+<p>XMM14</p>
+<p><strong>384</strong></p>
+<p>XMM15</p>
+<p><strong>400</strong></p>
+<p>Reserved</p>
+<p><strong>416</strong></p>
+<p>Reserved</p>
+<p><strong>432</strong></p>
+<p>Reserved</p>
+<p><strong>448</strong></p>
+<p>Available</p>
+<p><strong>464</strong></p>
+<p>Available</p>
+<p><strong>480</strong></p>
+<p>Available</p>
+<p><strong>496</strong></p>
+<h3>Table 3-47.  Layout of the 64-bit-mode FXSAVE Map (REX.W = 0)</h3>
+<p>15</p>
+<p>14</p>
+<p>13   12</p>
+<p>11</p>
+<p>10</p>
+<p>9</p>
+<p>8</p>
+<p>7</p>
+<p>6</p>
+<p>5</p>
+<p>4</p>
+<p>3</p>
+<p>2</p>
+<p>1</p>
+<p>0</p>
+<p>FCS</p>
+<p>FIP[31:0]</p>
+<p>FOP</p>
+<p>FTW</p>
+<p>FSW</p>
+<p>FCW</p>
+<p><strong>0</strong></p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>MXCSR_MASK</p>
+<p>MXCSR</p>
+<p>FDP[31:0]</p>
+<p><strong>16</strong></p>
+<p>FDS</p>
+<p>Reserved</p>
+<p>Reserved</p>
+<p>ST0/MM0</p>
+<p><strong>32</strong></p>
+<p>Reserved</p>
+<p>ST1/MM1</p>
+<p><strong>48</strong></p>
+<p>Reserved</p>
+<p>ST2/MM2</p>
+<p><strong>64</strong></p>
+<p>Reserved</p>
+<p>ST3/MM3</p>
+<p><strong>80</strong></p>
+<p>Reserved</p>
+<p>ST4/MM4</p>
+<p><strong>96</strong></p>
+<p>Reserved</p>
+<p>ST5/MM5</p>
+<p><strong>112</strong></p>
+<p>Reserved</p>
+<p>ST6/MM6</p>
+<p><strong>128</strong></p>
+<p>Reserved</p>
+<p>ST7/MM7</p>
+<p><strong>144</strong></p>
+<p>XMM0</p>
+<p><strong>160</strong></p>
+<p>XMM1</p>
+<p><strong>176</strong></p>
+<p>XMM2</p>
+<p><strong>192</strong></p>
+<p>XMM3</p>
+<p><strong>208</strong></p>
+<p>XMM4</p>
+<p><strong>224</strong></p>
+<p>XMM5</p>
+<p><strong>240</strong></p>
+<p>XMM6</p>
+<p><strong>256</strong></p>
+<p>XMM7</p>
+<p><strong>272</strong></p>
+<p>XMM8</p>
+<p><strong>288</strong></p>
+<p>XMM9</p>
+<p><strong>304</strong></p>
+<p>XMM10</p>
+<p><strong>320</strong></p>
+<p>XMM11</p>
+<p><strong>336</strong></p>
+<p>XMM12</p>
+<p><strong>352</strong></p>
+<p>XMM13</p>
+<p><strong>368</strong></p>
+<p>XMM14</p>
+<p><strong>384</strong></p>
+<p>XMM15</p>
+<p><strong>400</strong></p>
+<p>Reserved</p>
+<p><strong>416</strong></p>
+<p>Reserved</p>
+<p><strong>432</strong></p>
+<p>Reserved</p>
+<p><strong>448</strong></p>
+<p>Available</p>
+<p><strong>464</strong></p>
+<p>Available</p>
+<p><strong>480</strong></p>
+<p>Available</p>
+<p><strong>496</strong></p>
+<h2>Operation</h2>
+<pre>
+IF 64-Bit Mode
+    THEN
+    IF REX.W = 1
+        THEN
+        DEST ← Save64BitPromotedFxsave(x87 FPU, MMX, XMM15-XMM0, MXCSR);
+        ELSE
+        DEST ← Save64BitDefaultFxsave(x87 FPU, MMX, XMM15-XMM0, MXCSR);
+    FI;
+    ELSE
+    DEST ← SaveLegacyFxsave(x87 FPU, MMX, XMM7-XMM0, MXCSR);
+FI;
+</pre>
+<h2>Protected Mode Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>#GP(0)</td>
+<td>
+<p>For an illegal memory operand effective address in the CS, DS, ES, FS or GS segments.</p>
+<p>If a memory operand is not aligned on a 16-byte boundary, regardless of segment. (See the description of the alignment check exception [#AC] below.)</p></td></tr>
+<tr>
+<td>#SS(0)</td>
+<td>For an illegal address in the SS segment.</td></tr>
+<tr>
+<td>#PF(fault-code)</td>
+<td>For a page fault.</td></tr>
+<tr>
+<td>#NM</td>
+<td>
+<p>If CR0.TS[bit 3] = 1.</p>
+<p>If CR0.EM[bit 2] = 1.</p></td></tr>
+<tr>
+<td>#UD</td>
+<td>If CPUID.01H:EDX.FXSR[bit 24] = 0.</td></tr>
+<tr>
+<td>#UD</td>
+<td>If the LOCK prefix is used.</td></tr>
+<tr>
+<td>#AC</td>
+<td>If this exception is disabled a general protection exception (#GP) is signaled if the memory operand is not aligned on a 16-byte boundary, as described above. If the alignment check exception (#AC) is enabled (and the CPL is 3), signaling of #AC is not guaranteed and may vary with implementation, as follows. In all implementations where #AC is not signaled, a general protection exception is signaled in its place. In addition, the width of the alignment check may also vary with implementation. For instance, for a given implementation, an align-ment check exception might be signaled for a 2-byte misalignment, whereas a general protec-tion exception might be signaled for all other misalignments (4-, 8-, or 16-byte misalignments).</td></tr></table>
+<h2>Real-Address Mode Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>#GP</td>
+<td>
+<p>If a memory operand is not aligned on a 16-byte boundary, regardless of segment.</p>
+<p>If any part of the operand lies outside the effective address space from 0 to FFFFH.</p></td></tr>
+<tr>
+<td>#NM</td>
+<td>
+<p>If CR0.TS[bit 3] = 1.</p>
+<p>If CR0.EM[bit 2] = 1.</p></td></tr>
+<tr>
+<td>#UD</td>
+<td>
+<p>If CPUID.01H:EDX.FXSR[bit 24] = 0.</p>
+<p>If the LOCK prefix is used.</p></td></tr></table>
+<h2>Virtual-8086 Mode Exceptions</h2>
+<p>Same exceptions as in real address mode.</p>
+<table class="exception-table">
+<tr>
+<td>#PF(fault-code)</td>
+<td>For a page fault.</td></tr>
+<tr>
+<td>#AC</td>
+<td>For unaligned memory reference.</td></tr>
+<tr>
+<td>#UD</td>
+<td>If the LOCK prefix is used.</td></tr></table>
+<h2>Compatibility Mode Exceptions</h2>
+<p>Same exceptions as in protected mode.</p>
+<h2>64-Bit Mode Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>#SS(0)</td>
+<td>If a memory address referencing the SS segment is in a non-canonical form.</td></tr>
+<tr>
+<td>#GP(0)</td>
+<td>
+<p>If the memory address is in a non-canonical form.</p>
+<p>If memory operand is not aligned on a 16-byte boundary, regardless of segment.</p></td></tr>
+<tr>
+<td>#PF(fault-code)</td>
+<td>For a page fault.</td></tr>
+<tr>
+<td>#NM</td>
+<td>
+<p>If CR0.TS[bit 3] = 1.</p>
+<p>If CR0.EM[bit 2] = 1.</p></td></tr>
+<tr>
+<td>#UD</td>
+<td>
+<p>If CPUID.01H:EDX.FXSR[bit 24] = 0.</p>
+<p>If the LOCK prefix is used.</p></td></tr>
+<tr>
+<td>#AC</td>
+<td>If this exception is disabled a general protection exception (#GP) is signaled if the memory operand is not aligned on a 16-byte boundary, as described above. If the alignment check exception (#AC) is enabled (and the CPL is 3), signaling of #AC is not guaranteed and may vary with implementation, as follows. In all implementations where #AC is not signaled, a general protection exception is signaled in its place. In addition, the width of the alignment check may also vary with implementation. For instance, for a given implementation, an align-ment check exception might be signaled for a 2-byte misalignment, whereas a general protec-tion exception might be signaled for all other misalignments (4-, 8-, or 16-byte misalignments).</td></tr></table>
+<h2>Implementation Note</h2>
+<p>The order in which the processor signals general-protection (#GP) and page-fault (#PF) exceptions when they both occur on an instruction boundary is given in Table 5-2 in the <em>Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 3B</em>. This order vary for FXSAVE for different processor implementations.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/FXSAVE.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VTESTPD_VTESTPS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:50 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VTESTPD/VTESTPS—Packed Bit Test </title>
+<meta name="Description" content="VTESTPD/VTESTPS—Packed Bit Test " />
+<meta content="VTESTPD/VTESTPS, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VTESTPD/VTESTPS—Packed Bit Test</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>VEX.128.66.0F38.W0 0E /r VTESTPS <em>xmm1, xmm2/m128</em></td>
+<td>RM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Set ZF and CF depending on sign bit AND and ANDN of packed single-precision floating-point sources.</td></tr>
+<tr>
+<td>VEX.256.66.0F38.W0 0E /r VTESTPS <em>ymm1, ymm2/m256</em></td>
+<td>RM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Set ZF and CF depending on sign bit AND and ANDN of packed single-precision floating-point sources.</td></tr>
+<tr>
+<td>VEX.128.66.0F38.W0 0F /r VTESTPD <em>xmm1, xmm2/m128</em></td>
+<td>RM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Set ZF and CF depending on sign bit AND and ANDN of packed double-precision floating-point sources.</td></tr>
+<tr>
+<td>VEX.256.66.0F38.W0 0F /r VTESTPD <em>ymm1, ymm2/m256</em></td>
+<td>RM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Set ZF and CF depending on sign bit AND and ANDN of packed double-precision floating-point sources.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>RM</td>
+<td>ModRM:reg (r)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>VTESTPS performs a bitwise comparison of all the sign bits of the packed single-precision elements in the first source operation and corresponding sign bits in the second source operand. If the AND of the source sign bits with the dest sign bits produces all zeros, the ZF is set else the ZF is clear. If the AND of the source sign bits with the inverted dest sign bits produces all zeros the CF is set else the CF is clear. An attempt to execute VTESTPS with VEX.W=1 will cause #UD.</p>
+<p>VTESTPD performs a bitwise comparison of all the sign bits of the double-precision elements in the first source operation and corresponding sign bits in the second source operand. If the AND of the source sign bits with the dest sign bits produces all zeros, the ZF is set else the ZF is clear. If the AND the source sign bits with the inverted dest sign bits produces all zeros the CF is set else the CF is clear. An attempt to execute VTESTPS with VEX.W=1 will cause #UD.</p>
+<p>The first source register is specified by the ModR/M <em>reg</em> field.</p>
+<p>128-bit version: The first source register is an XMM register. The second source register can be an XMM register or a 128-bit memory location. The destination register is not modified.</p>
+<p>VEX.256 encoded version: The first source register is a YMM register. The second source register can be a YMM register or a 256-bit memory location. The destination register is not modified.</p>
+<p>Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VTESTPS (128-bit version)</strong>
+<pre>
+TEMP[127:0] (cid:197) SRC[127:0] AND DEST[127:0]
+IF (TEMP[31] = TEMP[63] = TEMP[95] = TEMP[127] = 0)
+    THEN ZF (cid:197)1;
+    ELSE ZF (cid:197) 0;
+    TEMP[127:0] (cid:197) SRC[127:0] AND NOT DEST[127:0]
+    IF (TEMP[31] = TEMP[63] = TEMP[95] = TEMP[127] = 0)
+        THEN CF (cid:197)1;
+        ELSE CF (cid:197) 0;
+        DEST (unmodified)
+        AF (cid:197) OF (cid:197) PF (cid:197) SF (cid:197) 0;
+</pre>
+<strong>VTESTPS (VEX.256 encoded version)</strong>
+<pre>
+TEMP[255:0] (cid:197) SRC[255:0] AND DEST[255:0]
+IF (TEMP[31] = TEMP[63] = TEMP[95] = TEMP[127]= TEMP[160] =TEMP[191] = TEMP[224] = TEMP[255] = 0)
+    THEN ZF (cid:197)1;
+    ELSE ZF (cid:197) 0;
+    TEMP[255:0] (cid:197) SRC[255:0] AND NOT DEST[255:0]
+    IF (TEMP[31] = TEMP[63] = TEMP[95] = TEMP[127]= TEMP[160] =TEMP[191] = TEMP[224] = TEMP[255] = 0)
+        THEN CF (cid:197)1;
+        ELSE CF (cid:197) 0;
+        DEST (unmodified)
+        AF (cid:197) OF (cid:197) PF (cid:197) SF (cid:197) 0;
+</pre>
+<strong>VTESTPD (128-bit version)</strong>
+<pre>
+TEMP[127:0] (cid:197) SRC[127:0] AND DEST[127:0]
+IF ( TEMP[63] = TEMP[127] = 0)
+    THEN ZF (cid:197)1;
+    ELSE ZF (cid:197) 0;
+    TEMP[127:0] (cid:197) SRC[127:0] AND NOT DEST[127:0]
+    IF ( TEMP[63] = TEMP[127] = 0)
+        THEN CF (cid:197)1;
+        ELSE CF (cid:197) 0;
+        DEST (unmodified)
+        AF (cid:197) OF (cid:197) PF (cid:197) SF (cid:197) 0;
+</pre>
+<strong>VTESTPD (VEX.256 encoded version)</strong>
+<pre>
+TEMP[255:0] (cid:197) SRC[255:0] AND DEST[255:0]
+IF (TEMP[63] = TEMP[127] = TEMP[191] = TEMP[255] = 0)
+    THEN ZF (cid:197)1;
+    ELSE ZF (cid:197) 0;
+    TEMP[255:0] (cid:197) SRC[255:0] AND NOT DEST[255:0]
+    IF (TEMP[63] = TEMP[127] = TEMP[191] = TEMP[255] = 0)
+        THEN CF (cid:197)1;
+        ELSE CF (cid:197) 0;
+        DEST (unmodified)
+        AF (cid:197) OF (cid:197) PF (cid:197) SF (cid:197) 0;
+        </pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+<strong>VTESTPS</strong>
+int _mm256_testz_ps (__m256 s1, __m256 s2);
+int _mm256_testc_ps (__m256 s1, __m256 s2);
+int _mm256_testnzc_ps (__m256 s1, __m128 s2);
+int _mm_testz_ps (__m128 s1, __m128 s2);
+int _mm_testc_ps (__m128 s1, __m128 s2);
+int _mm_testnzc_ps (__m128 s1, __m128 s2);
+<strong>VTESTPD</strong>
+int _mm256_testz_pd (__m256d s1, __m256d s2);
+int _mm256_testc_pd (__m256d s1, __m256d s2);
+int _mm256_testnzc_pd (__m256d s1, __m256d s2);
+int _mm_testz_pd (__m128d s1, __m128d s2);
+int _mm_testc_pd (__m128d s1, __m128d s2);
+int _mm_testnzc_pd (__m128d s1, __m128d s2);
+</pre>
+<h2>Flags Affected</h2>
+<p>The 0F, AF, PF, SF flags are cleared and the ZF, CF flags are set according to the operation.</p>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None.</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type 4; additionally</p>
+<table class="exception-table">
+<tr>
+<td>#UD</td>
+<td>
+<p>If VEX.vvvv ≠ 1111B.</p>
+<p>If VEX.W = 1 for VTESTPS or VTESTPD.</p></td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VTESTPD_VTESTPS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:50 GMT -->
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/MOVSS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>MOVSS—Move or Merge Scalar Single-Precision Floating-Point Value </title>
+<meta name="Description" content="MOVSS—Move or Merge Scalar Single-Precision Floating-Point Value " />
+<meta content="MOVSS, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>MOVSS—Move or Merge Scalar Single-Precision Floating-Point Value</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op / En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>F3 0F 10 /r</p>
+<p>MOVSS xmm1, xmm2</p></td>
+<td>RM</td>
+<td>V/V</td>
+<td>SSE</td>
+<td>Merge scalar single-precision floating-point value from xmm2 to xmm1 register.</td></tr>
+<tr>
+<td>
+<p>F3 0F 10 /r</p>
+<p>MOVSS xmm1, m32</p></td>
+<td>RM</td>
+<td>V/V</td>
+<td>SSE</td>
+<td>Load scalar single-precision floating-point value from m32 to xmm1 register.</td></tr>
+<tr>
+<td>
+<p>VEX.NDS.LIG.F3.0F.WIG 10 /r</p>
+<p>VMOVSS xmm1, xmm2, xmm3</p></td>
+<td>RVM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Merge scalar single-precision floating-point value from xmm2 and xmm3 to xmm1 register</td></tr>
+<tr>
+<td>
+<p>VEX.LIG.F3.0F.WIG 10 /r</p>
+<p>VMOVSS xmm1, m32</p></td>
+<td>XM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Load scalar single-precision floating-point value from m32 to xmm1 register.</td></tr>
+<tr>
+<td>
+<p>F3 0F 11 /r</p>
+<p>MOVSS xmm2/m32, xmm1</p></td>
+<td>MR</td>
+<td>V/V</td>
+<td>SSE</td>
+<td>Move scalar single-precision floating-point value from xmm1 register to xmm2/m32.</td></tr>
+<tr>
+<td>
+<p>VEX.NDS.LIG.F3.0F.WIG 11 /r</p>
+<p>VMOVSS xmm1, xmm2, xmm3</p></td>
+<td>MVR</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Move scalar single-precision floating-point value from xmm2 and xmm3 to xmm1 register.</td></tr>
+<tr>
+<td>
+<p>VEX.LIG.F3.0F.WIG 11 /r</p>
+<p>VMOVSS m32, xmm1</p></td>
+<td>MR</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Move scalar single-precision floating-point value from xmm1 register to m32.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.LIG.F3.0F.W0 10 /r</p>
+<p>VMOVSS xmm1 {k1}{z}, xmm2, xmm3</p></td>
+<td>RVM</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Move scalar single-precision floating-point value from xmm2 and xmm3 to xmm1 register under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.LIG.F3.0F.W0 10 /r</p>
+<p>VMOVSS xmm1 {k1}{z}, m32</p></td>
+<td>T1S-RM</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Move scalar single-precision floating-point values from m32 to xmm1 under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.LIG.F3.0F.W0 11 /r</p>
+<p>VMOVSS xmm1 {k1}{z}, xmm2, xmm3</p></td>
+<td>MVR</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Move scalar single-precision floating-point value from xmm2 and xmm3 to xmm1 register under writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.LIG.F3.0F.W0 11 /r</p>
+<p>VMOVSS m32 {k1}, xmm1</p></td>
+<td>T1S-MR</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Move scalar single-precision floating-point values from xmm1 to m32 under writemask k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>RM</td>
+<td>ModRM:reg (r, w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr>
+<tr>
+<td>RVM</td>
+<td>ModRM:reg (w)</td>
+<td>VEX.vvvv (r)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr>
+<tr>
+<td>MR</td>
+<td>ModRM:r/m (w)</td>
+<td>ModRM:reg (r)</td>
+<td>NA</td>
+<td>NA</td></tr>
+<tr>
+<td>XM</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr>
+<tr>
+<td>MVR</td>
+<td>ModRM:r/m (w)</td>
+<td>vvvv (r)</td>
+<td>ModRM:reg (r)</td>
+<td>NA</td></tr>
+<tr>
+<td>T1S-RM</td>
+<td>ModRM:reg (r, w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr>
+<tr>
+<td>T1S-MR</td>
+<td>ModRM:r/m (w)</td>
+<td>ModRM:reg (r)</td>
+<td>NA</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Moves a scalar single-precision floating-point value from the source operand (second operand) to the destination operand (first operand). The source and destination operands can be XMM registers or 32-bit memory locations. This instruction can be used to move a single-precision floating-point value to and from the low doubleword of an XMM register and a 32-bit memory location, or to move a single-precision floating-point value between the low doublewords of two XMM registers. The instruction cannot be used to transfer data between memory locations.</p>
+<p>Legacy version: When the source and destination operands are XMM registers, bits (MAX_VL-1:32) of the corre-sponding destination register are unmodified. When the source operand is a memory location and destination operand is an XMM registers, Bits (127:32) of the destination operand is cleared to all 0s, bits MAX_VL:128 of the destination operand remains unchanged.</p>
+<p>VEX and EVEX encoded register-register syntax: Moves a scalar single-precision floating-point value from the second source operand (the third operand) to the low doubleword element of the destination operand (the first operand). Bits 127:32 of the destination operand are copied from the first source operand (the second operand). Bits (MAX_VL-1:128) of the corresponding destination register are zeroed.</p>
+<p>VEX and EVEX encoded memory load syntax: When the source operand is a memory location and destination operand is an XMM registers, bits MAX_VL:32 of the destination operand is cleared to all 0s.</p>
+<p>EVEX encoded versions: The low doubleword of the destination is updated according to the writemask.</p>
+<p>Note: For memory store form instruction “VMOVSS m32, xmm1”, VEX.vvvv is reserved and must be 1111b other-wise instruction will #UD. For memory store form instruction “VMOVSS mv {k1}, xmm1”, EVEX.vvvv is reserved and must be 1111b otherwise instruction will #UD.</p>
+<p>Software should ensure VMOVSS is encoded with VEX.L=0. Encoding VMOVSS with VEX.L=1 may encounter unpredictable behavior across different processor generations.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VMOVSS (EVEX.NDS.LIG.F3.0F.W0 11 /r when the source operand is memory and the destination is an XMM register)</strong>
+<pre>
+IF k1[0] or *no writemask*
+    THEN
+    DEST[31:0] (cid:197) SRC[31:0]
+    ELSE
+    IF *merging-masking*
+        ; merging-masking
+        THEN *DEST[31:0] remains unchanged*
+        ELSE
+        ; zeroing-masking
+        THEN DEST[31:0] (cid:197) 0
+    FI;
+FI;
+DEST[511:32] (cid:197) 0
+</pre>
+<strong>VMOVSS (EVEX.NDS.LIG.F3.0F.W0 10 /r when the source operand is an XMM register and the destination is memory)</strong>
+<pre>
+IF k1[0] or *no writemask*
+    THEN
+    DEST[31:0] (cid:197) SRC[31:0]
+    ELSE
+    *DEST[31:0] remains unchanged*
+    ; merging-masking
+FI;
+</pre>
+<strong>VMOVSS (EVEX.NDS.LIG.F3.0F.W0 10/11 /r where the source and destination are XMM registers)</strong>
+<pre>
+IF k1[0] or *no writemask*
+    THEN
+    DEST[31:0] (cid:197) SRC2[31:0]
+    ELSE
+    IF *merging-masking*
+        ; merging-masking
+        THEN *DEST[31:0] remains unchanged*
+        ELSE
+        ; zeroing-masking
+        THEN DEST[31:0] (cid:197) 0
+    FI;
+FI;
+DEST[127:32] (cid:197) SRC1[127:32]
+DEST[MAX_VL-1:128] (cid:197) 0
+</pre>
+<strong>MOVSS (Legacy SSE version when the source and destination operands are both XMM registers)</strong>
+<pre>
+DEST[31:0] (cid:197)SRC[31:0]
+DEST[MAX_VL-1:32] (Unmodified)
+</pre>
+<strong>VMOVSS (VEX.NDS.128.F3.0F 11 /r where the destination is an XMM register)</strong>
+<pre>
+DEST[31:0] (cid:197)SRC2[31:0]
+DEST[127:32] (cid:197)SRC1[127:32]
+DEST[MAX_VL-1:128] (cid:197)0
+</pre>
+<strong>VMOVSS (VEX.NDS.128.F3.0F 10 /r where the source and destination are XMM registers)</strong>
+<pre>
+DEST[31:0] (cid:197)SRC2[31:0]
+DEST[127:32] (cid:197)SRC1[127:32]
+DEST[MAX_VL-1:128] (cid:197)0
+</pre>
+<strong>VMOVSS (VEX.NDS.128.F3.0F 10 /r when the source operand is memory and the destination is an XMM register)</strong>
+<pre>
+DEST[31:0] (cid:197)SRC[31:0]
+DEST[MAX_VL-1:32] (cid:197)0
+</pre>
+<strong>MOVSS/VMOVSS (when the source operand is an XMM register and the destination is memory)</strong>
+<pre>
+DEST[31:0] (cid:197)SRC[31:0]
+</pre>
+<strong>MOVSS (Legacy SSE version when the source operand is memory and the destination is an XMM register)</strong>
+<pre>
+DEST[31:0] (cid:197)SRC[31:0]
+DEST[127:32] (cid:197)0
+DEST[MAX_VL-1:128] (Unmodified)
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VMOVSS __m128 _mm_mask_load_ss(__m128 s, __mmask8 k, float * p);
+VMOVSS __m128 _mm_maskz_load_ss( __mmask8 k, float * p);
+VMOVSS __m128 _mm_mask_move_ss(__m128 sh, __mmask8 k, __m128 sl, __m128 a);
+VMOVSS __m128 _mm_maskz_move_ss( __mmask8 k, __m128 s, __m128 a);
+VMOVSS void _mm_mask_store_ss(float * p, __mmask8 k, __m128 a);
+MOVSS __m128 _mm_load_ss(float * p)
+MOVSS void_mm_store_ss(float * p, __m128 a)
+MOVSS __m128 _mm_move_ss(__m128 a, __m128 b)
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>Non-EVEX-encoded instruction, see Exceptions Type 5; additionally</p>
+<table>
+<tr>
+<td>#UD</td>
+<td>
+<p>If VEX.vvvv != 1111B.</p>
+<p>EVEX-encoded instruction, see Exceptions Type E10.</p></td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/MOVSS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

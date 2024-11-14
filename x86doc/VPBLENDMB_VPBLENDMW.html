@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VPBLENDMB_VPBLENDMW.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VPBLENDMB/VPBLENDMW—Blend Byte/Word Vectors Using an Opmask Control </title>
+<meta name="Description" content="VPBLENDMB/VPBLENDMW—Blend Byte/Word Vectors Using an Opmask Control " />
+<meta content="VPBLENDMB/VPBLENDMW, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VPBLENDMB/VPBLENDMW—Blend Byte/Word Vectors Using an Opmask Control</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.NDS.128.66.0F38.W0 66 /r</p>
+<p>VPBLENDMB xmm1 {k1}{z}, xmm2, xmm3/m128</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512BW</p></td>
+<td>Blend byte integer vector xmm2 and byte vector xmm3/m128 and store the result in xmm1, under control mask.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.256.66.0F38.W0 66 /r</p>
+<p>VPBLENDMB ymm1 {k1}{z}, ymm2, ymm3/m256</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512BW</p></td>
+<td>Blend byte integer vector ymm2 and byte vector ymm3/m256 and store the result in ymm1, under control mask.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.512.66.0F38.W0 66 /r</p>
+<p>VPBLENDMB zmm1 {k1}{z}, zmm2, zmm3/m512</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Blend byte integer vector zmm2 and byte vector zmm3/m512 and store the result in zmm1, under control mask.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.128.66.0F38.W1 66 /r</p>
+<p>VPBLENDMW xmm1 {k1}{z}, xmm2, xmm3/m128</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512BW</p></td>
+<td>Blend word integer vector xmm2 and word vector xmm3/m128 and store the result in xmm1, under control mask.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.256.66.0F38.W1 66 /r</p>
+<p>VPBLENDMW ymm1 {k1}{z}, ymm2, ymm3/m256</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512BW</p></td>
+<td>Blend word integer vector ymm2 and word vector ymm3/m256 and store the result in ymm1, under control mask.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.512.66.0F38.W1 66 /r</p>
+<p>VPBLENDMW zmm1 {k1}{z}, zmm2, zmm3/m512</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Blend word integer vector zmm2 and word vector zmm3/m512 and store the result in zmm1, under control mask.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>FVM</td>
+<td>ModRM:reg (w)</td>
+<td>EVEX.vvvv</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Performs an element-by-element blending of byte/word elements between the first source operand byte vector register and the second source operand byte vector from memory or register, using the instruction mask as selector. The result is written into the destination byte vector register.</p>
+<p>The destination and first source operands are ZMM/YMM/XMM registers. The second source operand can be a ZMM/YMM/XMM register, a 512/256/128-bit memory location or a 512/256/128-bit memory location.</p>
+<p>The mask is not used as a writemask for this instruction. Instead, the mask is used as an element selector: every element of the destination is conditionally selected between first source or second source using the value of the related mask bit (0 for first source, 1 for second source).</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VPBLENDMB (EVEX encoded versions)</strong>
+<pre>
+(KL, VL) = (16, 128), (32, 256), (64, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 8
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+7:i] (cid:197) SRC2[i+7:i]
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN DEST[i+7:i] (cid:197) SRC1[i+7:i]
+            ELSE
+            ; zeroing-masking
+            DEST[i+7:i] (cid:197) 0
+        FI;
+    FI;
+ENDFOR
+DEST[MAX_VL-1:VL] (cid:197) 0;
+</pre>
+<strong>VPBLENDMW (EVEX encoded versions)</strong>
+<pre>
+(KL, VL) = (8, 128), (16, 256), (32, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197) SRC2[i+15:i]
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN DEST[i+15:i] (cid:197) SRC1[i+15:i]
+            ELSE
+            ; zeroing-masking
+            DEST[i+15:i] (cid:197) 0
+        FI;
+    FI;
+ENDFOR
+DEST[MAX_VL-1:VL] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VPBLENDMB __m512i _mm512_mask_blend_epi8(__mmask64 m, __m512i a, __m512i b);
+VPBLENDMB __m256i _mm256_mask_blend_epi8(__mmask32 m, __m256i a, __m256i b);
+VPBLENDMB __m128i _mm_mask_blend_epi8(__mmask16 m, __m128i a, __m128i b);
+VPBLENDMW __m512i _mm512_mask_blend_epi16(__mmask32 m, __m512i a, __m512i b);
+VPBLENDMW __m256i _mm256_mask_blend_epi16(__mmask16 m, __m256i a, __m256i b);
+VPBLENDMW __m128i _mm_mask_blend_epi16(__mmask8 m, __m128i a, __m128i b);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type E4.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VPBLENDMB_VPBLENDMW.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

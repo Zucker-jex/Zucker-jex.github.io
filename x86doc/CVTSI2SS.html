@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/CVTSI2SS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:48 GMT -->
+<head>
+<meta charset="utf-8">
+<title>CVTSI2SS—Convert Doubleword Integer to Scalar Single-Precision Floating-Point Value </title>
+<meta name="Description" content="CVTSI2SS—Convert Doubleword Integer to Scalar Single-Precision Floating-Point Value " />
+<meta content="CVTSI2SS, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>CVTSI2SS—Convert Doubleword Integer to Scalar Single-Precision Floating-Point Value</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>F3 0F 2A /r CVTSI2SS xmm1, r/m32</td>
+<td>RM</td>
+<td>V/V</td>
+<td>SSE</td>
+<td>Convert one signed doubleword integer from r/m32 to one single-precision floating-point value in xmm1.</td></tr>
+<tr>
+<td>F3 REX.W 0F 2A /r CVTSI2SS xmm1, r/m64</td>
+<td>RM</td>
+<td>V/N.E.</td>
+<td>SSE</td>
+<td>Convert one signed quadword integer from r/m64 to one single-precision floating-point value in xmm1.</td></tr>
+<tr>
+<td>VEX.NDS.128.F3.0F.W0 2A /r VCVTSI2SS xmm1, xmm2, r/m32</td>
+<td>RVM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Convert one signed doubleword integer from r/m32 to one single-precision floating-point value in xmm1.</td></tr>
+<tr>
+<td>VEX.NDS.128.F3.0F.W1 2A /r VCVTSI2SS xmm1, xmm2, r/m64</td>
+<td>RVM</td>
+<td>V/N.E.<sup>1</sup></td>
+<td>AVX</td>
+<td>Convert one signed quadword integer from r/m64 to one single-precision floating-point value in xmm1.</td></tr>
+<tr>
+<td>EVEX.NDS.LIG.F3.0F.W0 2A /r VCVTSI2SS xmm1, xmm2, r/m32{er}</td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Convert one signed doubleword integer from r/m32 to one single-precision floating-point value in xmm1.</td></tr>
+<tr>
+<td>EVEX.NDS.LIG.F3.0F.W1 2A /r VCVTSI2SS xmm1, xmm2, r/m64{er}</td>
+<td>T1S</td>
+<td>V/N.E.<sup>1</sup></td>
+<td>AVX512F</td>
+<td>Convert one signed quadword integer from r/m64 to one single-precision floating-point value in xmm1.</td></tr></table>
+<p><strong>NOTES: 1. VEX.W1/EVEX.W1 in non-64 bit is ignored; the instructions behaves as if the W0 version is used.</strong></p>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>RM</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr>
+<tr>
+<td>RVM</td>
+<td>ModRM:reg (w)</td>
+<td>VEX.vvvv</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr>
+<tr>
+<td>T1S</td>
+<td>ModRM:reg (w)</td>
+<td>EVEX.vvvv</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Converts a signed doubleword integer (or signed quadword integer if operand size is 64 bits) in the “convert-from” source operand to a single-precision floating-point value in the destination operand (first operand). The “convert-from” source operand can be a general-purpose register or a memory location. The destination operand is an XMM register. The result is stored in the low doubleword of the destination operand, and the upper three doublewords are left unchanged. When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits.</p>
+<p>128-bit Legacy SSE version: In 64-bit mode, Use of the REX.W prefix promotes the instruction to use 64-bit input value. The “convert-from” source operand (the second operand) is a general-purpose register or memory location. Bits (MAX_VL-1:32) of the corresponding destination register remain unchanged.</p>
+<p>VEX.128 and EVEX encoded versions: The “convert-from” source operand (the third operand) can be a general-purpose register or a memory location. The first source and destination operands are XMM registers. Bits (127:32) of the XMM register destination are copied from corresponding bits in the first source operand. Bits (MAX_VL-1:128) of the destination register are zeroed.</p>
+<p>EVEX encoded version: the converted result in written to the low doubleword element of the destination under the writemask.</p>
+<p>Software should ensure VCVTSI2SS is encoded with VEX.L=0. Encoding VCVTSI2SS with VEX.L=1 may encounter unpredictable behavior across different processor generations.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VCVTSI2SS (EVEX encoded version)</strong>
+<pre>
+IF (SRC2 *is register*) AND (EVEX.b = 1)
+    THEN
+    SET_RM(EVEX.RC);
+    ELSE
+    SET_RM(MXCSR.RM);
+FI;
+IF 64-Bit Mode And OperandSize = 64
+    THEN
+    DEST[31:0] (cid:197) Convert_Integer_To_Single_Precision_Floating_Point(SRC[63:0]);
+    ELSE
+    DEST[31:0] (cid:197) Convert_Integer_To_Single_Precision_Floating_Point(SRC[31:0]);
+FI;
+DEST[127:32] (cid:197) SRC1[127:32]
+DEST[MAX_VL-1:128] (cid:197) 0
+</pre>
+<strong>VCVTSI2SS (VEX.128 encoded version)</strong>
+<pre>
+IF 64-Bit Mode And OperandSize = 64
+    THEN
+    DEST[31:0] (cid:197)Convert_Integer_To_Single_Precision_Floating_Point(SRC[63:0]);
+    ELSE
+    DEST[31:0] (cid:197)Convert_Integer_To_Single_Precision_Floating_Point(SRC[31:0]);
+FI;
+DEST[127:32] (cid:197)SRC1[127:32]
+DEST[MAX_VL-1:128] (cid:197)0
+</pre>
+<strong>CVTSI2SS (128-bit Legacy SSE version)</strong>
+<pre>
+IF 64-Bit Mode And OperandSize = 64
+    THEN
+    DEST[31:0] (cid:197)Convert_Integer_To_Single_Precision_Floating_Point(SRC[63:0]);
+    ELSE
+    DEST[31:0] (cid:197)Convert_Integer_To_Single_Precision_Floating_Point(SRC[31:0]);
+FI;
+DEST[MAX_VL-1:32] (Unmodified)
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VCVTSI2SS __m128 _mm_cvti32_ss(__m128 s, int a);
+VCVTSI2SS __m128 _mm_cvt_roundi32_ss(__m128 s, int a, int r);
+VCVTSI2SS __m128 _mm_cvti64_ss(__m128 s, __int64 a);
+VCVTSI2SS __m128 _mm_cvt_roundi64_ss(__m128 s, __int64 a, int r);
+CVTSI2SS __m128 _mm_cvtsi64_ss(__m128 s, __int64 a);
+CVTSI2SS __m128 _mm_cvtsi32_ss(__m128 a, int b);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>Precision</p>
+<h2>Other Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>VEX-encoded instructions, see Exceptions Type 3.</td></tr>
+<tr>
+<td>EVEX-encoded instructions, see Exceptions Type E3NF.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/CVTSI2SS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:48 GMT -->
+</html>

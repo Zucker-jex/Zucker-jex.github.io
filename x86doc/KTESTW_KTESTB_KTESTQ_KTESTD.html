@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/KTESTW_KTESTB_KTESTQ_KTESTD.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>KTESTW/KTESTB/KTESTQ/KTESTD—Packed Bit Test Masks and Set Flags </title>
+<meta name="Description" content="KTESTW/KTESTB/KTESTQ/KTESTD—Packed Bit Test Masks and Set Flags " />
+<meta content="KTESTW/KTESTB/KTESTQ/KTESTD, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>KTESTW/KTESTB/KTESTQ/KTESTD—Packed Bit Test Masks and Set Flags</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>VEX.L0.0F.W0 99 /r KTESTW k1, k2</td>
+<td>RR</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Set ZF and CF depending on sign bit AND and ANDN of 16 bits mask register sources.</td></tr>
+<tr>
+<td>VEX.L0.66.0F.W0 99 /r KTESTB k1, k2</td>
+<td>RR</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Set ZF and CF depending on sign bit AND and ANDN of 8 bits mask register sources.</td></tr>
+<tr>
+<td>VEX.L0.0F.W1 99 /r KTESTQ k1, k2</td>
+<td>RR</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Set ZF and CF depending on sign bit AND and ANDN of 64 bits mask register sources.</td></tr>
+<tr>
+<td>VEX.L0.66.0F.W1 99 /r KTESTD k1, k2</td>
+<td>RR</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Set ZF and CF depending on sign bit AND and ANDN of 32 bits mask register sources.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<p>Op/En</p>
+<p>Operand 1</p>
+<p>Operand2</p>
+<p>RR</p>
+<p>ModRM:reg (r)</p>
+<p>ModRM:r/m (r, ModRM:[7:6] must be 11b)</p>
+<h2>Description</h2>
+<p>Performs a bitwise comparison of the bits of the first source operand and corresponding bits in the second source operand. If the AND operation produces all zeros, the ZF is set else the ZF is clear. If the bitwise AND operation of the inverted first source operand with the second source operand produces all zeros the CF is set else the CF is clear. Only the EFLAGS register is updated.</p>
+<p>Note: In VEX-encoded versions, VEX.vvvv is reserved and must be 1111b, otherwise instructions will #UD.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>KTESTW</strong>
+<pre>
+TEMP[15:0] (cid:197) SRC2[15:0] AND SRC1[15:0]
+IF (TEMP[15:0] = = 0)
+    THEN ZF (cid:197)1;
+    ELSE ZF (cid:197) 0;
+FI;
+TEMP[15:0] (cid:197) SRC2[15:0] AND NOT SRC1[15:0]
+IF (TEMP[15:0] = = 0)
+    THEN CF (cid:197)1;
+    ELSE CF (cid:197) 0;
+FI;
+AF (cid:197) OF (cid:197) PF (cid:197) SF (cid:197) 0;
+</pre>
+<strong>KTESTB</strong>
+<pre>
+TEMP[7:0] (cid:197) SRC2[7:0] AND SRC1[7:0]
+IF (TEMP[7:0] = = 0)
+    THEN ZF (cid:197)1;
+    ELSE ZF (cid:197) 0;
+FI;
+TEMP[7:0] (cid:197) SRC2[7:0] AND NOT SRC1[7:0]
+IF (TEMP[7:0] = = 0)
+    THEN CF (cid:197)1;
+    ELSE CF (cid:197) 0;
+FI;
+AF (cid:197) OF (cid:197) PF (cid:197) SF (cid:197) 0;
+</pre>
+<strong>KTESTQ</strong>
+<pre>
+TEMP[63:0] (cid:197) SRC2[63:0] AND SRC1[63:0]
+IF (TEMP[63:0] = = 0)
+    THEN ZF (cid:197)1;
+    ELSE ZF (cid:197) 0;
+FI;
+TEMP[63:0] (cid:197) SRC2[63:0] AND NOT SRC1[63:0]
+IF (TEMP[63:0] = = 0)
+    THEN CF (cid:197)1;
+    ELSE CF (cid:197) 0;
+FI;
+AF (cid:197) OF (cid:197) PF (cid:197) SF (cid:197) 0;
+</pre>
+<strong>KTESTD</strong>
+<pre>
+TEMP[31:0] (cid:197) SRC2[31:0] AND SRC1[31:0]
+IF (TEMP[31:0] = = 0)
+    THEN ZF (cid:197)1;
+    ELSE ZF (cid:197) 0;
+FI;
+TEMP[31:0] (cid:197) SRC2[31:0] AND NOT SRC1[31:0]
+IF (TEMP[31:0] = = 0)
+    THEN CF (cid:197)1;
+    ELSE CF (cid:197) 0;
+FI;
+AF (cid:197) OF (cid:197) PF (cid:197) SF (cid:197) 0;
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type K20.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/KTESTW_KTESTB_KTESTQ_KTESTD.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/MOVHLPS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>MOVHLPS—Move Packed Single-Precision Floating-Point Values High to Low </title>
+<meta name="Description" content="MOVHLPS—Move Packed Single-Precision Floating-Point Values High to Low " />
+<meta content="MOVHLPS, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>MOVHLPS—Move Packed Single-Precision Floating-Point Values High to Low</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>0F 12 /r MOVHLPS xmm1, xmm2</td>
+<td>RM</td>
+<td>V/V</td>
+<td>SSE</td>
+<td>Move two packed single-precision floating-point values from high quadword of xmm2 to low quadword of xmm1.</td></tr>
+<tr>
+<td>VEX.NDS.128.0F.WIG 12 /r VMOVHLPS xmm1, xmm2, xmm3</td>
+<td>RVM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Merge two packed single-precision floating-point values from high quadword of xmm3 and low quadword of xmm2.</td></tr>
+<tr>
+<td>EVEX.NDS.128.0F.W0 12 /r VMOVHLPS xmm1, xmm2, xmm3</td>
+<td>RVM</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Merge two packed single-precision floating-point values from high quadword of xmm3 and low quadword of xmm2.</td></tr></table>
+<h3>Instruction Operand Encoding<sup>1</sup></h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>RM</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr>
+<tr>
+<td>RVM</td>
+<td>ModRM:reg (w)</td>
+<td>vvvv (r)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>This instruction cannot be used for memory to register moves.</p>
+<p><strong>128-bit two-argument form:</strong></p>
+<p>Moves two packed single-precision floating-point values from the high quadword of the second XMM argument (second operand) to the low quadword of the first XMM register (first argument). The quadword at bits 127:64 of the destination operand is left unchanged. Bits (MAX_VL-1:128) of the corresponding destination register remain unchanged.</p>
+<p><strong>128-bit and EVEX three-argument form</strong></p>
+<p>Moves two packed single-precision floating-point values from the high quadword of the third XMM argument (third operand) to the low quadword of the destination (first operand). Copies the high quadword from the second XMM argument (second operand) to the high quadword of the destination (first operand). Bits (MAX_VL-1:128) of the corresponding destination register are zeroed.</p>
+<p>If VMOVHLPS is encoded with VEX.L or EVEX.L’L= 1, an attempt to execute the instruction encoded with VEX.L or EVEX.L’L= 1 will cause an #UD exception.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>MOVHLPS (128-bit two-argument form)</strong>
+<pre>
+DEST[63:0] (cid:197) SRC[127:64]
+DEST[MAX_VL-1:64] (Unmodified)
+</pre>
+<strong>VMOVHLPS (128-bit three-argument form - VEX &amp; EVEX)</strong>
+<pre>
+DEST[63:0] (cid:197) SRC2[127:64]
+DEST[127:64] (cid:197) SRC1[127:64]
+DEST[MAX_VL-1:128] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+MOVHLPS __m128 _mm_movehl_ps(__m128 a, __m128 b)
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<p>1. ModRM.MOD = 011B required</p>
+<h2>Other Exceptions</h2>
+<p>Non-EVEX-encoded instruction, see Exceptions Type 7; additionally</p>
+<table>
+<tr>
+<td>#UD</td>
+<td>
+<p>If VEX.L = 1.</p>
+<p>EVEX-encoded instruction, see Exceptions Type E7NM.128.</p></td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/MOVHLPS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/PEXTRB_PEXTRD_PEXTRQ.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>PEXTRB/PEXTRD/PEXTRQ — Extract Byte/Dword/Qword </title>
+<meta name="Description" content="PEXTRB/PEXTRD/PEXTRQ — Extract Byte/Dword/Qword " />
+<meta content="PEXTRB/PEXTRD/PEXTRQ , x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>PEXTRB/PEXTRD/PEXTRQ — Extract Byte/Dword/Qword</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/ En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>66 0F 3A 14 /r ib PEXTRB<em> reg/m8, xmm2, imm8</em></td>
+<td>MRI</td>
+<td>V/V</td>
+<td>SSE4_1</td>
+<td>Extract a byte integer value from <em>xmm2</em> at the source byte offset specified by<em> imm8</em> into <em>reg or m8. </em>The upper bits of r32 or r64 are zeroed.</td></tr>
+<tr>
+<td>66 0F 3A 16 /r ib PEXTRD <em>r/m32, xmm2, imm8</em></td>
+<td>MRI</td>
+<td>V/V</td>
+<td>SSE4_1</td>
+<td>Extract a dword integer value from <em>xmm2</em> at the source dword offset specified by<em> imm8 </em>into <em>r/m32</em>.</td></tr>
+<tr>
+<td>66 REX.W 0F 3A 16 /r ib PEXTRQ <em>r/m64, xmm2, imm8</em></td>
+<td>MRI</td>
+<td>V/N.E.</td>
+<td>SSE4_1</td>
+<td>Extract a qword integer value from <em>xmm2 </em>at the source qword offset specified by<em> imm8 </em>into <em>r/m64</em>.</td></tr>
+<tr>
+<td>VEX.128.66.0F3A.W0 14 /r ib VPEXTRB <em>reg/m8, xmm2, imm8</em></td>
+<td>MRI</td>
+<td>V<sup>1</sup>/V</td>
+<td>AVX</td>
+<td>Extract a byte integer value from <em>xmm2</em> at the source byte offset specified by <em>imm8</em> into <em>reg</em> or <em>m8</em>. The upper bits of r64/r32 is filled with zeros.</td></tr>
+<tr>
+<td>VEX.128.66.0F3A.W0 16 /r ib VPEXTRD <em>r32/m32, xmm2, imm8</em></td>
+<td>MRI</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Extract a dword integer value from <em>xmm2</em> at the source dword offset specified by<em> imm8</em> into <em>r32/m32</em>.</td></tr>
+<tr>
+<td>VEX.128.66.0F3A.W1 16 /r ib VPEXTRQ <em>r64/m64, xmm2, imm8</em></td>
+<td>MRI</td>
+<td>V/i</td>
+<td>AVX</td>
+<td>Extract a qword integer value from<em> xmm2</em> at the source dword offset specified by<em> imm8 </em>into <em>r64/m64</em>.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F3A.WIG 14 /r ib</p>
+<p>VPEXTRB reg/m8, xmm2, imm8</p></td>
+<td>T1S-MRI</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Extract a byte integer value from xmm2 at the source byte offset specified by imm8 into reg or m8. The upper bits of r64/r32 is filled with zeros.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F3A.W0 16 /r ib</p>
+<p>VPEXTRD r32/m32, xmm2, imm8</p></td>
+<td>T1S-MRI</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Extract a dword integer value from xmm2 at the source dword offset specified by imm8 into r32/m32.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F3A.W1 16 /r ib</p>
+<p>VPEXTRQ r64/m64, xmm2, imm8</p></td>
+<td>T1S-MRI</td>
+<td>V/N.E.<sup>1</sup></td>
+<td>AVX512DQ</td>
+<td>Extract a qword integer value from xmm2 at the source dword offset specified by imm8 into r64/m64.</td></tr></table>
+<p>NOTES:</p>
+<p>1. In 64-bit mode, VEX.W1 is ignored for VPEXTRB (similar to legacy REX.W=1 prefix in PEXTRB).</p>
+<p><strong>NOTES: 1. VEX.W/EVEX.W in non-64 bit is ignored; the instructions behaves as if the W0 version is used.</strong></p>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>MRI</td>
+<td>ModRM:r/m (w)</td>
+<td>ModRM:reg (r)</td>
+<td>imm8</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Extract a byte/dword/qword integer value from the source XMM register at a byte/dword/qword offset determined from imm8[3:0]. The destination can be a register or byte/dword/qword memory location. If the destination is a register, the upper bits of the register are zero extended.</p>
+<p>In legacy non-VEX encoded version and if the destination operand is a register, the default operand size in 64-bit mode for PEXTRB/PEXTRD is 64 bits, the bits above the least significant byte/dword data are filled with zeros. PEXTRQ is not encodable in non-64-bit modes and requires REX.W in 64-bit mode.</p>
+<p>Note: In VEX.128 encoded versions, VEX.vvvv is reserved and must be 1111b, VEX.L must be 0, otherwise the instruction will #UD. In EVEX.128 encoded versions, EVEX.vvvv is reserved and must be 1111b, EVEX.L”L must be 0, otherwise the instruction will #UD. If the destination operand is a register, the default operand size in 64-bit mode for VPEXTRB/VPEXTRD is 64 bits, the bits above the least significant byte/word/dword data are filled with zeros. Attempt to execute VPEXTRQ in non-64-bit mode will cause #UD.</p>
+<h2>Operation</h2>
+<pre>
+CASE of
+PEXTRB: SEL (cid:197) COUNT[3:0];
+TEMP (cid:197) (Src &gt;&gt; SEL*8) AND FFH;
+IF (DEST = Mem8)
+    THEN
+    Mem8 (cid:197) TEMP[7:0];
+    ELSE IF (64-Bit Mode and 64-bit register selected)
+    THEN
+    R64[7:0] (cid:197) TEMP[7:0]; r64[63:8] ← ZERO_FILL; };
+ELSE
+R32[7:0] (cid:197) TEMP[7:0]; r32[31:8] ← ZERO_FILL; };
+FI;
+PEXTRD:SEL (cid:197) COUNT[1:0];
+TEMP (cid:197) (Src &gt;&gt; SEL*32) AND FFFF_FFFFH;
+DEST (cid:197) TEMP;
+PEXTRQ: SEL (cid:197) COUNT[0];
+TEMP (cid:197) (Src &gt;&gt; SEL*64);
+DEST (cid:197) TEMP;
+EASC:
+</pre>
+<strong>VPEXTRTD/VPEXTRQ</strong>
+<pre>
+IF (64-Bit Mode and 64-bit dest operand)
+    THEN
+    Src_Offset (cid:197) Imm8[0]
+    r64/m64 (cid:197)(Src &gt;&gt; Src_Offset * 64)
+    ELSE
+    Src_Offset (cid:197) Imm8[1:0]
+    r32/m32 (cid:197) ((Src &gt;&gt; Src_Offset *32) AND 0FFFFFFFFh);
+FI
+</pre>
+<strong>VPEXTRB ( dest=m8)</strong>
+<pre>
+SRC_Offset (cid:197) Imm8[3:0]
+Mem8 (cid:197) (Src &gt;&gt; Src_Offset*8)
+</pre>
+<strong>VPEXTRB ( dest=reg)</strong>
+<pre>
+IF (64-Bit Mode )
+    THEN
+    SRC_Offset (cid:197) Imm8[3:0]
+    DEST[7:0] (cid:197) ((Src &gt;&gt; Src_Offset*8) AND 0FFh)
+    DEST[63:8] (cid:197)(cid:3)ZERO_FILL;
+ELSE
+SRC_Offset (cid:197). Imm8[3:0];
+DEST[7:0] (cid:197) ((Src &gt;&gt; Src_Offset*8) AND 0FFh);
+DEST[31:8] (cid:197)(cid:3)ZERO_FILL;
+FI
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+PEXTRB:
+int _mm_extract_epi8 (__m128i src, const int ndx);
+PEXTRD:
+int _mm_extract_epi32 (__m128i src, const int ndx);
+PEXTRQ:
+__int64 _mm_extract_epi64 (__m128i src, const int ndx);
+</pre>
+<h2>Flags Affected</h2>
+<p>None.</p>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None.</p>
+<h2>Other Exceptions</h2>
+<p>Non-EVEX-encoded instruction, see Exceptions Type 5;</p>
+<table class="exception-table">
+<tr>
+<td>EVEX-encoded instruction, see Exceptions Type E9NF.</td></tr>
+<tr>
+<td>If VEX.L = 1 or EVEX.L’L &gt; 0.</td></tr>
+<tr>
+<td>If VEX.vvvv != 1111B or EVEX.vvvv != 1111B.</td></tr>
+<tr>
+<td>If VPEXTRQ in non-64-bit mode, VEX.W=1.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/PEXTRB_PEXTRD_PEXTRQ.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

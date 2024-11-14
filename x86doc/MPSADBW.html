@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/MPSADBW.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>MPSADBW — Compute Multiple Packed Sums of Absolute Difference </title>
+<meta name="Description" content="MPSADBW — Compute Multiple Packed Sums of Absolute Difference " />
+<meta content="MPSADBW , x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>MPSADBW — Compute Multiple Packed Sums of Absolute Difference</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32-bit Mode</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>66 0F 3A 42 /r ib</p>
+<p>MPSADBW <em>xmm1, xmm2/m128, imm8</em></p></td>
+<td>RMI</td>
+<td>V/V</td>
+<td>SSE4_1</td>
+<td>Sums absolute 8-bit integer difference of adjacent groups of 4 byte integers in <em>xmm1 </em>and <em>xmm2/m128 </em>and writes the results in <em>xmm1</em>. Starting offsets within <em>xmm1</em> and <em>xmm2/m128</em> are determined by <em>imm8</em>.</td></tr>
+<tr>
+<td>
+<p>VEX.NDS.128.66.0F3A.WIG 42 /r ib</p>
+<p>VMPSADBW <em>xmm1, xmm2, xmm3/m128, imm8</em></p></td>
+<td>RVMI</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Sums absolute 8-bit integer difference of adjacent groups of 4 byte integers in <em>xmm2 </em>and <em>xmm3/m128</em> and writes the results in <em>xmm1</em>. Starting offsets within <em>xmm2 </em>and <em>xmm3/m128</em> are determined by <em>imm8</em>.</td></tr>
+<tr>
+<td>
+<p>VEX.NDS.256.66.0F3A.WIG 42 /r ib</p>
+<p>VMPSADBW <em>ymm1, ymm2, ymm3/m256, imm8</em></p></td>
+<td>RVMI</td>
+<td>V/V</td>
+<td>AVX2</td>
+<td>Sums absolute 8-bit integer difference of adjacent groups of 4 byte integers in<em> xmm2 </em>and<em> ymm3/m128</em> and writes the results in <em>ymm1</em>. Starting offsets within <em>ymm2</em> and <em>xmm3/m128</em> are determined by<em> imm8</em>.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>RMI</td>
+<td>ModRM:reg (r, w)</td>
+<td>ModRM:r/m (r)</td>
+<td>imm8</td>
+<td>NA</td></tr>
+<tr>
+<td>RVMI</td>
+<td>ModRM:reg (w)</td>
+<td>VEX.vvvv (r)</td>
+<td>ModRM:r/m (r)</td>
+<td>imm8</td></tr></table>
+<h2>Description</h2>
+<p>(V)MPSADBW calculates packed word results of sum-absolute-difference (SAD) of unsigned bytes from two blocks of 32-bit dword elements, using two select fields in the immediate byte to select the offsets of the two blocks within the first source operand and the second operand. Packed SAD word results are calculated within each 128-bit lane. Each SAD word result is calculated between a stationary block_2 (whose offset within the second source operand is selected by a two bit select control, multiplied by 32 bits) and a sliding block_1 at consecutive byte-granular position within the first source operand. The offset of the first 32-bit block of block_1 is selectable using a one bit select control, multiplied by 32 bits.</p>
+<p>128-bit Legacy SSE version: Imm8[1:0]*32 specifies the bit offset of block_2 within the second source operand. Imm[2]*32 specifies the initial bit offset of the block_1 within the first source operand. The first source operand and destination operand are the same. The first source and destination operands are XMM registers. The second source operand is either an XMM register or a 128-bit memory location. Bits (VLMAX-1:128) of the corresponding YMM destination register remain unchanged. Bits 7:3 of the immediate byte are ignored.</p>
+<p>VEX.128 encoded version: Imm8[1:0]*32 specifies the bit offset of block_2 within the second source operand. Imm[2]*32 specifies the initial bit offset of the block_1 within the first source operand. The first source and desti-nation operands are XMM registers. The second source operand is either an XMM register or a 128-bit memory location. Bits (127:128) of the corresponding YMM register are zeroed. Bits 7:3 of the immediate byte are ignored.</p>
+<p>VEX.256 encoded version: The sum-absolute-difference (SAD) operation is repeated 8 times for MPSADW between the same block_2 (fixed offset within the second source operand) and a variable block_1 (offset is shifted by 8 bits for each SAD operation) in the first source operand. Each 16-bit result of eight SAD operations between block_2 and block_1 is written to the respective word in the lower 128 bits of the destination operand.</p>
+<p>Additionally, VMPSADBW performs another eight SAD operations on block_4 of the second source operand and block_3 of the first source operand. (Imm8[4:3]*32 + 128) specifies the bit offset of block_4 within the second source operand. (Imm[5]*32+128) specifies the initial bit offset of the block_3 within the first source operand. Each 16-bit result of eight SAD operations between block_4 and block_3 is written to the respective word in the upper 128 bits of the destination operand.</p>
+<p>The first source operand is a YMM register. The second source register can be a YMM register or a 256-bit memory location. The destination operand is a YMM register. Bits 7:6 of the immediate byte are ignored.</p>
+<p>Note: If VMPSADBW is encoded with VEX.L= 1, an attempt to execute the instruction encoded with VEX.L= 1 will cause an #UD exception.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VMPSADBW (VEX.256 encoded version)</strong>
+<pre>
+BLK2_OFFSET (cid:197) imm8[1:0]*32
+BLK1_OFFSET (cid:197) imm8[2]*32
+SRC1_BYTE0 (cid:197) SRC1[BLK1_OFFSET+7:BLK1_OFFSET]
+SRC1_BYTE1 (cid:197) SRC1[BLK1_OFFSET+15:BLK1_OFFSET+8]
+SRC1_BYTE2 (cid:197) SRC1[BLK1_OFFSET+23:BLK1_OFFSET+16]
+SRC1_BYTE3 (cid:197) SRC1[BLK1_OFFSET+31:BLK1_OFFSET+24]
+SRC1_BYTE4 (cid:197)SRC1[BLK1_OFFSET+39:BLK1_OFFSET+32]
+SRC1_BYTE5 (cid:197) SRC1[BLK1_OFFSET+47:BLK1_OFFSET+40]
+SRC1_BYTE6 (cid:197) SRC1[BLK1_OFFSET+55:BLK1_OFFSET+48]
+SRC1_BYTE7 (cid:197) SRC1[BLK1_OFFSET+63:BLK1_OFFSET+56]
+SRC1_BYTE8 (cid:197) SRC1[BLK1_OFFSET+71:BLK1_OFFSET+64]
+SRC1_BYTE9 (cid:197) SRC1[BLK1_OFFSET+79:BLK1_OFFSET+72]
+SRC1_BYTE10 (cid:197) SRC1[BLK1_OFFSET+87:BLK1_OFFSET+80]
+SRC2_BYTE0 (cid:197)SRC2[BLK2_OFFSET+7:BLK2_OFFSET]
+SRC2_BYTE1 (cid:197) SRC2[BLK2_OFFSET+15:BLK2_OFFSET+8]
+SRC2_BYTE2 (cid:197) SRC2[BLK2_OFFSET+23:BLK2_OFFSET+16]
+SRC2_BYTE3 (cid:197) SRC2[BLK2_OFFSET+31:BLK2_OFFSET+24]
+TEMP0 (cid:197) ABS(SRC1_BYTE0 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE1 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE3)
+DEST[15:0] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE1 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE3)
+DEST[31:16] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE3)
+DEST[47:32] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE3)
+DEST[63:48] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE3)
+DEST[79:64] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE3)
+DEST[95:80] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE9 - SRC2_BYTE3)
+DEST[111:96] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE9 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE10 - SRC2_BYTE3)
+DEST[127:112] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+BLK2_OFFSET (cid:197) imm8[4:3]*32 + 128
+BLK1_OFFSET (cid:197) imm8[5]*32 + 128
+SRC1_BYTE0 (cid:197) SRC1[BLK1_OFFSET+7:BLK1_OFFSET]
+SRC1_BYTE1 (cid:197) SRC1[BLK1_OFFSET+15:BLK1_OFFSET+8]
+SRC1_BYTE2 (cid:197) SRC1[BLK1_OFFSET+23:BLK1_OFFSET+16]
+SRC1_BYTE3 (cid:197) SRC1[BLK1_OFFSET+31:BLK1_OFFSET+24]
+SRC1_BYTE4 (cid:197) SRC1[BLK1_OFFSET+39:BLK1_OFFSET+32]
+SRC1_BYTE5 (cid:197) SRC1[BLK1_OFFSET+47:BLK1_OFFSET+40]
+SRC1_BYTE6 (cid:197) SRC1[BLK1_OFFSET+55:BLK1_OFFSET+48]
+SRC1_BYTE7 (cid:197) SRC1[BLK1_OFFSET+63:BLK1_OFFSET+56]
+SRC1_BYTE8 (cid:197) SRC1[BLK1_OFFSET+71:BLK1_OFFSET+64]
+SRC1_BYTE9 (cid:197) SRC1[BLK1_OFFSET+79:BLK1_OFFSET+72]
+SRC1_BYTE10 (cid:197) SRC1[BLK1_OFFSET+87:BLK1_OFFSET+80]
+SRC2_BYTE0 (cid:197)SRC2[BLK2_OFFSET+7:BLK2_OFFSET]
+SRC2_BYTE1 (cid:197) SRC2[BLK2_OFFSET+15:BLK2_OFFSET+8]
+SRC2_BYTE2 (cid:197) SRC2[BLK2_OFFSET+23:BLK2_OFFSET+16]
+SRC2_BYTE3 (cid:197) SRC2[BLK2_OFFSET+31:BLK2_OFFSET+24]
+TEMP0 (cid:197) ABS(SRC1_BYTE0 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE1 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE3)
+DEST[143:128] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197)ABS(SRC1_BYTE1 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE3)
+DEST[159:144] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE3)
+DEST[175:160] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197)ABS(SRC1_BYTE3 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE3)
+DEST[191:176] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE3)
+DEST[207:192] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE3)
+DEST[223:208] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE9 - SRC2_BYTE3)
+DEST[239:224] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE9 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE10 - SRC2_BYTE3)
+DEST[255:240] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+</pre>
+<strong>VMPSADBW (VEX.128 encoded version)</strong>
+<pre>
+BLK2_OFFSET (cid:197) imm8[1:0]*32
+BLK1_OFFSET (cid:197) imm8[2]*32
+SRC1_BYTE0 (cid:197) SRC1[BLK1_OFFSET+7:BLK1_OFFSET]
+SRC1_BYTE1 (cid:197) SRC1[BLK1_OFFSET+15:BLK1_OFFSET+8]
+SRC1_BYTE2 (cid:197) SRC1[BLK1_OFFSET+23:BLK1_OFFSET+16]
+SRC1_BYTE3 (cid:197) SRC1[BLK1_OFFSET+31:BLK1_OFFSET+24]
+SRC1_BYTE4 (cid:197) SRC1[BLK1_OFFSET+39:BLK1_OFFSET+32]
+SRC1_BYTE5 (cid:197) SRC1[BLK1_OFFSET+47:BLK1_OFFSET+40]
+SRC1_BYTE6 (cid:197) SRC1[BLK1_OFFSET+55:BLK1_OFFSET+48]
+SRC1_BYTE7 (cid:197) SRC1[BLK1_OFFSET+63:BLK1_OFFSET+56]
+SRC1_BYTE8 (cid:197) SRC1[BLK1_OFFSET+71:BLK1_OFFSET+64]
+SRC1_BYTE9 (cid:197) SRC1[BLK1_OFFSET+79:BLK1_OFFSET+72]
+SRC1_BYTE10 (cid:197) SRC1[BLK1_OFFSET+87:BLK1_OFFSET+80]
+SRC2_BYTE0 (cid:197)SRC2[BLK2_OFFSET+7:BLK2_OFFSET]
+SRC2_BYTE1 (cid:197) SRC2[BLK2_OFFSET+15:BLK2_OFFSET+8]
+SRC2_BYTE2 (cid:197) SRC2[BLK2_OFFSET+23:BLK2_OFFSET+16]
+SRC2_BYTE3 (cid:197) SRC2[BLK2_OFFSET+31:BLK2_OFFSET+24]
+TEMP0 (cid:197) ABS(SRC1_BYTE0 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE1 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE3)
+DEST[15:0] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE1 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE3)
+DEST[31:16] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE2 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE3)
+DEST[47:32] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE3 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE3)
+DEST[63:48] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE4 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE3)
+DEST[79:64] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE5 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE3)
+DEST[95:80] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE6 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE9 - SRC2_BYTE3)
+DEST[111:96] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS(SRC1_BYTE7 - SRC2_BYTE0)
+TEMP1 (cid:197) ABS(SRC1_BYTE8 - SRC2_BYTE1)
+TEMP2 (cid:197) ABS(SRC1_BYTE9 - SRC2_BYTE2)
+TEMP3 (cid:197) ABS(SRC1_BYTE10 - SRC2_BYTE3)
+DEST[127:112] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+DEST[VLMAX-1:128] (cid:197) 0
+</pre>
+<strong>MPSADBW (128-bit Legacy SSE version)</strong>
+<pre>
+SRC_OFFSET (cid:197) imm8[1:0]*32
+DEST_OFFSET (cid:197) imm8[2]*32
+DEST_BYTE0 (cid:197) DEST[DEST_OFFSET+7:DEST_OFFSET]
+DEST_BYTE1 (cid:197) DEST[DEST_OFFSET+15:DEST_OFFSET+8]
+DEST_BYTE2 (cid:197) DEST[DEST_OFFSET+23:DEST_OFFSET+16]
+DEST_BYTE3 (cid:197) DEST[DEST_OFFSET+31:DEST_OFFSET+24]
+DEST_BYTE4 (cid:197) DEST[DEST_OFFSET+39:DEST_OFFSET+32]
+DEST_BYTE5 (cid:197) DEST[DEST_OFFSET+47:DEST_OFFSET+40]
+DEST_BYTE6 (cid:197) DEST[DEST_OFFSET+55:DEST_OFFSET+48]
+DEST_BYTE7 (cid:197) DEST[DEST_OFFSET+63:DEST_OFFSET+56]
+DEST_BYTE8 (cid:197) DEST[DEST_OFFSET+71:DEST_OFFSET+64]
+DEST_BYTE9 (cid:197) DEST[DEST_OFFSET+79:DEST_OFFSET+72]
+DEST_BYTE10 (cid:197) DEST[DEST_OFFSET+87:DEST_OFFSET+80]
+SRC_BYTE0 (cid:197) SRC[SRC_OFFSET+7:SRC_OFFSET]
+SRC_BYTE1 (cid:197) SRC[SRC_OFFSET+15:SRC_OFFSET+8]
+SRC_BYTE2 (cid:197) SRC[SRC_OFFSET+23:SRC_OFFSET+16]
+SRC_BYTE3 (cid:197) SRC[SRC_OFFSET+31:SRC_OFFSET+24]
+TEMP0 (cid:197) ABS( DEST_BYTE0 - SRC_BYTE0)
+TEMP1 (cid:197) ABS( DEST_BYTE1 - SRC_BYTE1)
+TEMP2 (cid:197) ABS( DEST_BYTE2 - SRC_BYTE2)
+TEMP3 (cid:197) ABS( DEST_BYTE3 - SRC_BYTE3)
+DEST[15:0] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS( DEST_BYTE1 - SRC_BYTE0)
+TEMP1 (cid:197) ABS( DEST_BYTE2 - SRC_BYTE1)
+TEMP2 (cid:197) ABS( DEST_BYTE3 - SRC_BYTE2)
+TEMP3 (cid:197) ABS( DEST_BYTE4 - SRC_BYTE3)
+DEST[31:16] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS( DEST_BYTE2 - SRC_BYTE0)
+TEMP1 (cid:197) ABS( DEST_BYTE3 - SRC_BYTE1)
+TEMP2 (cid:197) ABS( DEST_BYTE4 - SRC_BYTE2)
+TEMP3 (cid:197) ABS( DEST_BYTE5 - SRC_BYTE3)
+DEST[47:32] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS( DEST_BYTE3 - SRC_BYTE0)
+TEMP1 (cid:197) ABS( DEST_BYTE4 - SRC_BYTE1)
+TEMP2 (cid:197) ABS( DEST_BYTE5 - SRC_BYTE2)
+TEMP3 (cid:197) ABS( DEST_BYTE6 - SRC_BYTE3)
+DEST[63:48] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS( DEST_BYTE4 - SRC_BYTE0)
+TEMP1 (cid:197) ABS( DEST_BYTE5 - SRC_BYTE1)
+TEMP2 (cid:197) ABS( DEST_BYTE6 - SRC_BYTE2)
+TEMP3 (cid:197) ABS( DEST_BYTE7 - SRC_BYTE3)
+DEST[79:64] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS( DEST_BYTE5 - SRC_BYTE0)
+TEMP1 (cid:197) ABS( DEST_BYTE6 - SRC_BYTE1)
+TEMP2 (cid:197) ABS( DEST_BYTE7 - SRC_BYTE2)
+TEMP3 (cid:197) ABS( DEST_BYTE8 - SRC_BYTE3)
+DEST[95:80] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS( DEST_BYTE6 - SRC_BYTE0)
+TEMP1 (cid:197) ABS( DEST_BYTE7 - SRC_BYTE1)
+TEMP2 (cid:197) ABS( DEST_BYTE8 - SRC_BYTE2)
+TEMP3 (cid:197) ABS( DEST_BYTE9 - SRC_BYTE3)
+DEST[111:96] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+TEMP0 (cid:197) ABS( DEST_BYTE7 - SRC_BYTE0)
+TEMP1 (cid:197) ABS( DEST_BYTE8 - SRC_BYTE1)
+TEMP2 (cid:197) ABS( DEST_BYTE9 - SRC_BYTE2)
+TEMP3 (cid:197) ABS( DEST_BYTE10 - SRC_BYTE3)
+DEST[127:112] (cid:197) TEMP0 + TEMP1 + TEMP2 + TEMP3
+DEST[VLMAX-1:128] (Unmodified)
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+(V)MPSADBW:
+ __m128i _mm_mpsadbw_epu8 (__m128i s1, __m128i s2, const int mask);
+VMPSADBW:
+ __m256i _mm256_mpsadbw_epu8 (__m256i s1, __m256i s2, const int mask);
+</pre>
+<h2>Flags Affected</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type 4; additionally</p>
+<table class="exception-table">
+<tr>
+<td>#UD</td>
+<td>If VEX.L = 1.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/MPSADBW.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

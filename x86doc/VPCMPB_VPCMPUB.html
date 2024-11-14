@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VPCMPB_VPCMPUB.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VPCMPB/VPCMPUB—Compare Packed Byte Values Into Mask </title>
+<meta name="Description" content="VPCMPB/VPCMPUB—Compare Packed Byte Values Into Mask " />
+<meta content="VPCMPB/VPCMPUB, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VPCMPB/VPCMPUB—Compare Packed Byte Values Into Mask</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.NDS.128.66.0F3A.W0 3F /r ib</p>
+<p>VPCMPB k1 {k2}, xmm2, xmm3/m128, imm8</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>AVX512VL AVX512BW</td>
+<td>Compare packed signed byte values in xmm3/m128 and xmm2 using bits 2:0 of imm8 as a comparison predicate with writemask k2 and leave the result in mask register k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.256.66.0F3A.W0 3F /r ib</p>
+<p>VPCMPB k1 {k2}, ymm2, ymm3/m256, imm8</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>AVX512VL AVX512BW</td>
+<td>Compare packed signed byte values in ymm3/m256 and ymm2 using bits 2:0 of imm8 as a comparison predicate with writemask k2 and leave the result in mask register k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.512.66.0F3A.W0 3F /r ib</p>
+<p>VPCMPB k1 {k2}, zmm2, zmm3/m512, imm8</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Compare packed signed byte values in zmm3/m512 and zmm2 using bits 2:0 of imm8 as a comparison predicate with writemask k2 and leave the result in mask register k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.128.66.0F3A.W0 3E /r ib</p>
+<p>VPCMPUB k1 {k2}, xmm2, xmm3/m128, imm8</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>AVX512VL AVX512BW</td>
+<td>Compare packed unsigned byte values in xmm3/m128 and xmm2 using bits 2:0 of imm8 as a comparison predicate with writemask k2 and leave the result in mask register k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.256.66.0F3A.W0 3E /r ib</p>
+<p>VPCMPUB k1 {k2}, ymm2, ymm3/m256, imm8</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>AVX512VL AVX512BW</td>
+<td>Compare packed unsigned byte values in ymm3/m256 and ymm2 using bits 2:0 of imm8 as a comparison predicate with writemask k2 and leave the result in mask register k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.NDS.512.66.0F3A.W0 3E /r ib</p>
+<p>VPCMPUB k1 {k2}, zmm2, zmm3/m512, imm8</p></td>
+<td>FVM</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Compare packed unsigned byte values in zmm3/m512 and zmm2 using bits 2:0 of imm8 as a comparison predicate with writemask k2 and leave the result in mask register k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>FVM</td>
+<td>ModRM:reg (w)</td>
+<td>vvvv (r)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Performs a SIMD compare of the packed byte values in the second source operand and the first source operand and returns the results of the comparison to the mask destination operand. The comparison predicate operand (imme-diate byte) specifies the type of comparison performed on each pair of packed values in the two source operands. The result of each comparison is a single mask bit result of 1 (comparison true) or 0 (comparison false).</p>
+<p>VPCMPB performs a comparison between pairs of signed byte values.</p>
+<p>VPCMPUB performs a comparison between pairs of unsigned byte values.</p>
+<p>The first source operand (second operand) is a ZMM/YMM/XMM register. The second source operand can be a ZMM/YMM/XMM register or a 512/256/128-bit memory location. The destination operand (first operand) is a mask register k1. Up to 64/32/16 comparisons are performed with results written to the destination operand under the writemask k2.</p>
+<p>The comparison predicate operand is an 8-bit immediate: bits 2:0 define the type of comparison to be performed. Bits 3 through 7 of the immediate are reserved. Compiler can implement the pseudo-op mnemonic listed in Table 5-10.</p>
+<h3>Table 5-10. Pseudo-Op and VPCMP* Implementation</h3>
+<p>:</p>
+<table>
+<tr>
+<th>Pseudo-Op</th>
+<th>PCMPM Implementation</th></tr>
+<tr>
+<td>VPCMPEQ*<em> reg1, reg2, reg3</em></td>
+<td>VPCMP* <em>reg1, reg2, reg3, 0</em></td></tr>
+<tr>
+<td>VPCMPLT*<em> reg1, reg2, reg3</em></td>
+<td>VPCMP*<em>reg1, reg2, reg3, 1</em></td></tr>
+<tr>
+<td>VPCMPLE* <em>reg1, reg2, reg3</em></td>
+<td>VPCMP* <em>reg1, reg2, reg3, 2</em></td></tr>
+<tr>
+<td>VPCMPNEQ* <em>reg1, reg2, reg3</em></td>
+<td>VPCMP*<em> reg1, reg2, reg3, 4</em></td></tr>
+<tr>
+<td>VPPCMPNLT*<em> reg1, reg2, reg3</em></td>
+<td>VPCMP* <em>reg1, reg2, reg3, 5</em></td></tr>
+<tr>
+<td>VPCMPNLE* <em>reg1, reg2, reg3</em></td>
+<td>VPCMP* <em>reg1, reg2, reg3, 6</em></td></tr></table>
+<h2>Operation</h2>
+<pre>
+CASE (COMPARISON PREDICATE) OF
+0: OP (cid:197) EQ;
+1: OP (cid:197) LT;
+2: OP (cid:197) LE;
+3: OP (cid:197) FALSE;
+4: OP (cid:197) NEQ ;
+5: OP (cid:197) NLT;
+6: OP (cid:197) NLE;
+7: OP (cid:197) TRUE;
+ESAC;
+</pre>
+<strong>VPCMPB (EVEX encoded versions)</strong>
+<pre>
+(KL, VL) = (16, 128), (32, 256), (64, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 8
+    IF k2[j] OR *no writemask*
+        THEN
+        CMP (cid:197) SRC1[i+7:i] OP SRC2[i+7:i];
+        IF CMP = TRUE
+            THEN DEST[j] (cid:197) 1;
+            ELSE DEST[j] (cid:197) 0; FI;
+        ELSE
+        DEST[j] = 0
+        ; zeroing-masking onlyFI;
+FI;
+ENDFOR
+DEST[MAX_KL-1:KL] (cid:197) 0
+</pre>
+<strong>VPCMPUB (EVEX encoded versions)</strong>
+<pre>
+(KL, VL) = (16, 128), (32, 256), (64, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 8
+    IF k2[j] OR *no writemask*
+        THEN
+        CMP (cid:197) SRC1[i+7:i] OP SRC2[i+7:i];
+        IF CMP = TRUE
+            THEN DEST[j] (cid:197) 1;
+            ELSE DEST[j] (cid:197) 0; FI;
+        ELSE
+        DEST[j] = 0
+        ; zeroing-masking onlyFI;
+FI;
+ENDFOR
+DEST[MAX_KL-1:KL] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VPCMPB __mmask64 _mm512_cmp_epi8_mask( __m512i a, __m512i b, int cmp);
+VPCMPB __mmask64 _mm512_mask_cmp_epi8_mask( __mmask64 m, __m512i a, __m512i b, int cmp);
+VPCMPB __mmask32 _mm256_cmp_epi8_mask( __m256i a, __m256i b, int cmp);
+VPCMPB __mmask32 _mm256_mask_cmp_epi8_mask( __mmask32 m, __m256i a, __m256i b, int cmp);
+VPCMPB __mmask16 _mm_cmp_epi8_mask( __m128i a, __m128i b, int cmp);
+VPCMPB __mmask16 _mm_mask_cmp_epi8_mask( __mmask16 m, __m128i a, __m128i b, int cmp);
+VPCMPB __mmask64 _mm512_cmp[eq|ge|gt|le|lt|neq]_epi8_mask( __m512i a, __m512i b);
+VPCMPB __mmask64 _mm512_mask_cmp[eq|ge|gt|le|lt|neq]_epi8_mask( __mmask64 m, __m512i a, __m512i b);
+VPCMPB __mmask32 _mm256_cmp[eq|ge|gt|le|lt|neq]_epi8_mask( __m256i a, __m256i b);
+VPCMPB __mmask32 _mm256_mask_cmp[eq|ge|gt|le|lt|neq]_epi8_mask( __mmask32 m, __m256i a, __m256i b);
+VPCMPB __mmask16 _mm_cmp[eq|ge|gt|le|lt|neq]_epi8_mask( __m128i a, __m128i b);
+VPCMPB __mmask16 _mm_mask_cmp[eq|ge|gt|le|lt|neq]_epi8_mask( __mmask16 m, __m128i a, __m128i b);
+VPCMPUB __mmask64 _mm512_cmp_epu8_mask( __m512i a, __m512i b, int cmp);
+VPCMPUB __mmask64 _mm512_mask_cmp_epu8_mask( __mmask64 m, __m512i a, __m512i b, int cmp);
+VPCMPUB __mmask32 _mm256_cmp_epu8_mask( __m256i a, __m256i b, int cmp);
+VPCMPUB __mmask32 _mm256_mask_cmp_epu8_mask( __mmask32 m, __m256i a, __m256i b, int cmp);
+VPCMPUB __mmask16 _mm_cmp_epu8_mask( __m128i a, __m128i b, int cmp);
+VPCMPUB __mmask16 _mm_mask_cmp_epu8_mask( __mmask16 m, __m128i a, __m128i b, int cmp);
+VPCMPUB __mmask64 _mm512_cmp[eq|ge|gt|le|lt|neq]_epu8_mask( __m512i a, __m512i b, int cmp);
+VPCMPUB __mmask64 _mm512_mask_cmp[eq|ge|gt|le|lt|neq]_epu8_mask( __mmask64 m, __m512i a, __m512i b, int cmp);
+VPCMPUB __mmask32 _mm256_cmp[eq|ge|gt|le|lt|neq]_epu8_mask( __m256i a, __m256i b, int cmp);
+VPCMPUB __mmask32 _mm256_mask_cmp[eq|ge|gt|le|lt|neq]_epu8_mask( __mmask32 m, __m256i a, __m256i b, int cmp);
+VPCMPUB __mmask16 _mm_cmp[eq|ge|gt|le|lt|neq]_epu8_mask( __m128i a, __m128i b, int cmp);
+VPCMPUB __mmask16 _mm_mask_cmp[eq|ge|gt|le|lt|neq]_epu8_mask( __mmask16 m, __m128i a, __m128i b, int cmp);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>EVEX-encoded instruction, see Exceptions Type E4.nb.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VPCMPB_VPCMPUB.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

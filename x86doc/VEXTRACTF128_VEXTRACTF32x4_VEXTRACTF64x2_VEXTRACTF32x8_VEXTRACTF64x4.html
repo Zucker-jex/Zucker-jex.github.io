@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VEXTRACTF128_VEXTRACTF32x4_VEXTRACTF64x2_VEXTRACTF32x8_VEXTRACTF64x4.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—Extra ct Packed Floating-Point Values </title>
+<meta name="Description" content="VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—Extra ct Packed Floating-Point Values " />
+<meta content="VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VEXTRACTF128/VEXTRACTF32x4/VEXTRACTF64x2/VEXTRACTF32x8/VEXTRACTF64x4—Extra ct Packed Floating-Point Values</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>VEX.256.66.0F3A.W0 19 /r ib</p>
+<p>VEXTRACTF128 xmm1/m128, ymm2, imm8</p></td>
+<td>RMI</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Extract 128 bits of packed floating-point values from ymm2 and store results in xmm1/m128.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F3A.W0 19 /r ib</p>
+<p>VEXTRACTF32X4 xmm1/m128 {k1}{z}, ymm2, imm8</p></td>
+<td>T4</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Extract 128 bits of packed single-precision floating-point values from ymm2 and store results in xmm1/m128 subject to writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F3A.W0 19 /r ib</p>
+<p>VEXTRACTF32x4 xmm1/m128 {k1}{z}, zmm2, imm8</p></td>
+<td>T4</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Extract 128 bits of packed single-precision floating-point values from zmm2 and store results in xmm1/m128 subject to writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F3A.W1 19 /r ib</p>
+<p>VEXTRACTF64X2 xmm1/m128 {k1}{z}, ymm2, imm8</p></td>
+<td>T2</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512DQ</p></td>
+<td>Extract 128 bits of packed double-precision floating-point values from ymm2 and store results in xmm1/m128 subject to writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F3A.W1 19 /r ib</p>
+<p>VEXTRACTF64X2 xmm1/m128 {k1}{z}, zmm2, imm8</p></td>
+<td>T2</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Extract 128 bits of packed double-precision floating-point values from zmm2 and store results in xmm1/m128 subject to writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F3A.W0 1B /r ib</p>
+<p>VEXTRACTF32X8 ymm1/m256 {k1}{z}, zmm2, imm8</p></td>
+<td>T8</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Extract 256 bits of packed single-precision floating-point values from zmm2 and store results in ymm1/m256 subject to writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F3A.W1 1B /r ib</p>
+<p>VEXTRACTF64x4 ymm1/m256 {k1}{z}, zmm2, imm8</p></td>
+<td>T4</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Extract 256 bits of packed double-precision floating-point values from zmm2 and store results in ymm1/m256 subject to writemask k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>RMI</td>
+<td>ModRM:r/m (w)</td>
+<td>ModRM:reg (r)</td>
+<td>Imm8</td>
+<td>NA</td></tr>
+<tr>
+<td>T2, T4, T8</td>
+<td>ModRM:r/m (w)</td>
+<td>ModRM:reg (r)</td>
+<td>Imm8</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>VEXTRACTF128/VEXTRACTF32x4 and VEXTRACTF64x2 extract 128-bits of single-precision floating-point values from the source operand (the second operand) and store to the low 128-bit of the destination operand (the first operand). The 128-bit data extraction occurs at an 128-bit granular offset specified by imm8[0] (256-bit) or imm8[1:0] as the multiply factor. The destination may be either a vector register or an 128-bit memory location.</p>
+<p>VEXTRACTF32x4: The low 128-bit of the destination operand is updated at 32-bit granularity according to the writemask.</p>
+<p>VEXTRACTF32x8 and VEXTRACTF64x4 extract 256-bits of double-precision floating-point values from the source operand (second operand) and store to the low 256-bit of the destination operand (the first operand). The 256-bit data extraction occurs at an 256-bit granular offset specified by imm8[0] (256-bit) or imm8[0] as the multiply factor The destination may be either a vector register or a 256-bit memory location.</p>
+<p>VEXTRACTF64x4: The low 256-bit of the destination operand is updated at 64-bit granularity according to the writemask.</p>
+<p>VEX.vvvv and EVEX.vvvv are reserved and must be 1111b otherwise instructions will #UD.</p>
+<p>The high 6 bits of the immediate are ignored.</p>
+<p>If VEXTRACTF128 is encoded with VEX.L= 0, an attempt to execute the instruction encoded with VEX.L= 0 will cause an #UD exception.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VEXTRACTF32x4 (EVEX encoded versions) when destination is a register</strong>
+<pre>
+VL = 256, 512
+IF VL = 256
+    CASE (imm8[0]) OF
+    0: TMP_DEST[127:0] (cid:197) SRC1[127:0]
+    1: TMP_DEST[127:0] (cid:197) SRC1[255:128]
+    ESAC.
+FI;
+IF VL = 512
+    CASE (imm8[1:0]) OF
+    00: TMP_DEST[127:0] (cid:197) SRC1[127:0]
+    01: TMP_DEST[127:0] (cid:197) SRC1[255:128]
+    10: TMP_DEST[127:0] (cid:197) SRC1[383:256]
+    11: TMP_DEST[127:0] (cid:197) SRC1[511:384]
+    ESAC.
+FI;
+FOR j (cid:197) 0 TO 3
+    i (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+31:i] (cid:197) TMP_DEST[i+31:i]
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+31:i] remains unchanged*
+            ELSE *zeroing-masking*
+            ; zeroing-masking
+            DEST[i+31:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:128] (cid:197) 0
+</pre>
+<strong>VEXTRACTF32x4 (EVEX encoded versions) when destination is memory</strong>
+<pre>
+VL = 256, 512
+IF VL = 256
+    CASE (imm8[0]) OF
+    0: TMP_DEST[127:0] (cid:197) SRC1[127:0]
+    1: TMP_DEST[127:0] (cid:197) SRC1[255:128]
+    ESAC.
+FI;
+IF VL = 512
+    CASE (imm8[1:0]) OF
+    00: TMP_DEST[127:0] (cid:197) SRC1[127:0]
+    01: TMP_DEST[127:0] (cid:197) SRC1[255:128]
+    10: TMP_DEST[127:0] (cid:197) SRC1[383:256]
+    11: TMP_DEST[127:0] (cid:197) SRC1[511:384]
+    ESAC.
+FI;
+FOR j (cid:197) 0 TO 3
+    i (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+31:i] (cid:197) TMP_DEST[i+31:i]
+        ELSE *DEST[i+31:i] remains unchanged*
+        ; merging-masking
+    FI;
+ENDFOR
+</pre>
+<strong>VEXTRACTF64x2 (EVEX encoded versions) when destination is a register</strong>
+<pre>
+VL = 256, 512
+IF VL = 256
+    CASE (imm8[0]) OF
+    0: TMP_DEST[127:0] (cid:197) SRC1[127:0]
+    1: TMP_DEST[127:0] (cid:197) SRC1[255:128]
+    ESAC.
+FI;
+IF VL = 512
+    CASE (imm8[1:0]) OF
+    00: TMP_DEST[127:0] (cid:197) SRC1[127:0]
+    01: TMP_DEST[127:0] (cid:197) SRC1[255:128]
+    10: TMP_DEST[127:0] (cid:197) SRC1[383:256]
+    11: TMP_DEST[127:0] (cid:197) SRC1[511:384]
+    ESAC.
+FI;
+FOR j (cid:197) 0 TO 1
+    i (cid:197) j * 64
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+63:i] (cid:197) TMP_DEST[i+63:i]
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+63:i] remains unchanged*
+            ELSE *zeroing-masking*
+            ; zeroing-masking
+            DEST[i+63:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:128] (cid:197) 0
+</pre>
+<strong>VEXTRACTF64x2 (EVEX encoded versions) when destination is memory</strong>
+<pre>
+VL = 256, 512
+IF VL = 256
+    CASE (imm8[0]) OF
+    0: TMP_DEST[127:0] (cid:197) SRC1[127:0]
+    1: TMP_DEST[127:0] (cid:197) SRC1[255:128]
+    ESAC.
+FI;
+IF VL = 512
+    CASE (imm8[1:0]) OF
+    00: TMP_DEST[127:0] (cid:197) SRC1[127:0]
+    01: TMP_DEST[127:0] (cid:197) SRC1[255:128]
+    10: TMP_DEST[127:0] (cid:197) SRC1[383:256]
+    11: TMP_DEST[127:0] (cid:197) SRC1[511:384]
+    ESAC.
+FI;
+FOR j (cid:197) 0 TO 1
+    i (cid:197) j * 64
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+63:i] (cid:197) TMP_DEST[i+63:i]
+        ELSE *DEST[i+63:i] remains unchanged*
+        ; merging-masking
+    FI;
+ENDFOR
+</pre>
+<strong>VEXTRACTF32x8 (EVEX.U1.512 encoded version) when destination is a register</strong>
+<pre>
+VL = 512
+CASE (imm8[0]) OF
+0: TMP_DEST[255:0] (cid:197) SRC1[255:0]
+1: TMP_DEST[255:0] (cid:197) SRC1[511:256]
+ESAC.
+FOR j (cid:197) 0 TO 7
+    i (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+31:i] (cid:197) TMP_DEST[i+31:i]
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+31:i] remains unchanged*
+            ELSE *zeroing-masking*
+            ; zeroing-masking
+            DEST[i+31:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:256] (cid:197) 0
+</pre>
+<strong>VEXTRACTF32x8 (EVEX.U1.512 encoded version) when destination is memory</strong>
+<pre>
+CASE (imm8[0]) OF
+0: TMP_DEST[255:0] (cid:197) SRC1[255:0]
+1: TMP_DEST[255:0] (cid:197) SRC1[511:256]
+ESAC.
+FOR j (cid:197) 0 TO 7
+    i (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+31:i] (cid:197) TMP_DEST[i+31:i]
+        ELSE *DEST[i+31:i] remains unchanged*
+        ; merging-masking
+    FI;
+ENDFOR
+</pre>
+<strong>VEXTRACTF64x4 (EVEX.512 encoded version) when destination is a register</strong>
+<pre>
+VL = 512
+CASE (imm8[0]) OF
+0: TMP_DEST[255:0] (cid:197) SRC1[255:0]
+1: TMP_DEST[255:0] (cid:197) SRC1[511:256]
+ESAC.
+FOR j (cid:197) 0 TO 3
+    i (cid:197) j * 64
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+63:i] (cid:197) TMP_DEST[i+63:i]
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+63:i] remains unchanged*
+            ELSE *zeroing-masking*
+            ; zeroing-masking
+            DEST[i+63:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:256] (cid:197) 0
+</pre>
+<strong>VEXTRACTF64x4 (EVEX.512 encoded version) when destination is memory</strong>
+<pre>
+CASE (imm8[0]) OF
+0: TMP_DEST[255:0] (cid:197) SRC1[255:0]
+1: TMP_DEST[255:0] (cid:197) SRC1[511:256]
+ESAC.
+FOR j (cid:197) 0 TO 3
+    i (cid:197) j * 64
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+63:i] (cid:197) TMP_DEST[i+63:i]
+        ELSE
+        ; merging-masking
+        *DEST[i+63:i] remains unchanged*
+    FI;
+ENDFOR
+</pre>
+<strong>VEXTRACTF128 (memory destination form)</strong>
+<pre>
+CASE (imm8[0]) OF
+0: DEST[127:0] (cid:197)SRC1[127:0]
+1: DEST[127:0] (cid:197)SRC1[255:128]
+ESAC.
+</pre>
+<strong>VEXTRACTF128 (register destination form)</strong>
+<pre>
+CASE (imm8[0]) OF
+0: DEST[127:0] (cid:197)SRC1[127:0]
+1: DEST[127:0] (cid:197)SRC1[255:128]
+ESAC.
+DEST[MAX_VL-1:128] (cid:197)0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VEXTRACTF32x4 __m128 _mm512_extractf32x4_ps(__m512 a, const int nidx);
+VEXTRACTF32x4 __m128 _mm512_mask_extractf32x4_ps(__m128 s, __mmask8 k, __m512 a, const int nidx);
+VEXTRACTF32x4 __m128 _mm512_maskz_extractf32x4_ps( __mmask8 k, __m512 a, const int nidx);
+VEXTRACTF32x4 __m128 _mm256_extractf32x4_ps(__m256 a, const int nidx);
+VEXTRACTF32x4 __m128 _mm256_mask_extractf32x4_ps(__m128 s, __mmask8 k, __m256 a, const int nidx);
+VEXTRACTF32x4 __m128 _mm256_maskz_extractf32x4_ps( __mmask8 k, __m256 a, const int nidx);
+VEXTRACTF32x8 __m256 _mm512_extractf32x8_ps(__m512 a, const int nidx);
+VEXTRACTF32x8 __m256 _mm512_mask_extractf32x8_ps(__m256 s, __mmask8 k, __m512 a, const int nidx);
+VEXTRACTF32x8 __m256 _mm512_maskz_extractf32x8_ps( __mmask8 k, __m512 a, const int nidx);
+VEXTRACTF64x2 __m128d _mm512_extractf64x2_pd(__m512d a, const int nidx);
+VEXTRACTF64x2 __m128d _mm512_mask_extractf64x2_pd(__m128d s, __mmask8 k, __m512d a, const int nidx);
+VEXTRACTF64x2 __m128d _mm512_maskz_extractf64x2_pd( __mmask8 k, __m512d a, const int nidx);
+VEXTRACTF64x2 __m128d _mm256_extractf64x2_pd(__m256d a, const int nidx);
+VEXTRACTF64x2 __m128d _mm256_mask_extractf64x2_pd(__m128d s, __mmask8 k, __m256d a, const int nidx);
+VEXTRACTF64x2 __m128d _mm256_maskz_extractf64x2_pd( __mmask8 k, __m256d a, const int nidx);
+VEXTRACTF64x4 __m256d _mm512_extractf64x4_pd( __m512d a, const int nidx);
+VEXTRACTF64x4 __m256d _mm512_mask_extractf64x4_pd(__m256d s, __mmask8 k, __m512d a, const int nidx);
+VEXTRACTF64x4 __m256d _mm512_maskz_extractf64x4_pd( __mmask8 k, __m512d a, const int nidx);
+VEXTRACTF128 __m128 _mm256_extractf128_ps (__m256 a, int offset);
+VEXTRACTF128 __m128d _mm256_extractf128_pd (__m256d a, int offset);
+VEXTRACTF128 __m128i_mm256_extractf128_si256(__m256i a, int offset);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<table>
+<tr>
+<td>VEX-encoded instructions, see Exceptions Type 6;</td></tr>
+<tr>
+<td>EVEX-encoded instructions, see Exceptions Type E6NF.</td></tr>
+<tr>
+<td>IF VEX.L = 0.</td></tr>
+<tr>
+<td>If VEX.vvvv != 1111B or EVEX.vvvv != 1111B.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VEXTRACTF128_VEXTRACTF32x4_VEXTRACTF64x2_VEXTRACTF32x8_VEXTRACTF64x4.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

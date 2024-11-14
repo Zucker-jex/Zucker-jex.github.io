@@ -45,6 +45,15 @@ header:
     url: /random.html
 
   - titles:
+      en    : &EN       x86DOC
+      zh-Hans: &ZH_HANS x86DOC
+      zh-Hant: &ZH_HANT x86DOC
+      ja    : &JA       x86DOC
+      fr    : &FR       x86DOC
+      de    : &DE       x86DOC
+    url: /x86doc/index.html
+
+  - titles:
       en    : &EN       Profile
       zh-Hans: &ZH_HANS 简介
       zh-Hant: &ZH_HANT 簡介

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/CVTSS2SI.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:48 GMT -->
+<head>
+<meta charset="utf-8">
+<title>CVTSS2SI—Convert Scalar Single-Precision Floating-Point Value to Doubleword Integer </title>
+<meta name="Description" content="CVTSS2SI—Convert Scalar Single-Precision Floating-Point Value to Doubleword Integer " />
+<meta content="CVTSS2SI, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>CVTSS2SI—Convert Scalar Single-Precision Floating-Point Value to Doubleword Integer</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>F3 0F 2D /r CVTSS2SI r32, xmm1/m32</td>
+<td>RM</td>
+<td>V/V</td>
+<td>SSE</td>
+<td>Convert one single-precision floating-point value from xmm1/m32 to one signed doubleword integer in r32.</td></tr>
+<tr>
+<td>F3 REX.W 0F 2D /r CVTSS2SI r64, xmm1/m32</td>
+<td>RM</td>
+<td>V/N.E.</td>
+<td>SSE</td>
+<td>Convert one single-precision floating-point value from xmm1/m32 to one signed quadword integer in r64.</td></tr>
+<tr>
+<td>VEX.128.F3.0F.W0 2D /r VCVTSS2SI r32, xmm1/m32</td>
+<td>RM</td>
+<td>V/V</td>
+<td>AVX</td>
+<td>Convert one single-precision floating-point value from xmm1/m32 to one signed doubleword integer in r32.</td></tr>
+<tr>
+<td>VEX.128.F3.0F.W1 2D /r VCVTSS2SI r64, xmm1/m32</td>
+<td>RM</td>
+<td>V/N.E.<sup>1</sup></td>
+<td>AVX</td>
+<td>Convert one single-precision floating-point value from xmm1/m32 to one signed quadword integer in r64.</td></tr>
+<tr>
+<td>EVEX.LIG.F3.0F.W0 2D /r VCVTSS2SI r32, xmm1/m32{er}</td>
+<td>T1F</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Convert one single-precision floating-point value from xmm1/m32 to one signed doubleword integer in r32.</td></tr>
+<tr>
+<td>EVEX.LIG.F3.0F.W1 2D /r VCVTSS2SI r64, xmm1/m32{er}</td>
+<td>T1F</td>
+<td>V/N.E.<sup>1</sup></td>
+<td>AVX512F</td>
+<td>Convert one single-precision floating-point value from xmm1/m32 to one signed quadword integer in r64.</td></tr></table>
+<p><strong>NOTES: 1. VEX.W1/EVEX.W1 in non-64 bit is ignored; the instructions behaves as if the W0 version is used.</strong></p>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>RM</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr>
+<tr>
+<td>T1F</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Converts a single-precision floating-point value in the source operand (the second operand) to a signed doubleword integer (or signed quadword integer if operand size is 64 bits) in the destination operand (the first operand). The source operand can be an XMM register or a memory location. The destination operand is a general-purpose register. When the source operand is an XMM register, the single-precision floating-point value is contained in the low doubleword of the register.</p>
+<p>When a conversion is inexact, the value returned is rounded according to the rounding control bits in the MXCSR register or the embedded rounding control bits. If a converted result cannot be represented in the destination format, the floating-point invalid exception is raised, and if this exception is masked, the indefinite integer value (2<sup>w-1</sup>, where w represents the number of bits in the destination format) is returned.</p>
+<p>Legacy SSE instructions: In 64-bit mode, Use of the REX.W prefix promotes the instruction to produce 64-bit data. See the summary chart at the beginning of this section for encoding data and limits.</p>
+<p>VEX.W1 and EVEX.W1 versions: promotes the instruction to produce 64-bit data in 64-bit mode.</p>
+<p>Note: VEX.vvvv and EVEX.vvvv are reserved and must be 1111b, otherwise instructions will #UD.</p>
+<p>Software should ensure VCVTSS2SI is encoded with VEX.L=0. Encoding VCVTSS2SI with VEX.L=1 may encounter unpredictable behavior across different processor generations.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>VCVTSS2SI (EVEX encoded version)</strong>
+<pre>
+IF (SRC *is register*) AND (EVEX.b = 1)
+    THEN
+    SET_RM(EVEX.RC);
+    ELSE
+    SET_RM(MXCSR.RM);
+FI;
+IF 64-bit Mode and OperandSize = 64
+    THEN
+    DEST[63:0] (cid:197) Convert_Single_Precision_Floating_Point_To_Integer(SRC[31:0]);
+    ELSE
+    DEST[31:0] (cid:197) Convert_Single_Precision_Floating_Point_To_Integer(SRC[31:0]);
+FI;
+</pre>
+<strong>(V)CVTSS2SI (Legacy and VEX.128 encoded version)</strong>
+<pre>
+IF 64-bit Mode and OperandSize = 64
+    THEN
+    DEST[63:0] (cid:197)Convert_Single_Precision_Floating_Point_To_Integer(SRC[31:0]);
+    ELSE
+    DEST[31:0] (cid:197)Convert_Single_Precision_Floating_Point_To_Integer(SRC[31:0]);
+FI;
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VCVTSS2SI int _mm_cvtss_i32( __m128 a);
+VCVTSS2SI int _mm_cvt_roundss_i32( __m128 a, int r);
+VCVTSS2SI __int64 _mm_cvtss_i64( __m128 a);
+VCVTSS2SI __int64 _mm_cvt_roundss_i64( __m128 a, int r);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>Invalid, Precision</p>
+<h2>Other Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>VEX-encoded instructions, see Exceptions Type 3; additionally</td></tr>
+<tr>
+<td>If VEX.vvvv != 1111B.</td></tr>
+<tr>
+<td>EVEX-encoded instructions, see Exceptions Type E3NF.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/CVTSS2SI.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:48 GMT -->
+</html>

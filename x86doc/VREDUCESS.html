@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VREDUCESS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:50 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VREDUCESS—Perform a Reduction Transformation on a Scalar Float32 Value </title>
+<meta name="Description" content="VREDUCESS—Perform a Reduction Transformation on a Scalar Float32 Value " />
+<meta content="VREDUCESS, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VREDUCESS—Perform a Reduction Transformation on a Scalar Float32 Value</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.NDS.LIG.66.0F3A.W0 57 /r /ib</p>
+<p>VREDUCESS xmm1 {k1}{z}, xmm2, xmm3/m32{sae}, imm8</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Perform a reduction transformation on a scalar single-precision floating point value in xmm3/m32 by subtracting a number of fraction bits specified by the imm8 field. Also, upper single precision floating-point values (bits[127:32]) from xmm2 are copied to xmm1[127:32]. Stores the result in xmm1 register.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>T1S</td>
+<td>ModRM:reg (w)</td>
+<td>EVEX.vvvv (r)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Perform a reduction transformation of the binary encoded single-precision FP value in the low dword element of the second source operand (the third operand) and store the reduced result in binary FP format to the low dword element of the destination operand (the first operand) under the writemask k1. Bits 127:32 of the destination operand are copied from respective dword elements of the first source operand (the second operand).</p>
+<p>The reduction transformation subtracts the integer part and the leading M fractional bits from the binary FP source value, where M is a unsigned integer specified by imm8[7:4], see Figure 5-28. Specifically, the reduction transfor-mation can be expressed as:</p>
+<p>dest = src – (ROUND(2<sup>M</sup>*src))*2<sup>-M</sup>;</p>
+<p>where “Round()” treats “src”, “2<sup>M</sup>”, and their product as binary FP numbers with normalized significand and bi-ased exponents.</p>
+<p>The magnitude of the reduced result can be expressed by considering src= 2<sup>p</sup>*man2, where ‘man2’ is the normalized significand and ‘p’ is the unbiased exponent</p>
+<p>Then if RC = RNE: 0&lt;=|Reduced Result|&lt;=2<sup>p-M-1</sup></p>
+<p>Then if RC ≠ RNE: 0&lt;=|Reduced Result|&lt;2<sup>p-M</sup></p>
+<p>This instruction might end up with a precision exception set. However, in case of SPE set (i.e. Suppress Precision Exception, which is imm8[3]=1), no precision exception is reported.</p>
+<p>Handling of special case of input values are listed in Table 5-21.</p>
+<h2>Operation</h2>
+<pre>
+ReduceArgumentSP(SRC[31:0], imm8[7:0])
+{
+// Check for NaN
+IF (SRC [31:0] = NAN) THEN
+    RETURN (Convert SRC[31:0] to QNaN); FI
+M (cid:197) imm8[7:4]; // Number of fraction bits of the normalized significand to be subtracted
+RC (cid:197) imm8[1:0];// Round Control for ROUND() operation
+RC source (cid:197) imm[2];
+SPE (cid:197) 0;// Suppress Precision Exception
+TMP[31:0] (cid:197) 2<sup>-M</sup> *{ROUND(2<sup>M</sup>*SRC[31:0], SPE, RC_source, RC)}; // ROUND() treats SRC and 2<sup>M </sup>as standard binary FP values
+TMP[31:0] (cid:197) SRC[31:0] – TMP[31:0]; // subtraction under the same RC,SPE controls
+RETURN TMP[31:0]; // binary encoded FP with biased exponent and normalized significand
+}
+</pre>
+<strong>VREDUCESS</strong>
+<pre>
+IF k1[0] or *no writemask*
+    THEN
+    DEST[31:0] (cid:197) ReduceArgumentSP(SRC2[31:0], imm8[7:0])
+    ELSE
+    IF *merging-masking*
+        ; merging-masking
+        THEN *DEST[31:0] remains unchanged*
+        ELSE
+        ; zeroing-masking
+        THEN DEST[31:0] = 0
+    FI;
+FI;
+DEST[127:32] (cid:197) SRC1[127:32]
+DEST[MAX_VL-1:128] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VREDUCESS __m128 _mm_mask_reduce_ss( __m128 a, __m128 b, int imm, int sae)
+VREDUCESS __m128 _mm_mask_reduce_ss(__m128 s, __mmask16 k, __m128 a, __m128 b, int imm, int sae)
+VREDUCESS __m128 _mm_maskz_reduce_ss(__mmask16 k, __m128 a, __m128 b, int imm, int sae)
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>Invalid, Precision</p>
+<p>If SPE is enabled, precision exception is not reported (regardless of MXCSR exception mask).</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type E3.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VREDUCESS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:50 GMT -->
+</html>

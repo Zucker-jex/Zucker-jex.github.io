@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/SHA1RNDS4.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>SHA1RNDS4—Perform Four Rounds of SHA1 Operation </title>
+<meta name="Description" content="SHA1RNDS4—Perform Four Rounds of SHA1 Operation " />
+<meta content="SHA1RNDS4, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>SHA1RNDS4—Perform Four Rounds of SHA1 Operation</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>0F 3A CC /r ib</p>
+<p>SHA1RNDS4 xmm1, xmm2/m128, imm8</p></td>
+<td>RMI</td>
+<td>V/V</td>
+<td>SHA</td>
+<td>Performs four rounds of SHA1 operation operating on SHA1 state (A,B,C,D) from xmm1, with a pre-computed sum of the next 4 round message dwords and state variable E from xmm2/m128. The immediate byte controls logic functions and round constants.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td></tr>
+<tr>
+<td>RMI</td>
+<td>ModRM:reg (r, w)</td>
+<td>ModRM:r/m (r)</td>
+<td>Imm8</td></tr></table>
+<h2>Description</h2>
+<p>The SHA1RNDS4 instruction performs four rounds of SHA1 operation using an initial SHA1 state (A,B,C,D) from the first operand (which is a source operand and the destination operand) and some pre-computed sum of the next 4 round message dwords, and state variable E from the second operand (a source operand). The updated SHA1 state (A,B,C,D) after four rounds of processing is stored in the destination operand.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>SHA1RNDS4</strong>
+<pre>
+The function f() and Constant K are dependent on the value of the immediate.
+IF ( imm8[1:0] = 0 )
+    THEN f() (cid:197) f0(), K (cid:197) K<sub>0</sub>;
+    ELSE IF ( imm8[1:0] = 1 )
+    THEN f() (cid:197) f1(), K (cid:197) K<sub>1</sub>;
+    ELSE IF ( imm8[1:0] = 2 )
+    THEN f() (cid:197) f2(), K (cid:197) K<sub>2</sub>;
+    ELSE IF ( imm8[1:0] = 3 )
+    THEN f() (cid:197) f3(), K (cid:197) K3;
+FI;
+A (cid:197) SRC1[127:96];
+B (cid:197) SRC1[95:64];
+C (cid:197) SRC1[63:32];
+D (cid:197) SRC1[31:0];
+W<sub>0</sub>E (cid:197) SRC2[127:96];
+W<sub>1</sub> (cid:197) SRC2[95:64];
+W<sub>2</sub> (cid:197) SRC2[63:32];
+W<sub>3</sub> (cid:197) SRC2[31:0];
+Round i = 0 operation:
+A_1 (cid:197) f (B, C, D) + (A ROL 5) +W<sub>0</sub>E +K;
+B_1 (cid:197) A;
+C_1 (cid:197) B ROL 30;
+D_1 (cid:197) C;
+E_1 (cid:197) D;
+FOR i = 1 to 3
+    A_(i +1) (cid:197) f (B_i, C_i, D_i) + (A_i ROL 5) +W<sub>i</sub>+ E_i +K;
+    B_(i +1) (cid:197) A_i;
+    C_(i +1) (cid:197) B_i ROL 30;
+    D_(i +1) (cid:197) C_i;
+    E_(i +1) (cid:197) D_i;
+ENDFOR
+DEST[127:96] (cid:197) A_4;
+DEST[95:64] (cid:197) B_4;
+DEST[63:32] (cid:197) C_4;
+DEST[31:0] (cid:197) D_4;
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+SHA1RNDS4: __m128i _mm_sha1rnds4_epu32(__m128i, __m128i, const int);
+</pre>
+<h2>Flags Affected</h2>
+<p>None</p>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type 4.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/SHA1RNDS4.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VPSCATTERDD_VPSCATTERDQ_VPSCATTERQD_VPSCATTERQQ.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VPSCATTERDD/VPSCATTERDQ/VPSCATTERQD/VPSCATTERQQ—Scatter Packed Dword, Packed Qword with Signed Dword, Signed Qword Indices </title>
+<meta name="Description" content="VPSCATTERDD/VPSCATTERDQ/VPSCATTERQD/VPSCATTERQQ—Scatter Packed Dword, Packed Qword with Signed Dword, Signed Qword Indices " />
+<meta content="VPSCATTERDD/VPSCATTERDQ/VPSCATTERQD/VPSCATTERQQ, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VPSCATTERDD/VPSCATTERDQ/VPSCATTERQD/VPSCATTERQQ—Scatter Packed Dword, Packed Qword with Signed Dword, Signed Qword Indices</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F38.W0 A0 /vsib</p>
+<p>VPSCATTERDD vm32x {k1}, xmm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512VL AVX512F</td>
+<td>Using signed dword indices, scatter dword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F38.W0 A0 /vsib</p>
+<p>VPSCATTERDD vm32y {k1}, ymm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512VL AVX512F</td>
+<td>Using signed dword indices, scatter dword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F38.W0 A0 /vsib</p>
+<p>VPSCATTERDD vm32z {k1}, zmm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Using signed dword indices, scatter dword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F38.W1 A0 /vsib</p>
+<p>VPSCATTERDQ vm32x {k1}, xmm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512VL AVX512F</td>
+<td>Using signed dword indices, scatter qword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F38.W1 A0 /vsib</p>
+<p>VPSCATTERDQ vm32x {k1}, ymm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512VL AVX512F</td>
+<td>Using signed dword indices, scatter qword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F38.W1 A0 /vsib</p>
+<p>VPSCATTERDQ vm32y {k1}, zmm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Using signed dword indices, scatter qword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F38.W0 A1 /vsib</p>
+<p>VPSCATTERQD vm64x {k1}, xmm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512VL AVX512F</td>
+<td>Using signed qword indices, scatter dword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F38.W0 A1 /vsib</p>
+<p>VPSCATTERQD vm64y {k1}, xmm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512VL AVX512F</td>
+<td>Using signed qword indices, scatter dword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F38.W0 A1 /vsib</p>
+<p>VPSCATTERQD vm64z {k1}, ymm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Using signed qword indices, scatter dword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F38.W1 A1 /vsib</p>
+<p>VPSCATTERQQ vm64x {k1}, xmm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512VL AVX512F</td>
+<td>Using signed qword indices, scatter qword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F38.W1 A1 /vsib</p>
+<p>VPSCATTERQQ vm64y {k1}, ymm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512VL AVX512F</td>
+<td>Using signed qword indices, scatter qword values to memory using writemask k1.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F38.W1 A1 /vsib</p>
+<p>VPSCATTERQQ vm64z {k1}, zmm1</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Using signed qword indices, scatter qword values to memory using writemask k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>
+<p>Op/En</p>
+<p>T1S</p></td>
+<td>
+<p>Operand 1</p>
+<p>BaseReg (R): VSIB:base,</p>
+<p>VectorReg(R): VSIB:index</p></td>
+<td>
+<p>Operand 2</p>
+<p>ModRM:reg (r)</p></td>
+<td>
+<p>Operand 3</p>
+<p>NA</p></td>
+<td>
+<p>Operand 4</p>
+<p>NA</p></td></tr></table>
+<h2>Description</h2>
+<p>Stores up to 16 elements (8 elements for qword indices) in doubleword vector or 8 elements in quadword vector to the memory locations pointed by base address BASE_ADDR and index vector VINDEX, with scale SCALE. The elements are specified via the VSIB (i.e., the index register is a vector register, holding packed indices). Elements</p>
+<p>will only be stored if their corresponding mask bit is one. The entire mask register will be set to zero by this instruc-tion unless it triggers an exception.</p>
+<p>This instruction can be suspended by an exception if at least one element is already scattered (i.e., if the exception is triggered by an element other than the rightmost one with its mask bit set). When this happens, the destination register and the mask register are partially updated. If any traps or interrupts are pending from already scattered elements, they will be delivered in lieu of the exception; in this case, EFLAG.RF is set to one so an instruction break-point is not re-triggered when the instruction is continued.</p>
+<p>Note that:</p>
+<p>Note that the presence of VSIB byte is enforced in this instruction. Hence, the instruction will #UD fault if ModRM.rm is different than 100b.</p>
+<p>This instruction has special disp8*N and alignment rules. N is considered to be the size of a single vector element.</p>
+<p>The scaled index may require more bits to represent than the address bits used by the processor (e.g., in 32-bit mode, if the scale is greater than one). In this case, the most significant bits beyond the number of address bits are ignored.</p>
+<p>The instruction will #UD fault if the k0 mask register is specified.</p>
+<p>The instruction will #UD fault if EVEX.Z = 1.</p>
+<h2>Operation</h2>
+<pre>
+BASE_ADDR stands for the memory operand base address (a GPR); may not exist
+VINDEX stands for the memory operand vector of indices (a ZMM register)
+SCALE stands for the memory operand scalar (1, 2, 4 or 8)
+DISP is the optional 1, 2 or 4 byte displacement
+</pre>
+<strong>VPSCATTERDD (EVEX encoded versions)</strong>
+<pre>
+(KL, VL)= (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN MEM[BASE_ADDR +SignExtend(VINDEX[i+31:i]) * SCALE + DISP] (cid:197)(cid:3)SRC[i+31:i]
+        k1[j] (cid:197) 0
+    FI;
+ENDFOR
+k1[MAX_KL-1:KL] (cid:197) 0
+</pre>
+<strong>VPSCATTERDQ (EVEX encoded versions)</strong>
+<pre>
+(KL, VL)= (2, 128), (4, 256), (8, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 64
+    k (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN MEM[BASE_ADDR +SignExtend(VINDEX[k+31:k]) * SCALE + DISP] (cid:197)(cid:3)SRC[i+63:i]
+        k1[j] (cid:197) 0
+    FI;
+ENDFOR
+k1[MAX_KL-1:KL] (cid:197) 0
+</pre>
+<strong>VPSCATTERQD (EVEX encoded versions)</strong>
+<pre>
+(KL, VL)= (2, 128), (4, 256), (8, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 32
+    k (cid:197) j * 64
+    IF k1[j] OR *no writemask*
+        THEN MEM[BASE_ADDR + (VINDEX[k+63:k]) * SCALE + DISP] (cid:197)(cid:3)SRC[i+31:i]
+        k1[j] (cid:197) 0
+    FI;
+ENDFOR
+k1[MAX_KL-1:KL] (cid:197) 0
+</pre>
+<strong>VPSCATTERQQ (EVEX encoded versions)</strong>
+<pre>
+(KL, VL)= (2, 128), (4, 256), (8, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 64
+    IF k1[j] OR *no writemask*
+        THEN MEM[BASE_ADDR + (VINDEX[j+63:j]) * SCALE + DISP] (cid:197)(cid:3)SRC[i+63:i]
+    FI;
+ENDFOR
+k1[MAX_KL-1:KL] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VPSCATTERDD void _mm512_i32scatter_epi32(void * base, __m512i vdx, __m512i a, int scale);
+VPSCATTERDD void _mm256_i32scatter_epi32(void * base, __m256i vdx, __m256i a, int scale);
+VPSCATTERDD void _mm_i32scatter_epi32(void * base, __m128i vdx, __m128i a, int scale);
+VPSCATTERDD void _mm512_mask_i32scatter_epi32(void * base, __mmask16 k, __m512i vdx, __m512i a, int scale);
+VPSCATTERDD void _mm256_mask_i32scatter_epi32(void * base, __mmask8 k, __m256i vdx, __m256i a, int scale);
+VPSCATTERDD void _mm_mask_i32scatter_epi32(void * base, __mmask8 k, __m128i vdx, __m128i a, int scale);
+VPSCATTERDQ void _mm512_i32scatter_epi64(void * base, __m256i vdx, __m512i a, int scale);
+VPSCATTERDQ void _mm256_i32scatter_epi64(void * base, __m128i vdx, __m256i a, int scale);
+VPSCATTERDQ void _mm_i32scatter_epi64(void * base, __m128i vdx, __m128i a, int scale);
+VPSCATTERDQ void _mm512_mask_i32scatter_epi64(void * base, __mmask8 k, __m256i vdx, __m512i a, int scale);
+VPSCATTERDQ void _mm256_mask_i32scatter_epi64(void * base, __mmask8 k, __m128i vdx, __m256i a, int scale);
+VPSCATTERDQ void _mm_mask_i32scatter_epi64(void * base, __mmask8 k, __m128i vdx, __m128i a, int scale);
+VPSCATTERQD void _mm512_i64scatter_epi32(void * base, __m512i vdx, __m256i a, int scale);
+VPSCATTERQD void _mm256_i64scatter_epi32(void * base, __m256i vdx, __m128i a, int scale);
+VPSCATTERQD void _mm_i64scatter_epi32(void * base, __m128i vdx, __m128i a, int scale);
+VPSCATTERQD void _mm512_mask_i64scatter_epi32(void * base, __mmask8 k, __m512i vdx, __m256i a, int scale);
+VPSCATTERQD void _mm256_mask_i64scatter_epi32(void * base, __mmask8 k, __m256i vdx, __m128i a, int scale);
+VPSCATTERQD void _mm_mask_i64scatter_epi32(void * base, __mmask8 k, __m128i vdx, __m128i a, int scale);
+VPSCATTERQQ void _mm512_i64scatter_epi64(void * base, __m512i vdx, __m512i a, int scale);
+VPSCATTERQQ void _mm256_i64scatter_epi64(void * base, __m256i vdx, __m256i a, int scale);
+VPSCATTERQQ void _mm_i64scatter_epi64(void * base, __m128i vdx, __m128i a, int scale);
+VPSCATTERQQ void _mm512_mask_i64scatter_epi64(void * base, __mmask8 k, __m512i vdx, __m512i a, int scale);
+VPSCATTERQQ void _mm256_mask_i64scatter_epi64(void * base, __mmask8 k, __m256i vdx, __m256i a, int scale);
+VPSCATTERQQ void _mm_mask_i64scatter_epi64(void * base, __mmask8 k, __m128i vdx, __m128i a, int scale);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type E12.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VPSCATTERDD_VPSCATTERDQ_VPSCATTERQD_VPSCATTERQQ.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

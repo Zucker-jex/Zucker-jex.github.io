@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/KXORW_KXORB_KXORQ_KXORD.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>KXORW/KXORB/KXORQ/KXORD—Bitwise Logical XOR Masks </title>
+<meta name="Description" content="KXORW/KXORB/KXORQ/KXORD—Bitwise Logical XOR Masks " />
+<meta content="KXORW/KXORB/KXORQ/KXORD, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>KXORW/KXORB/KXORQ/KXORD—Bitwise Logical XOR Masks</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>VEX.NDS.L1.0F.W0 47 /r KXORW k1, k2, k3</td>
+<td>RVR</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Bitwise XOR 16 bits masks k2 and k3 and place result in k1.</td></tr>
+<tr>
+<td>VEX.L1.66.0F.W0 47 /r KXORB k1, k2, k3</td>
+<td>RVR</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Bitwise XOR 8 bits masks k2 and k3 and place result in k1.</td></tr>
+<tr>
+<td>VEX.L1.0F.W1 47 /r KXORQ k1, k2, k3</td>
+<td>RVR</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Bitwise XOR 64 bits masks k2 and k3 and place result in k1.</td></tr>
+<tr>
+<td>VEX.L1.66.0F.W1 47 /r KXORD k1, k2, k3</td>
+<td>RVR</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Bitwise XOR 32 bits masks k2 and k3 and place result in k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td></tr>
+<tr>
+<td>RVR</td>
+<td>ModRM:reg (w)</td>
+<td>VEX.1vvv (r)</td>
+<td>ModRM:r/m (r, ModRM:[7:6] must be 11b)</td></tr></table>
+<h2>Description</h2>
+<p>Performs a bitwise XOR between the vector mask k2 and the vector mask k3, and writes the result into vector mask k1 (three-operand form).</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>KXORW</strong>
+<pre>
+DEST[15:0] (cid:197) SRC1[15:0] BITWISE XOR SRC2[15:0]
+DEST[MAX_KL-1:16] (cid:197) 0
+</pre>
+<strong>KXORB</strong>
+<pre>
+DEST[7:0] (cid:197) SRC1[7:0] BITWISE XOR SRC2[7:0]
+DEST[MAX_KL-1:8] (cid:197) 0
+</pre>
+<strong>KXORQ</strong>
+<pre>
+DEST[63:0] (cid:197) SRC1[63:0] BITWISE XOR SRC2[63:0]
+DEST[MAX_KL-1:64] (cid:197) 0
+</pre>
+<strong>KXORD</strong>
+<pre>
+DEST[31:0] (cid:197) SRC1[31:0] BITWISE XOR SRC2[31:0]
+DEST[MAX_KL-1:32] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+KXORW __mmask16 _mm512_kxor(__mmask16 a, __mmask16 b);
+</pre>
+<h2>Flags Affected</h2>
+<p>None</p>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type K20.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/KXORW_KXORB_KXORQ_KXORD.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

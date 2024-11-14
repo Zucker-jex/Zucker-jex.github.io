@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VPGATHERDD_VPGATHERDQ.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VPGATHERDD/VPGATHERDQ—Gather Packed Dword, Packed Qword with Signed Dword Indices </title>
+<meta name="Description" content="VPGATHERDD/VPGATHERDQ—Gather Packed Dword, Packed Qword with Signed Dword Indices " />
+<meta content="VPGATHERDD/VPGATHERDQ, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VPGATHERDD/VPGATHERDQ—Gather Packed Dword, Packed Qword with Signed Dword Indices</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F38.W0 90 /vsib</p>
+<p>VPGATHERDD xmm1 {k1}, vm32x</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Using signed dword indices, gather dword values from memory using writemask k1 for merging-masking.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F38.W0 90 /vsib</p>
+<p>VPGATHERDD ymm1 {k1}, vm32y</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Using signed dword indices, gather dword values from memory using writemask k1 for merging-masking.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F38.W0 90 /vsib</p>
+<p>VPGATHERDD zmm1 {k1}, vm32z</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Using signed dword indices, gather dword values from memory using writemask k1 for merging-masking.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F38.W1 90 /vsib</p>
+<p>VPGATHERDQ xmm1 {k1}, vm32x</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Using signed dword indices, gather quadword values from memory using writemask k1 for merging-masking.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F38.W1 90 /vsib</p>
+<p>VPGATHERDQ ymm1 {k1}, vm32x</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Using signed dword indices, gather quadword values from memory using writemask k1 for merging-masking.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F38.W1 90 /vsib</p>
+<p>VPGATHERDQ zmm1 {k1}, vm32y</p></td>
+<td>T1S</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Using signed dword indices, gather quadword values from memory using writemask k1 for merging-masking.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>
+<p>Op/En</p>
+<p>T1S</p></td>
+<td>
+<p>Operand 1</p>
+<p>ModRM:reg (w)</p></td>
+<td>
+<p>Operand 2</p>
+<p>BaseReg (R): VSIB:base,</p>
+<p>VectorReg(R): VSIB:index</p></td>
+<td>
+<p>Operand 3</p>
+<p>NA</p></td>
+<td>
+<p>Operand 4</p>
+<p>NA</p></td></tr></table>
+<h2>Description</h2>
+<p>A set of 16 or 8 doubleword/quadword memory locations pointed to by base address BASE_ADDR and index vector VINDEX with scale SCALE are gathered. The result is written into vector zmm1. The elements are specified via the VSIB (i.e., the index register is a zmm, holding packed indices). Elements will only be loaded if their corresponding mask bit is one. If an element’s mask bit is not set, the corresponding element of the destination register (zmm1) is left unchanged. The entire mask register will be set to zero by this instruction unless it triggers an exception.</p>
+<p>This instruction can be suspended by an exception if at least one element is already gathered (i.e., if the exception is triggered by an element other than the rightmost one with its mask bit set). When this happens, the destination register and the mask register (k1) are partially updated; those elements that have been gathered are placed into the destination register and have their mask bits set to zero. If any traps or interrupts are pending from already gathered elements, they will be delivered in lieu of the exception; in this case, EFLAG.RF is set to one so an instruc-tion breakpoint is not re-triggered when the instruction is continued.</p>
+<p>If the data element size is less than the index element size, the higher part of the destination register and the mask register do not correspond to any elements being gathered. This instruction sets those higher parts to zero. It may update these unused elements to one or both of those registers even if the instruction triggers an exception, and even if the instruction triggers the exception before gathering any elements.</p>
+<p>Note that:</p>
+<p>instruction is repeatable - given the same input values and architectural state, the same set of elements to the left of the faulting one will be gathered.</p>
+<p>Note that the presence of VSIB byte is enforced in this instruction. Hence, the instruction will #UD fault if ModRM.rm is different than 100b.</p>
+<p>This instruction has the same disp8*N and alignment rules as for scalar instructions (Tuple 1).</p>
+<p>The instruction will #UD fault if the destination vector zmm1 is the same as index vector VINDEX. The instruction will #UD fault if the k0 mask register is specified.</p>
+<p>The scaled index may require more bits to represent than the address bits used by the processor (e.g., in 32-bit mode, if the scale is greater than one). In this case, the most significant bits beyond the number of address bits are ignored.</p>
+<h2>Operation</h2>
+<pre>
+BASE_ADDR stands for the memory operand base address (a GPR); may not exist
+VINDEX stands for the memory operand vector of indices (a ZMM register)
+SCALE stands for the memory operand scalar (1, 2, 4 or 8)
+DISP is the optional 1, 2 or 4 byte displacement
+</pre>
+<strong>VPGATHERDD (EVEX encoded version)</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 32
+    IF k1[j]
+        THEN DEST[i+31:i] (cid:197) MEM[BASE_ADDR +
+        SignExtend(VINDEX[i+31:i]) * SCALE + DISP]), 1)
+        k1[j] (cid:197) 0
+        ELSE *DEST[i+31:i] (cid:197) remains unchanged*
+        ; Only merging masking is allowed
+    FI;
+ENDFOR
+k1[MAX_KL-1:KL] (cid:197) 0
+DEST[MAX_VL-1:VL] (cid:197) 0
+</pre>
+<strong>VPGATHERDQ (EVEX encoded version)</strong>
+<pre>
+(KL, VL) = (2, 128), (4, 256), (8, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 64
+    k (cid:197) j * 32
+    IF k1[j]
+        THEN DEST[i+63:i] (cid:197)
+        MEM[BASE_ADDR + SignExtend(VINDEX[k+31:k]) * SCALE + DISP])
+        k1[j] (cid:197) 0
+        ELSE *DEST[i+63:i] (cid:197) remains unchanged*
+        ; Only merging masking is allowed
+    FI;
+ENDFOR
+k1[MAX_KL-1:KL] (cid:197) 0
+DEST[MAX_VL-1:VL] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VPGATHERDD __m512i _mm512_i32gather_epi32( __m512i vdx, void * base, int scale);
+VPGATHERDD __m512i _mm512_mask_i32gather_epi32(__m512i s, __mmask16 k, __m512i vdx, void * base, int scale);
+VPGATHERDD __m256i _mm256_mmask_i32gather_epi32(__m256i s, __mmask8 k, __m256i vdx, void * base, int scale);
+VPGATHERDD __m128i _mm_mmask_i32gather_epi32(__m128i s, __mmask8 k, __m128i vdx, void * base, int scale);
+VPGATHERDQ __m512i _mm512_i32logather_epi64( __m256i vdx, void * base, int scale);
+VPGATHERDQ __m512i _mm512_mask_i32logather_epi64(__m512i s, __mmask8 k, __m256i vdx, void * base, int scale);
+VPGATHERDQ __m256i _mm256_mmask_i32logather_epi64(__m256i s, __mmask8 k, __m128i vdx, void * base, int scale);
+VPGATHERDQ __m128i _mm_mmask_i32gather_epi64(__m128i s, __mmask8 k, __m128i vdx, void * base, int scale);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type E12.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VPGATHERDD_VPGATHERDQ.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

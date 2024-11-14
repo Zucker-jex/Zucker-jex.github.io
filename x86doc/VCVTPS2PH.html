@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VCVTPS2PH.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VCVTPS2PH—Convert Single-Precision FP value to 16-bit FP value </title>
+<meta name="Description" content="VCVTPS2PH—Convert Single-Precision FP value to 16-bit FP value " />
+<meta content="VCVTPS2PH, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VCVTPS2PH—Convert Single-Precision FP value to 16-bit FP value</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>VEX.128.66.0F3A.W0 1D 1D/r ib</p>
+<p>VCVTPS2PH xmm1/m64, xmm2, imm8</p></td>
+<td>MRI</td>
+<td>V/V</td>
+<td>F16C</td>
+<td>Convert four packed single-precision floating-point values in xmm2 to packed half-precision (16-bit) floating-point values in xmm1/m64. Imm8 provides rounding controls.</td></tr>
+<tr>
+<td>
+<p>VEX.256.66.0F3A.W0 1D1D /r ib</p>
+<p>VCVTPS2PH xmm1/m128, ymm2, imm8</p></td>
+<td>MRI</td>
+<td>V/V</td>
+<td>F16C</td>
+<td>Convert eight packed single-precision floating-point values in ymm2 to packed half-precision (16-bit) floating-point values in xmm1/m128. Imm8 provides rounding controls.</td></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F3A.W0 1D1D /r ib</p>
+<p>VCVTPS2PH xmm1/m64 {k1}{z}, xmm2, imm8</p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Convert four packed single-precision floating-point values in xmm2 to packed half-precision (16-bit) floating-point values in xmm1/m64. Imm8 provides rounding controls.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F3A.W0 1D1D /r ib</p>
+<p>VCVTPS2PH xmm1/m128 {k1}{z}, ymm2, imm8</p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512F</p></td>
+<td>Convert eight packed single-precision floating-point values in ymm2 to packed half-precision (16-bit) floating-point values in xmm1/m128. Imm8 provides rounding controls.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F3A.W0 1D1D /r ib</p>
+<p>VCVTPS2PH ymm1/m256 {k1}{z}, zmm2{sae}, imm8</p></td>
+<td>HVM</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Convert sixteen packed single-precision floating-point values in zmm2 to packed half-precision (16-bit) floating-point values in ymm1/m256. Imm8 provides rounding controls.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>MRI</td>
+<td>ModRM:r/m (w)</td>
+<td>ModRM:reg (r)</td>
+<td>Imm8</td>
+<td>NA</td></tr>
+<tr>
+<td>HVM</td>
+<td>ModRM:r/m (w)</td>
+<td>ModRM:reg (r)</td>
+<td>Imm8</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Convert packed single-precision floating values in the source operand to half-precision (16-bit) floating-point values and store to the destination operand. The rounding mode is specified using the immediate field (imm8).</p>
+<p>Underflow results (i.e., tiny results) are converted to denormals. MXCSR.FTZ is ignored. If a source element is denormal relative to the input format with DM masked and at least one of PM or UM unmasked; a SIMD exception will be raised with DE, UE and PE set.</p>
+<p>The immediate byte defines several bit fields that control rounding operation. The effect and encoding of the RC field are listed in Table 5-3.</p>
+<h3>Table 5-3. Immediate Byte Encoding for 16-bit Floating-Point Conversion Instructions</h3>
+<table>
+<tr>
+<th>Bits</th>
+<th>Field Name/value</th>
+<th>Description</th>
+<th>Comment</th></tr>
+<tr>
+<td>Imm[1:0]</td>
+<td>RC=00B</td>
+<td>Round to nearest even</td>
+<td>If Imm[2] = 0</td></tr>
+<tr>
+<td></td>
+<td>RC=01B</td>
+<td>Round down</td>
+<td></td></tr>
+<tr>
+<td></td>
+<td>RC=10B</td>
+<td>Round up</td>
+<td></td></tr>
+<tr>
+<td></td>
+<td>RC=11B</td>
+<td>Truncate</td>
+<td></td></tr>
+<tr>
+<td>Imm[2]</td>
+<td>MS1=0</td>
+<td>Use imm[1:0] for rounding</td>
+<td>Ignore MXCSR.RC</td></tr>
+<tr>
+<td></td>
+<td>MS1=1</td>
+<td>Use MXCSR.RC for rounding</td>
+<td></td></tr>
+<tr>
+<td>Imm[7:3]</td>
+<td>Ignored</td>
+<td>Ignored by processor</td>
+<td></td></tr></table>
+<p>VEX.128 version: The source operand is a XMM register. The destination operand is a XMM register or 64-bit memory location. If the destination operand is a register then the upper bits (MAX_VL-1:64) of corresponding register are zeroed.</p>
+<p>VEX.256 version: The source operand is a YMM register. The destination operand is a XMM register or 128-bit memory location. If the destination operand is a register, the upper bits (MAX_VL-1:128) of the corresponding destination register are zeroed.</p>
+<p>Note: VEX.vvvv and EVEX.vvvv are reserved (must be 1111b).</p>
+<p>EVEX encoded versions: The source operand is a ZMM/YMM/XMM register. The destination operand is a YMM/XMM/XMM (low 64-bits) register or a 256/128/64-bit memory location, conditionally updated with writemask k1. Bits (MAX_VL-1:256/128/64) of the corresponding destination register are zeroed.</p>
+<h2>Operation</h2>
+<pre>
+vCvt_s2h(SRC1[31:0])
+{
+IF Imm[2] = 0
+    THEN
+    ; using Imm[1:0] for rounding control, see Table 5-3
+    RETURN Cvt_Single_Precision_To_Half_Precision_FP_Imm(SRC1[31:0]);
+    ELSE
+    ; using MXCSR.RC for rounding control
+    RETURN Cvt_Single_Precision_To_Half_Precision_FP_Mxcsr(SRC1[31:0]);
+FI;
+}
+</pre>
+<strong>VCVTPS2PH (EVEX encoded versions) when dest is a register</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    k (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197)
+        vCvt_s2h(SRC[k+31:k])
+        ELSE
+        IF *merging-masking*
+            ; merging-masking
+            THEN *DEST[i+15:i] remains unchanged*
+            ELSE
+            ; zeroing-masking
+            DEST[i+15:i] (cid:197) 0
+        FI
+    FI;
+ENDFOR
+DEST[MAX_VL-1:VL/2] (cid:197) 0
+</pre>
+<strong>VCVTPS2PH (EVEX encoded versions) when dest is memory</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 16
+    k (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN DEST[i+15:i] (cid:197)
+        vCvt_s2h(SRC[k+31:k])
+        ELSE
+        *DEST[i+15:i] remains unchanged*
+        ; merging-masking
+    FI;
+ENDFOR
+</pre>
+<strong>VCVTPS2PH (VEX.256 encoded version)</strong>
+<pre>
+DEST[15:0] (cid:197)vCvt_s2h(SRC1[31:0]);
+DEST[31:16] (cid:197)vCvt_s2h(SRC1[63:32]);
+DEST[47:32] (cid:197)vCvt_s2h(SRC1[95:64]);
+DEST[63:48] (cid:197)vCvt_s2h(SRC1[127:96]);
+DEST[79:64] (cid:197)vCvt_s2h(SRC1[159:128]);
+DEST[95:80] (cid:197)vCvt_s2h(SRC1[191:160]);
+DEST[111:96] (cid:197)vCvt_s2h(SRC1[223:192]); DEST[127:112] (cid:197)vCvt_s2h(SRC1[255:224]);
+DEST[MAX_VL-1:128] (cid:197) 0
+</pre>
+<strong>VCVTPS2PH (VEX.128 encoded version)</strong>
+<pre>
+DEST[15:0] (cid:197)vCvt_s2h(SRC1[31:0]);
+DEST[31:16] (cid:197)vCvt_s2h(SRC1[63:32]);
+DEST[47:32] (cid:197)vCvt_s2h(SRC1[95:64]); DEST[63:48] (cid:197)vCvt_s2h(SRC1[127:96]);
+DEST[MAX_VL-1:64] (cid:197) 0
+</pre>
+<h2>Flags Affected</h2>
+<p>None</p>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VCVTPS2PH __m256i _mm512_cvtps_ph(__m512 a);
+VCVTPS2PH __m256i _mm512_mask_cvtps_ph(__m256i s, __mmask16 k,__m512 a);
+VCVTPS2PH __m256i _mm512_maskz_cvtps_ph(__mmask16 k,__m512 a);
+VCVTPS2PH __m256i _mm512_cvt_roundps_ph(__m512 a, const int imm);
+VCVTPS2PH __m256i _mm512_mask_cvt_roundps_ph(__m256i s, __mmask16 k,__m512 a, const int imm);
+VCVTPS2PH __m256i _mm512_maskz_cvt_roundps_ph(__mmask16 k,__m512 a, const int imm);
+VCVTPS2PH __m128i _mm256_mask_cvtps_ph(__m128i s, __mmask8 k,__m256 a);
+VCVTPS2PH __m128i _mm256_maskz_cvtps_ph(__mmask8 k,__m256 a);
+VCVTPS2PH __m128i _mm_mask_cvtps_ph(__m128i s, __mmask8 k,__m128 a);
+VCVTPS2PH __m128i _mm_maskz_cvtps_ph(__mmask8 k,__m128 a);
+VCVTPS2PH __m128i _mm_cvtps_ph ( __m128 m1, const int imm);
+VCVTPS2PH __m128i _mm256_cvtps_ph(__m256 m1, const int imm);
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>Invalid, Underflow, Overflow, Precision, Denormal (if MXCSR.DAZ=0);</p>
+<h2>Other Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>VEX-encoded instructions, see Exceptions Type 11 (do not report #AC);</td></tr>
+<tr>
+<td>EVEX-encoded instructions, see Exceptions Type E11.</td></tr>
+<tr>
+<td>If VEX.W=1.</td></tr>
+<tr>
+<td>If VEX.vvvv != 1111B or EVEX.vvvv != 1111B.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VCVTPS2PH.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/VFPCLASSPS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>VFPCLASSPS—Tests Types Of a Packed Float32 Values </title>
+<meta name="Description" content="VFPCLASSPS—Tests Types Of a Packed Float32 Values " />
+<meta content="VFPCLASSPS, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>VFPCLASSPS—Tests Types Of a Packed Float32 Values</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op /En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>EVEX.128.66.0F3A.W0 66 /r ib</p>
+<p>VFPCLASSPS k2 {k1}, xmm2/m128/m32bcst, imm8</p></td>
+<td>FV</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512DQ</p></td>
+<td>Tests the input for the following categories:  NaN, +0, -0, +Infinity, -Infinity, denormal, finite negative.  The immediate field provides a mask bit for each of these category tests.  The masked test results are OR-ed together to form a mask result.</td></tr>
+<tr>
+<td>
+<p>EVEX.256.66.0F3A.W0 66 /r ib</p>
+<p>VFPCLASSPS k2 {k1}, ymm2/m256/m32bcst, imm8</p></td>
+<td>FV</td>
+<td>V/V</td>
+<td>
+<p>AVX512VL</p>
+<p>AVX512DQ</p></td>
+<td>Tests the input for the following categories:  NaN, +0, -0, +Infinity, -Infinity, denormal, finite negative.  The immediate field provides a mask bit for each of these category tests.  The masked test results are OR-ed together to form a mask result.</td></tr>
+<tr>
+<td>
+<p>EVEX.512.66.0F3A.W0 66 /r ib</p>
+<p>VFPCLASSPS k2 {k1}, zmm2/m512/m32bcst, imm8</p></td>
+<td>FV</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Tests the input for the following categories:  NaN, +0, -0, +Infinity, -Infinity, denormal, finite negative.  The immediate field provides a mask bit for each of these category tests.  The masked test results are OR-ed together to form a mask result.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td>
+<td>Operand 4</td></tr>
+<tr>
+<td>FV</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>The FPCLASSPS instruction checks the packed single-precision floating point values for special categories, specified by the set bits in the imm8 byte. Each set bit in imm8 specifies a category of floating-point values that the input data element is classified against. The classified results of all specified categories of an input value are ORed together to form the final boolean result for the input element. The result of each element is written to the corre-sponding bit in a mask register k2 according to the writemask k1. Bits [MAX_KL-1:16/8/4] of the destination are cleared.</p>
+<p>The classification categories specified by imm8 are shown in Figure 5-13. The classification test for each category is listed in Table 5-6.</p>
+<p>The source operand is a ZMM/YMM/XMM register, a 512/256/128-bit memory location, or a 512/256/128-bit vector broadcasted from a 32-bit memory location.</p>
+<p>EVEX.vvvv is reserved and must be 1111b otherwise instructions will #UD.</p>
+<h2>Operation</h2>
+<pre>
+CheckFPClassSP (tsrc[31:0], imm8[7:0]){
+//* Start checking the source operand for special type *//
+NegNum  (cid:197) tsrc[31];
+IF (tsrc[30:23]=0FFh) Then ExpAllOnes (cid:197) 1; FI;
+    IF (tsrc[30:23]=0h) Then ExpAllZeros (cid:197) 1;
+        IF (ExpAllZeros AND MXCSR.DAZ) Then
+            MantAllZeros (cid:197) 1;
+            ELSIF (tsrc[22:0]=0h) Then
+            MantAllZeros (cid:197) 1;
+        FI;
+        ZeroNumber= ExpAllZeros AND MantAllZeros
+        SignalingBit= tsrc[22];
+        sNaN_res (cid:197) ExpAllOnes AND  NOT(MantAllZeros) AND NOT(SignalingBit) ; // sNaN
+        qNaN_res (cid:197) ExpAllOnes AND  NOT(MantAllZeros) AND SignalingBit;; // qNaN
+        Pzero_res (cid:197) NOT(NegNum) AND ExpAllZeros AND MantAllZeros;; // +0
+        Nzero_res (cid:197) NegNum AND ExpAllZeros AND MantAllZeros;; // -0
+        PInf_res (cid:197) NOT(NegNum) AND ExpAllOnes AND MantAllZeros;; // +Inf
+        NInf_res (cid:197) NegNum AND ExpAllOnes AND MantAllZeros;; // -Inf
+        Denorm_res (cid:197) ExpAllZeros AND  NOT(MantAllZeros);; // denorm
+        FinNeg_res (cid:197) NegNum AND NOT(ExpAllOnes) AND NOT(ZeroNumber);; // -finite
+        bResult = ( imm8[0] AND qNaN_res ) OR (imm8[1] AND Pzero_res ) OR
+        ( imm8[2] AND Nzero_res ) OR ( imm8[3] AND PInf_res ) OR
+        ( imm8[4] AND NInf_res ) OR ( imm8[5] AND Denorm_res ) OR
+        ( imm8[6] AND FinNeg_res ) OR ( imm8[7] AND sNaN_res ) ;
+        Return bResult;
+        } //* end of CheckSPClassSP() *//
+</pre>
+<strong>VFPCLASSPS (EVEX encoded versions)</strong>
+<pre>
+(KL, VL) = (4, 128), (8, 256), (16, 512)
+FOR j (cid:197) 0 TO KL-1
+    i (cid:197) j * 32
+    IF k1[j] OR *no writemask*
+        THEN
+        IF (EVEX.b == 1) AND (SRC *is memory*)
+            THEN
+            DEST[j] (cid:197) CheckFPClassDP(SRC1[31:0], imm8[7:0]);
+            ELSE
+            DEST[j] (cid:197) CheckFPClassDP(SRC1[i+31:i], imm8[7:0]);
+        FI;
+        ELSE  DEST[j] (cid:197) 0
+        ; zeroing-masking only
+    FI;
+ENDFOR
+DEST[MAX_KL-1:KL] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+VFPCLASSPS __mmask16 _mm512_fpclass_ps_mask( __m512 a, int c);
+VFPCLASSPS __mmask16 _mm512_mask_fpclass_ps_mask( __mmask16 m, __m512 a, int c)
+VFPCLASSPS __mmask8 _mm256_fpclass_ps_mask( __m256 a, int c)
+VFPCLASSPS __mmask8 _mm256_mask_fpclass_ps_mask( __mmask8 m, __m256 a, int c)
+VFPCLASSPS __mmask8 _mm_fpclass_ps_mask( __m128 a, int c)
+VFPCLASSPS __mmask8 _mm_mask_fpclass_ps_mask( __mmask8 m, __m128 a, int c)
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type E4</p>
+<table>
+<tr>
+<td>#UD</td>
+<td>If EVEX.vvvv != 1111B.</td></tr></table>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/VFPCLASSPS.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

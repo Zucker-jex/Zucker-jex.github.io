@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/KADDW_KADDB_KADDQ_KADDD.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>KADDW/KADDB/KADDQ/KADDD—ADD Two Masks </title>
+<meta name="Description" content="KADDW/KADDB/KADDQ/KADDD—ADD Two Masks " />
+<meta content="KADDW/KADDB/KADDQ/KADDD, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>KADDW/KADDB/KADDQ/KADDD—ADD Two Masks</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>VEX.L1.0F.W0 4A /r KADDW k1, k2, k3</td>
+<td>RVR</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Add 16 bits masks in k2 and k3 and place result in k1.</td></tr>
+<tr>
+<td>VEX.L1.66.0F.W0 4A /r KADDB k1, k2, k3</td>
+<td>RVR</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Add 8 bits masks in k2 and k3 and place result in k1.</td></tr>
+<tr>
+<td>VEX.L1.0F.W1 4A /r KADDQ k1, k2, k3</td>
+<td>RVR</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Add 64 bits masks in k2 and k3 and place result in k1.</td></tr>
+<tr>
+<td>VEX.L1.66.0F.W1 4A /r KADDD k1, k2, k3</td>
+<td>RVR</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Add 32 bits masks in k2 and k3 and place result in k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<p>Op/En</p>
+<p>Operand 1</p>
+<p>Operand 2</p>
+<p>Operand 3</p>
+<p>RVR</p>
+<p>ModRM:reg (w)</p>
+<p>VEX.1vvv (r)</p>
+<p>ModRM:r/m (r, ModRM:[7:6] must be 11b)</p>
+<h2>Description</h2>
+<p>Adds the vector mask k2 and the vector mask k3, and writes the result into vector mask k1.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>KADDW</strong>
+<pre>
+DEST[15:0] (cid:197) SRC1[15:0] + SRC2[15:0]
+DEST[MAX_KL-1:16] (cid:197) 0
+</pre>
+<strong>KADDB</strong>
+<pre>
+DEST[7:0] (cid:197) SRC1[7:0] + SRC2[7:0]
+DEST[MAX_KL-1:8] (cid:197) 0
+</pre>
+<strong>KADDQ</strong>
+<pre>
+DEST[63:0] (cid:197) SRC1[63:0] + SRC2[63:0]
+DEST[MAX_KL-1:64] (cid:197) 0
+</pre>
+<strong>KADDD</strong>
+<pre>
+DEST[31:0] (cid:197) SRC1[31:0] + SRC2[31:0]
+DEST[MAX_KL-1:32] (cid:197) 0
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+</pre>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type K20.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/KADDW_KADDB_KADDQ_KADDD.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

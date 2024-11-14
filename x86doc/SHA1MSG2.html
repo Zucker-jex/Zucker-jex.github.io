@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/SHA1MSG2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>SHA1MSG2—Perform a Final Calculation for the Next Four SHA1 Message Dwords </title>
+<meta name="Description" content="SHA1MSG2—Perform a Final Calculation for the Next Four SHA1 Message Dwords " />
+<meta content="SHA1MSG2, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>SHA1MSG2—Perform a Final Calculation for the Next Four SHA1 Message Dwords</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>
+<p>0F 38 CA /r</p>
+<p>SHA1MSG2 xmm1, xmm2/m128</p></td>
+<td>RM</td>
+<td>V/V</td>
+<td>SHA</td>
+<td>Performs the final calculation for the next four SHA1 message dwords using intermediate results from xmm1 and the previous message dwords from xmm2/m128, storing the result in xmm1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td></tr>
+<tr>
+<td>RM</td>
+<td>ModRM:reg (r, w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>The SHA1MSG2 instruction is one of two SHA1 message scheduling instructions. The instruction performs the final calculation to derive the next four SHA1 message dwords.</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>SHA1MSG2</strong>
+<pre>
+W13 (cid:197) SRC2[95:64] ;
+W14 (cid:197) SRC2[63: 32] ;
+W15 (cid:197) SRC2[31: 0] ;
+W16 (cid:197) (SRC1[127:96] XOR W13 ) ROL 1;
+W17 (cid:197) (SRC1[95:64] XOR W14) ROL 1;
+W18 (cid:197) (SRC1[63: 32] XOR W15) ROL 1;
+W19 (cid:197) (SRC1[31: 0] XOR W16) ROL 1;
+DEST[127:96] (cid:197) W16;
+DEST[95:64] (cid:197) W17;
+DEST[63:32] (cid:197) W18;
+DEST[31:0] (cid:197) W19;
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+SHA1MSG2: __m128i _mm_sha1msg2_epu32(__m128i, __m128i);
+</pre>
+<h2>Flags Affected</h2>
+<p>None</p>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type 4.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/SHA1MSG2.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

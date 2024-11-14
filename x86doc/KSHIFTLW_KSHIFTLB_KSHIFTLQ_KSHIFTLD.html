@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/KSHIFTLW_KSHIFTLB_KSHIFTLQ_KSHIFTLD.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+<head>
+<meta charset="utf-8">
+<title>KSHIFTLW/KSHIFTLB/KSHIFTLQ/KSHIFTLD—Shift Left Mask Registers </title>
+<meta name="Description" content="KSHIFTLW/KSHIFTLB/KSHIFTLQ/KSHIFTLD—Shift Left Mask Registers " />
+<meta content="KSHIFTLW/KSHIFTLB/KSHIFTLQ/KSHIFTLD, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>KSHIFTLW/KSHIFTLB/KSHIFTLQ/KSHIFTLD—Shift Left Mask Registers</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>VEX.L0.66.0F3A.W1 32 /r KSHIFTLW k1, k2, imm8</td>
+<td>RRI</td>
+<td>V/V</td>
+<td>AVX512F</td>
+<td>Shift left 16 bits in k2 by immediate and write result in k1.</td></tr>
+<tr>
+<td>VEX.L0.66.0F3A.W0 32 /r KSHIFTLB k1, k2, imm8</td>
+<td>RRI</td>
+<td>V/V</td>
+<td>AVX512DQ</td>
+<td>Shift left 8 bits in k2 by immediate and write result in k1.</td></tr>
+<tr>
+<td>VEX.L0.66.0F3A.W1 33 /r KSHIFTLQ k1, k2, imm8</td>
+<td>RRI</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Shift left 64 bits in k2 by immediate and write result in k1.</td></tr>
+<tr>
+<td>VEX.L0.66.0F3A.W0 33 /r KSHIFTLD k1, k2, imm8</td>
+<td>RRI</td>
+<td>V/V</td>
+<td>AVX512BW</td>
+<td>Shift left 32 bits in k2 by immediate and write result in k1.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td></tr>
+<tr>
+<td>RRI</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r, ModRM:[7:6] must be 11b)</td>
+<td>Imm8</td></tr></table>
+<h2>Description</h2>
+<p>Shifts 8/16/32/64 bits in the second operand (source operand) left by the count specified in immediate byte and place the least significant 8/16/32/64 bits of the result in the destination operand. The higher bits of the destination are zero-extended. The destination is set to zero if the count value is greater than 7 (for byte shift), 15 (for word shift), 31 (for doubleword shift) or 63 (for quadword shift).</p>
+<h2>Operation</h2>
+<pre>
+</pre>
+<strong>KSHIFTLW</strong>
+<pre>
+COUNT (cid:197) imm8[7:0]
+DEST[MAX_KL-1:0] (cid:197) 0
+IF COUNT &lt;=15
+    THEN DEST[15:0] (cid:197) SRC1[15:0] &lt;&lt; COUNT;
+FI;
+</pre>
+<strong>KSHIFTLB</strong>
+<pre>
+COUNT (cid:197) imm8[7:0]
+DEST[MAX_KL-1:0] (cid:197) 0
+IF COUNT &lt;=7
+    THEN
+    DEST[7:0] (cid:197) SRC1[7:0] &lt;&lt; COUNT;
+FI;
+</pre>
+<strong>KSHIFTLQ</strong>
+<pre>
+COUNT (cid:197) imm8[7:0]
+DEST[MAX_KL-1:0] (cid:197) 0
+IF COUNT &lt;=63
+    THEN
+    DEST[63:0] (cid:197) SRC1[63:0] &lt;&lt; COUNT;
+FI;
+</pre>
+<strong>KSHIFTLD</strong>
+<pre>
+COUNT (cid:197) imm8[7:0]
+DEST[MAX_KL-1:0] (cid:197) 0
+IF COUNT &lt;=31
+    THEN
+    DEST[31:0] (cid:197) SRC1[31:0] &lt;&lt; COUNT;
+FI;
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+Compiler auto generates KSHIFTLW when needed.
+</pre>
+<h2>Flags Affected</h2>
+<p>None</p>
+<h2>SIMD Floating-Point Exceptions</h2>
+<p>None</p>
+<h2>Other Exceptions</h2>
+<p>See Exceptions Type K20.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/KSHIFTLW_KSHIFTLB_KSHIFTLQ_KSHIFTLD.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:49 GMT -->
+</html>

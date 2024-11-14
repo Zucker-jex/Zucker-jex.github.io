@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- Mirrored from shell-storm.org/x86doc/BNDMK.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:48 GMT -->
+<head>
+<meta charset="utf-8">
+<title>BNDMK—Make Bounds </title>
+<meta name="Description" content="BNDMK—Make Bounds " />
+<meta content="BNDMK, x64 opcodes, nasm opcode table, assembly opcode table, intel opcode reference, x86 opcode, instruction reference, assembly opcodes, intel semantics" name="keywords">
+<meta name="Viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="Robots" content="index,follow"/>
+<link href="style.css" type="text/css" rel="stylesheet">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NLNHL50HG5"></script>
+<script src="../assets/js/gtag.js"></script>
+</head>
+<body><a href="./">Back to opcode table</a>
+<h1>BNDMK—Make Bounds</h1>
+<table>
+<tr>
+<th>Opcode/Instruction</th>
+<th>Op/En</th>
+<th>64/32 bit Mode Support</th>
+<th>CPUID Feature Flag</th>
+<th>Description</th></tr>
+<tr>
+<td>F3 0F 1B /r BNDMK bnd, m32</td>
+<td>RM</td>
+<td>NE/V</td>
+<td>MPX</td>
+<td>Make lower and upper bounds from m32 and store them in bnd.</td></tr>
+<tr>
+<td>F3 0F 1B /r BNDMK bnd, m64</td>
+<td>RM</td>
+<td>V/NE</td>
+<td>MPX</td>
+<td>Make lower and upper bounds from m64 and store them in bnd.</td></tr></table>
+<h3>Instruction Operand Encoding</h3>
+<table>
+<tr>
+<td>Op/En</td>
+<td>Operand 1</td>
+<td>Operand 2</td>
+<td>Operand 3</td></tr>
+<tr>
+<td>RM</td>
+<td>ModRM:reg (w)</td>
+<td>ModRM:r/m (r)</td>
+<td>NA</td></tr></table>
+<h2>Description</h2>
+<p>Makes bounds from the second operand and stores the lower and upper bounds in the bound register bnd. The second operand must be a memory operand. The content of the base register from the memory operand is stored in the lower bound bnd.LB. The 1's complement of the effective address of m32/m64 is stored in the upper bound b.UB. Computation of m32/m64 has identical behavior to LEA.</p>
+<p>This instruction does not cause any memory access, and does not read or write any flags.</p>
+<p>If the instruction did not specify base register, the lower bound will be zero. The reg-reg form of this instruction retains legacy behavior (NOP).</p>
+<p>RIP relative instruction in 64-bit will #UD.</p>
+<h2>Operation</h2>
+<pre>
+BND.LB (cid:197) SRCMEM.base;
+IF 64-bit mode Then
+    BND.UB (cid:197) NOT(LEA.64_bits(SRCMEM));
+    ELSE
+    BND.UB (cid:197) Zero_Extend.64_bits(NOT(LEA.32_bits(SRCMEM)));
+FI;
+</pre>
+<h2>Intel C/C++ Compiler Intrinsic Equivalent</h2>
+<pre>
+BNDMKvoid * _bnd_set_ptr_bounds(const void * q, size_t size);
+</pre>
+<h2>Flags Affected</h2>
+<p>None</p>
+<h2>Protected Mode Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>#UD</td>
+<td>
+<p>If ModRM is RIP relative.</p>
+<p>If the LOCK prefix is used.</p>
+<p>If ModRM.r/m encodes BND4-BND7 when Intel MPX is enabled.</p>
+<p>If 67H prefix is not used and CS.D=0.</p>
+<p>If 67H prefix is used and CS.D=1.</p></td></tr></table>
+<h2>Real-Address Mode Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>#UD</td>
+<td>
+<p>If ModRM is RIP relative.</p>
+<p>If the LOCK prefix is used.</p>
+<p>If ModRM.r/m encodes BND4-BND7 when Intel MPX is enabled.</p>
+<p>If 16-bit addressing is used.</p></td></tr></table>
+<h2>Virtual-8086 Mode Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>#UD</td>
+<td>
+<p>If ModRM is RIP relative.</p>
+<p>If the LOCK prefix is used.</p>
+<p>If ModRM.r/m encodes BND4-BND7 when Intel MPX is enabled.</p>
+<p>If 16-bit addressing is used.</p></td></tr></table>
+<h2>Compatibility Mode Exceptions</h2>
+<p>Same exceptions as in protected mode.</p>
+<h2>64-Bit Mode Exceptions</h2>
+<table class="exception-table">
+<tr>
+<td>#UD</td>
+<td>If ModRM.r/m and REX encodes BND4-BND15 when Intel MPX is enabled.</td></tr>
+<tr>
+<td>#SS(0)</td>
+<td>If the memory address referencing the SS segment is in a non-canonical form.</td></tr>
+<tr>
+<td>#GP(0)</td>
+<td>If the memory address is in a non-canonical form.</td></tr></table>
+<p>Same exceptions as in protected mode.</p>
+</body>
+
+<!-- Mirrored from shell-storm.org/x86doc/BNDMK.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 14 Nov 2024 15:31:48 GMT -->
+</html>
