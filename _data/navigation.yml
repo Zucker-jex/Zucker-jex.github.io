@@ -24,7 +24,7 @@ header:
       ja    : *EN
       fr    : *EN
       de    : *EN
-    url: /LifeViewer.html
+    url: /page/LifeViewer.html
 
   # - titles:
   #     en    : &EN       GOL
@@ -33,7 +33,7 @@ header:
   #     ja    : &JA       ラゲ
   #     fr    : &FR       JDLV
   #     de    : &DE       SDL
-  #   url: /game_of_life.html
+  #   url: /page/game_of_life.html
 
   - titles:
       en    : &EN       RS
@@ -42,7 +42,7 @@ header:
       ja    : &JA       ラセ
       fr    : &FR       SA
       de    : &DE       ZA
-    url: /random.html
+    url: /page/random.html
 
   - titles:
       en    : &EN       x86doc
