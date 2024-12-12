@@ -8,7 +8,7 @@ aside:
 
 使用 TensorFlow 进行深度学习 - 第二版 <!--more-->
 
-![Image](/assets/images/Translator/Deep%20Learning%20with%20TensorFlow%20-%20Second%20Edition.jpeg){:.shadow}
+![Image](../../assets/images/Translator/Deep%20Learning%20with%20TensorFlow%20-%20Second%20Edition.jpeg){:.shadow}
 
 ## 关于
 

@@ -8,7 +8,7 @@ aside:
 
 Ready or Not（严正以待）热门地图 <!--more-->
 
-![Image](/assets/images/ready_or_not.png){:.shadow}
+![Image](../../assets/images/ready_or_not.png){:.shadow}
 
 **因为本人并未获得任何方的授权（作者，N 网，VOID Interactive），所以仅提供转存储服务，产生的任何版权问题请自行负责！**
 
