@@ -19,10 +19,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install ruby-build
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y ruby-build
+      - name: Add Ruby 3.1.4 definition
+        run: |
+          wget https://raw.githubusercontent.com/rbenv/ruby-build/master/share/ruby-build/3.1.4
+          sudo mv 3.1.4 /usr/local/share/ruby-build/definitions/
       - name: Install Ruby
         run: |
           ruby-build 3.1.4 /opt/hostedtoolcache/Ruby/3.1.4/x64
@@ -30,7 +34,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.150.0
         with:
-          ruby-version: "3.1"
+          ruby-version: "3.1.4"
           bundler-cache: true
           cache-version: 0
       - name: Setup Pages
