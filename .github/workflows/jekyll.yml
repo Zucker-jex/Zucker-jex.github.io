@@ -22,6 +22,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install ruby-build
+        run: |
+          git clone https://github.com/rbenv/ruby-build.git
+          cd ruby-build
+          sudo ./install.sh
+
       - name: Setup Ruby
         run: |
           ruby-build 3.1.4 /opt/hostedtoolcache/Ruby/3.1.4/x64
