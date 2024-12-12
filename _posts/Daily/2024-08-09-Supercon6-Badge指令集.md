@@ -17,7 +17,7 @@ aside:
 
 ## 指令集全31条
 
-![Image](../../assets/images/Daily/屏幕截图%202024-08-09%20211156.png)
+![Image](/assets/images/Daily/屏幕截图%202024-08-09%20211156.png)
 
 ### ADD RX,RY
 
