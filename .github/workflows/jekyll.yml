@@ -22,16 +22,12 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y ruby-build
-      - name: Add Ruby 3.3.6 definition
-        run: |
-          sudo mkdir -p /usr/local/share/ruby-build/definitions/
-          wget https://raw.githubusercontent.com/rbenv/ruby-build/master/share/ruby-build/3.3.6
-          sudo mv 3.3.6 /usr/local/share/ruby-build/definitions/
+          sudo apt-get install -y rbenv
+          rbenv init -
       - name: Install Ruby
         run: |
-          ruby-build 3.3.6 /opt/hostedtoolcache/Ruby/3.3.6/x64
-          touch /opt/hostedtoolcache/Ruby/3.3.6/x64.complete
+          rbenv install 3.3.6
+          rbenv global 3.3.6
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.150.0
         with:
