@@ -17,45 +17,17 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y git build-essential libssl-dev zlib1g-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common
-
-      - name: Install ruby-build
-        run: |
-          git clone https://github.com/rbenv/ruby-build.git ~/.ruby-build
-          sudo ~/.ruby-build/install.sh
-
-      - name: Install and cache Ruby
-        env:
-          RUBY_VERSION: 3.2.2
-        run: |
-          RUBY_CACHE_PATH="${{ runner.tool_cache }}/ruby/$RUBY_VERSION"
-          if [ -d "$RUBY_CACHE_PATH" ]; then
-            echo "Using cached Ruby version $RUBY_VERSION"
-          else
-            echo "Installing Ruby version $RUBY_VERSION"
-            ruby-build "$RUBY_VERSION" "$RUBY_CACHE_PATH"
-          fi
-          echo "Adding Ruby to PATH"
-          echo "$RUBY_CACHE_PATH/bin" >> $GITHUB_PATH
-
-      - name: Verify Ruby installation
-        run: |
-          ruby --version
-          gem --version
-
-      - name: Install gems
-        run: |
-          gem install bundler
-          bundle install
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.150.0
+        with:
+          ruby-version: "3.2.2"
+          bundler-cache: true
+          cache-version: 0
 
       - name: Setup Pages
         id: pages
