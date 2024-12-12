@@ -23,18 +23,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ruby-build
-      - name: Add Ruby 3.1.4 definition
+      - name: Add Ruby 3.4.0-rc1 definition
         run: |
-          wget https://raw.githubusercontent.com/rbenv/ruby-build/master/share/ruby-build/3.1.4
-          sudo mv 3.1.4 /usr/local/share/ruby-build/definitions/
+          wget https://raw.githubusercontent.com/rbenv/ruby-build/master/share/ruby-build/3.4.0-rc1
+          sudo mv 3.4.0-rc1 /usr/local/share/ruby-build/definitions/
       - name: Install Ruby
         run: |
-          ruby-build 3.1.4 /opt/hostedtoolcache/Ruby/3.1.4/x64
-          touch /opt/hostedtoolcache/Ruby/3.1.4/x64.complete
+          ruby-build 3.4.0-rc1 /opt/hostedtoolcache/Ruby/3.4.0-rc1/x64
+          touch /opt/hostedtoolcache/Ruby/3.4.0-rc1/x64.complete
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.150.0
         with:
-          ruby-version: "3.1.4"
+          ruby-version: "3.4.0-rc1"
           bundler-cache: true
           cache-version: 0
       - name: Setup Pages
