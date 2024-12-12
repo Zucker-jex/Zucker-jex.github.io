@@ -25,6 +25,7 @@ jobs:
           sudo apt-get install -y ruby-build
       - name: Add Ruby 3.3.6 definition
         run: |
+          sudo mkdir -p /usr/local/share/ruby-build/definitions/
           wget https://raw.githubusercontent.com/rbenv/ruby-build/master/share/ruby-build/3.3.6
           sudo mv 3.3.6 /usr/local/share/ruby-build/definitions/
       - name: Install Ruby
