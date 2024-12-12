@@ -24,6 +24,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y rbenv
           rbenv init -
+          brew update && brew upgrade ruby-build
       - name: Install Ruby
         run: |
           rbenv install 3.3.6
