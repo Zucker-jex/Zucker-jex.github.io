@@ -30,8 +30,13 @@ jobs:
 
       - name: Setup Ruby
         run: |
-          ruby-build 3.1.4 /opt/hostedtoolcache/Ruby/3.1.4/x64
-          touch /opt/hostedtoolcache/Ruby/3.1.4/x64.complete
+          ruby-build 3.3.6 /opt/hostedtoolcache/Ruby/3.3.6/x64
+          touch /opt/hostedtoolcache/Ruby/3.3.6/x64.complete
+
+      - name: Install Bundler
+        run: |
+          gem update --system
+          gem install bundler
 
       - name: Setup Pages
         id: pages
