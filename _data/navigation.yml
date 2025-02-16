@@ -8,14 +8,14 @@ header:
       de    : &DE       Archiv
     url: /archive.html
 
-  # - titles:
-  #     en    : &EN       Guestbook
-  #     zh-Hans: &ZH_HANS 留言板
-  #     zh-Hant: &ZH_HANT 留言板
-  #     ja    : &JA       ゲストブック
-  #     fr    : &FR       Livre d'or
-  #     de    : &DE       Gästebuch
-  #   url: /guestbook.html
+  - titles:
+      en    : &EN       Guestbook
+      zh-Hans: &ZH_HANS 留言板
+      zh-Hant: &ZH_HANT 留言板
+      ja    : &JA       ゲストブック
+      fr    : &FR       Livre d'or
+      de    : &DE       Gästebuch
+    url: /guestbook.html
 
   - titles:
       en    : &EN       LifeViewer
