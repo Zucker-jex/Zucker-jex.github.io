@@ -11,6 +11,7 @@
 
     <div itemscope itemtype="{{ _site_author_itemtype }}">
       <meta itemprop="name" content="{{ _site_author.name }}">
+
       {%- assign _site_author_url = _site_author.url | default: '/'-%}
       {%- include snippets/get-nav-url.html path=_site_author_url -%}
       {%- assign _site_author_url = __return -%}
@@ -30,6 +31,9 @@
         {%- assign _locale_copyright_dates = __return -%}
         © {{ site.title }} {{ _locale_copyright_dates }},
         Powered by <a title="Jekyll is a simple, blog-aware, static site generator." href="http://jekyllrb.com/">Jekyll</a>
+      </div>
+      <div class="mt-1">
+        <a href="https://icp.gov.moe/?keyword=20253239" target="_blank"><img src="https://api.xn--kiv.fun/Shields/?part1=%E8%90%8CICP%E5%A4%87&part2=20253239%E5%8F%B7&url=https%3A%2F%2Ficp.gov.moe%2F%3Fkeyword%3D20253239&style=blue" alt="萌ICP备: 20253239号"></a>
       </div>
     </div>
   </div>
