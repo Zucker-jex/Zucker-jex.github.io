@@ -1,0 +1,950 @@
+{
+  "AK": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "saint",
+      "inv"
+    ],
+    "name": "Curious Ascent",
+    "cname": "好奇攀升",
+    "specificNames": [
+      "Curious Ascent",
+      "Curious Ascent",
+      "Curious Ascent",
+      "Curious Ascent",
+      "Curious Ascent",
+      "Curious Ascent",
+      "Curious Ascent",
+      "Curious Ascent",
+      "Curious Ascent"
+    ]
+  },
+  "AB": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "saint",
+      "inv"
+    ],
+    "name": "Arid Barrens",
+    "cname": "干旱荒地",
+    "specificNames": [
+      "Arid Barrens",
+      "Windswept Barrens",
+      "Arid Barrens",
+      "Arid Barrens",
+      "Arid Barrens",
+      "Arid Barrens",
+      "Arid Barrens",
+      "Frigid Desert",
+      "Miros World"
+    ]
+  },
+  "BL": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "saint",
+      "inv"
+    ],
+    "name": "Badlands",
+    "cname": "荒原",
+    "specificNames": [
+      "Badlands",
+      "Badlands",
+      "Badlands",
+      "Badlands",
+      "Badlands",
+      "Badlands",
+      "Badlands",
+      "Archaic Tundra",
+      "Badlands"
+    ]
+  },
+  "BY": {
+    "slugcats": [
+      "red",
+      "saint",
+      "inv",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "white",
+      "rivulet",
+      "spear"
+    ],
+    "name": "Purification Conduits",
+    "cname": "净化通道",
+    "specificNames": [
+      "Purification Conduits",
+      "Sterile Waterworks",
+      "Purification Conduits",
+      "Purification Conduits",
+      "Purification Conduits",
+      "Purification Conduits",
+      "Purification Conduits",
+      "Purification Conduits",
+      "Purification Conduits"
+    ]
+  },
+  "CW": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "inv"
+    ],
+    "name": "Chasing Wind",
+    "cname": "追逐清风",
+    "specificNames": [
+      "Chasing Wind",
+      "Chasing Wind",
+      "Chasing Wind",
+      "Chasing Wind",
+      "Chasing Wind",
+      "Chasing Wind",
+      "Chasing Wind",
+      "Chasing Wind"
+    ]
+  },
+  "FR": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "saint",
+      "inv"
+    ],
+    "name": "Far Shore",
+    "cname": "远岸",
+    "specificNames": [
+      "Far Shore",
+      "Far Shore",
+      "Far Shore",
+      "Far Shore",
+      "Far Shore",
+      "Far Shore",
+      "Far Shore",
+      "Lost Strand",
+      "Far Shore"
+    ]
+  },
+  "DW": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red"
+    ],
+    "name": "Deserted Wastelands",
+    "cname": "荒废荒地",
+    "specificNames": [
+      "Deserted Wastelands",
+      "Deserted Wastelands",
+      "Deserted Wastelands"
+    ]
+  },
+  "FT": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Forsaken Station",
+    "cname": "遗弃站点",
+    "specificNames": [
+      "Forsaken Station",
+      "Forsaken Station",
+      "Forsaken Station",
+      "Forsaken Station",
+      "Forsaken Station",
+      "Forsaken Station",
+      "Forsaken Station",
+      "Forsaken Station"
+    ]
+  },
+  "GH": {
+    "slugcats": [
+      "inv",
+      "saint",
+      "red",
+      "yellow",
+      "artificer",
+      "gourmand",
+      "spear",
+      "rivulet",
+      "white"
+    ],
+    "name": "Hanging Gardens",
+    "cname": "空中花园",
+    "specificNames": [
+      "Hanging Gardens",
+      "Enduring Sanctuary",
+      "Hanging Gardens",
+      "Hanging Gardens",
+      "Hanging Gardens",
+      "Hanging Gardens",
+      "Hanging Gardens",
+      "Hanging Gardens",
+      "Hanging Gardens"
+    ]
+  },
+  "GS": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "inv",
+      "saint"
+    ],
+    "name": "Gilded Sanctuary",
+    "cname": "镀金圣殿",
+    "specificNames": [
+      "Gilded Sanctuary",
+      "Gilded Sanctuary",
+      "Gilded Sanctuary",
+      "Gilded Sanctuary",
+      "Gilded Sanctuary",
+      "Gilded Sanctuary",
+      "Gilded Sanctuary",
+      "Gilded Sanctuary",
+      "Gilded Sanctuary"
+    ]
+  },
+  "HC": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "inv",
+      "red"
+    ],
+    "name": "Howling Rift",
+    "cname": "呼啸裂谷",
+    "specificNames": [
+      "Howling Rift",
+      "Howling Rift",
+      "Howling Rift",
+      "Howling Rift",
+      "Howling Rift",
+      "Howling Rift",
+      "Howling Rift",
+      "Howling Rift"
+    ]
+  },
+  "LW": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "red",
+      "yellow",
+      "inv"
+    ],
+    "name": "Lush Mire",
+    "cname": "葱郁沼泽",
+    "specificNames": [
+      "Lush Mire",
+      "Lush Mire",
+      "Lush Mire",
+      "Lush Mire",
+      "Lush Mire",
+      "Lush Mire",
+      "Lush Mire",
+      "Lush Mire"
+    ]
+  },
+  "MF": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "inv"
+    ],
+    "name": "Moss Fields",
+    "cname": "苔藓原野",
+    "specificNames": [
+      "Moss Fields",
+      "Moss Fields",
+      "Moss Fields",
+      "Moss Fields",
+      "Moss Fields",
+      "Moss Fields",
+      "Moss Fields",
+      "Moss Fields"
+    ]
+  },
+  "NF": {
+    "slugcats": [
+      "saint"
+    ],
+    "name": "Neuron Forest",
+    "cname": "神经森林",
+    "specificNames": [
+      "Neuron Forest"
+    ]
+  },
+  "RA": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "saint",
+      "inv"
+    ],
+    "name": "The radiosphere",
+    "cname": "无线电层",
+    "specificNames": [
+      "The radiosphere",
+      "The radiosphere",
+      "The radiosphere",
+      "The radiosphere",
+      "The radiosphere",
+      "The radiosphere",
+      "The radiosphere",
+      "The radiosphere",
+      "The radiosphere"
+    ]
+  },
+  "RF": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "saint",
+      "inv"
+    ],
+    "name": "Coral Caves",
+    "cname": "珊瑚洞穴",
+    "specificNames": [
+      "Coral Caves",
+      "Coral Caves",
+      "Coral Caves",
+      "Coral Caves",
+      "Coral Caves",
+      "Coral Caves",
+      "Coral Caves",
+      "Bleached Grotto",
+      "Coral Caves"
+    ]
+  },
+  "SD": {
+    "slugcats": [
+      "white",
+      "rivulet",
+      "spear",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "red",
+      "inv"
+    ],
+    "name": "Scorched District",
+    "cname": "焦土区",
+    "specificNames": [
+      "Scorched District",
+      "Scorched District",
+      "Scorched District",
+      "Scorched District",
+      "Scorched District",
+      "Scorched District",
+      "Scorched District",
+      "Scorched District"
+    ]
+  },
+  "SK": {
+    "slugcats": [
+      "inv",
+      "saint",
+      "red",
+      "yellow",
+      "artificer",
+      "gourmand",
+      "spear",
+      "rivulet",
+      "white"
+    ],
+    "name": "Stormy Coast",
+    "cname": "风暴海滨",
+    "specificNames": [
+      "Stormy Coast",
+      "Desolate Port",
+      "Stormy Coast",
+      "Stormy Coast",
+      "Sunlit Port",
+      "Stormy Coast",
+      "Shrouded Coast",
+      "Stormy Coast",
+      "Stormy Coast"
+    ]
+  },
+  "TM": {
+    "slugcats": [
+      "red",
+      "inv",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "white",
+      "rivulet",
+      "spear"
+    ],
+    "name": "The Mast",
+    "cname": "桅杆",
+    "specificNames": [
+      "The Mast",
+      "The Mast",
+      "The Mast",
+      "The Mast",
+      "The Mast",
+      "The Mast",
+      "The Mast",
+      "The Mast"
+    ]
+  },
+  "US": {
+    "slugcats": [
+      "red",
+      "inv",
+      "gourmand",
+      "artificer",
+      "yellow",
+      "white",
+      "rivulet",
+      "spear"
+    ],
+    "name": "Undersea",
+    "cname": "海底",
+    "specificNames": [
+      "Undersea",
+      "Undersea",
+      "Undersea",
+      "Undersea",
+      "Undersea",
+      "Undersea",
+      "Undersea",
+      "Undersea"
+    ]
+  },
+  "XD": {
+    "slugcats": [
+      "yellow"
+    ],
+    "name": "Lost Cranny",
+    "cname": "失落角落",
+    "specificNames": [
+      "Lost Cranny"
+    ]
+  },
+  "XM": {
+    "slugcats": [
+      "saint"
+    ],
+    "name": "Ashen Monolith",
+    "cname": "灰烬巨石",
+    "specificNames": [
+      "Ashen Monolith"
+    ]
+  },
+  "BUS": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Desert Bus",
+    "cname": "沙漠巴士",
+    "specificNames": [
+      "Desert Bus",
+      "Desert Bus",
+      "Desert Bus",
+      "Desert Bus",
+      "Desert Bus",
+      "Desert Bus",
+      "Desert Bus",
+      "Desert Bus",
+      "Desert Bus"
+    ]
+  },
+  "MT": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "gourmand"
+    ],
+    "name": "The grinder",
+    "cname": "磨坊",
+    "specificNames": [
+      "The grinder",
+      "The grinder",
+      "The grinder"
+    ]
+  },
+  "PA": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Pilgrims' Ascent",
+    "cname": "朝圣者的飞升",
+    "specificNames": [
+      "Pilgrims' Ascent",
+      "Pilgrims' Ascent",
+      "Pilgrims' Ascent",
+      "Pilgrims' Ascent",
+      "Pilgrims' Ascent",
+      "Pilgrims' Ascent",
+      "Pilgrims' Ascent",
+      "Pilgrims' Ascent"
+    ]
+  },
+  "SC": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Sacred Garden",
+    "cname": "圣洁花园",
+    "specificNames": [
+      "Sacred Garden",
+      "Sacred Garden",
+      "Sacred Garden",
+      "Sacred Garden",
+      "Sacred Garden",
+      "Chilled Hydroponics",
+      "Sacred Garden",
+      "Sacred Garden",
+      "Winter Wonderland"
+    ]
+  },
+  "FO": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Fog Gulch",
+    "cname": "迷雾峡谷",
+    "specificNames": [
+      "Fog Gulch",
+      "Fog Gulch",
+      "Fog Gulch",
+      "Fog Gulch",
+      "Fog Gulch",
+      "Fog Gulch",
+      "Fog Gulch",
+      "Fog Gulch"
+    ]
+  },
+  "SE": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Steaming Edifice",
+    "cname": "蒸汽大厦",
+    "specificNames": [
+      "Steaming Edifice",
+      "Steaming Edifice",
+      "Steaming Edifice",
+      "Steaming Edifice",
+      "Steaming Edifice",
+      "Steaming Edifice",
+      "Steaming Edifice",
+      "Steaming Edifice",
+      "Steaming Edifice"
+    ]
+  },
+  "UU": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Citadel",
+    "cname": "城堡",
+    "specificNames": [
+      "Citadel",
+      "Citadel",
+      "Citadel",
+      "Citadel",
+      "Citadel",
+      "Citadel",
+      "Citadel",
+      "BRIGHTENED CITADEL"
+    ]
+  },
+  "BI": {
+    "slugcats": [
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "white",
+      "yellow",
+      "red",
+      "inv"
+    ],
+    "name": "Bioengineering Center",
+    "cname": "生物工程中心",
+    "specificNames": [
+      "Bioengineering Center",
+      "Bioengineering Center",
+      "Bioengineering Center",
+      "Bioengineering Center",
+      "Bioengineering Center",
+      "Bioengineering Center",
+      "Bioengineering Center",
+      "Bioengineering Center",
+      "Bioengineering Center"
+    ]
+  },
+  "F1": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Forsaken Factory",
+    "cname": "遗弃工厂",
+    "specificNames": [
+      "Forsaken Factory",
+      "Forsaken Factory",
+      "Forsaken Factory",
+      "Forsaken Factory",
+      "Forsaken Factory",
+      "Forsaken Factory",
+      "Forsaken Factory",
+      "Forsaken Factory",
+      "Forsaken Factory"
+    ]
+  },
+  "HG": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red"
+    ],
+    "name": "Old Hanging Gardens",
+    "cname": "旧空中花园",
+    "specificNames": [
+      "Old Hanging Gardens",
+      "Old Hanging Gardens",
+      "Old Hanging Gardens"
+    ]
+  },
+  "HW": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Moonlit Acres",
+    "cname": "月光田地",
+    "specificNames": [
+      "Moonlit Acres",
+      "Moonlit Acres",
+      "Moonlit Acres",
+      "Moonlit Acres",
+      "Moonlit Acres",
+      "Sunlit Sanctuary",
+      "Moonlit Acres",
+      "Moonlit Acres",
+      "Moonlit Acres"
+    ]
+  },
+  "ML": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Marshland Wastes",
+    "cname": "沼泽荒原",
+    "specificNames": [
+      "Marshland Wastes",
+      "Marshland Wastes",
+      "Marshland Wastes",
+      "Marshland Wastes",
+      "Marshland Wastes",
+      "Forgotten Tundra",
+      "Marshland Wastes",
+      "Marshland Wastes",
+      "Garbage Wastes 2 Electric Boogaloo"
+    ]
+  },
+  "CE": {
+    "slugcats": [
+      "begonia"
+    ],
+    "name": "The Pit",
+    "cname": "矿坑",
+    "specificNames": [
+      "The Pit"
+    ]
+  },
+  "FS": {
+    "slugcats": [
+      "droughtwanderer"
+    ],
+    "name": "Forest Sanctuary",
+    "cname": "森林圣域",
+    "specificNames": [
+      "Forest Sanctuary"
+    ]
+  },
+  "IS": {
+    "slugcats": [
+      "droughtwanderer"
+    ],
+    "name": "Intake System",
+    "cname": "吸入系统",
+    "specificNames": [
+      "Intake System"
+    ]
+  },
+  "JW": {
+    "slugcats": [
+      "begonia"
+    ],
+    "name": "Sea Of Stars",
+    "cname": "群星之海",
+    "specificNames": [
+      "Sea Of Stars"
+    ]
+  },
+  "MW": {
+    "slugcats": [
+      "droughtwanderer"
+    ],
+    "name": "The Fragmented Exterior",
+    "cname": "破碎外缘",
+    "specificNames": [
+      "The Fragmented Exterior"
+    ]
+  },
+  "OL": {
+    "slugcats": [
+      "droughtwanderer"
+    ],
+    "name": "Looks to the Moon",
+    "cname": "仰望皓月",
+    "specificNames": [
+      "Looks to the Moon"
+    ]
+  },
+  "RP": {
+    "slugcats": [
+      "begonia"
+    ],
+    "name": "Path Less Taken",
+    "cname": "少走的路",
+    "specificNames": [
+      "Path Less Taken"
+    ]
+  },
+  "HH": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "inv",
+      "beacon",
+      "photomaniac",
+      "incandescent",
+      "begonia",
+      "gravelslug"
+    ],
+    "name": "Hallowed Grotto",
+    "cname": "神圣石窟",
+    "specificNames": [
+      "Hallowed Grotto",
+      "Hallowed Grotto",
+      "Hallowed Grotto",
+      "Hallowed Caves",
+      "Hallowed Grotto",
+      "Hallowed Forest",
+      "Hallowed Grotto",
+      "Hallowed Grotto",
+      "Big Pebbles is watching",
+      "Dark Forest",
+      "Dark Forest",
+      "Hallowed Forest",
+      "Hallowed Forest",
+      "Hallowed Caves"
+    ]
+  },
+  "UF": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "saint",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Sizzling Sewers",
+    "cname": "蜂鸣水道",
+    "specificNames": [
+      "Sizzling Sewers",
+      "Sizzling Sewers",
+      "Sizzling Sewers",
+      "Sizzling Sewers",
+      "Sizzling Sewers",
+      "Sizzling Sewers",
+      "Sizzling Sewers",
+      "Sizzling Sewers",
+      "Sizzling Sewers"
+    ]
+  },
+  "PV": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red",
+      "rivulet",
+      "artificer",
+      "spear",
+      "gourmand",
+      "inv"
+    ],
+    "name": "Preservatory",
+    "cname": "防腐室",
+    "specificNames": [
+      "Preservatory",
+      "Preservatory",
+      "Preservatory",
+      "Preservatory",
+      "Preservatory",
+      "Preservatory",
+      "Preservatory",
+      "Preservatory"
+    ]
+  },
+  "WP": {
+    "slugcats": [
+      "white",
+      "yellow",
+      "red"
+    ],
+    "name": "Weakened Platform",
+    "cname": "衰弱平台",
+    "specificNames": [
+      "Weakened Platform",
+      "Weakened Platform",
+      "Weakened Platform"
+    ]
+  }
+}

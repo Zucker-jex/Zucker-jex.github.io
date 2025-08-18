@@ -1,0 +1,1540 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>雨世界模组地图</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <meta property="og:image" content="https://rain-world-map-sc.github.io/mod-map/embed.jpg" />
+    <meta property="og:type" content="object" />
+    <meta property="og:title" content="Rain World Mod Map" />
+    <meta property="og:url" content="https://rain-world-map-sc.github.io/mod-map/" />
+    <meta property="og:description" content="一个包含雨世界中Mod区域的在线互动地图。" />
+    <link rel="stylesheet" href="./rw.css" />
+    <link rel="stylesheet" href="./leaflet/leaflet.css" />
+
+    <script src="./global.js"></script>
+    <script src="./leaflet/leaflet.js"></script>
+    <script src="./beziero.js"></script>
+
+    <style id="mapstyle">
+        body,
+        html {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        #mapid {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background: black;
+        }
+
+        .room-labels {
+            opacity: 0.4;
+            pointer-events: auto;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            color: white;
+            background-color: black;
+            border: none;
+        }
+
+        .spawn-divs {
+            display: flex;
+            justify-content: center;
+        }
+
+        .spawn-entry {
+            display: none;
+            /* to be overwritten */
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+
+        .lineage-entry {
+            height: 24px;
+        }
+
+        .roomtag-divs {
+            display: flex;
+            justify-content: center;
+        }
+
+        .object-divs {
+            display: flex;
+            justify-content: center;
+        }
+
+        .object-entry {
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+
+        .object-label {
+            position: absolute;
+            margin-left: 0px;
+            margin-top: -5px;
+            font-weight: 900;
+            font-size: 140%;
+            color: white;
+            -webkit-text-fill-color: white;
+            /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: black;
+        }
+
+        .object-tooltip {
+            position: absolute;
+            margin-left: 0px;
+            margin-top: 0px;
+            font-weight: 900;
+            font-size: 150%;
+            color: white;
+            -webkit-text-fill-color: white;
+            /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: black;
+        }
+
+        .object-image {
+            position: absolute;
+            margin-left: -25px;
+            margin-top: -25px;
+        }
+
+        .roomtag-entry {
+            display: none;
+            /* to be overwritten */
+            margin-left: 16px;
+            margin-right: 16px;
+        }
+
+        .roomtag-label {
+            position: absolute;
+            margin-left: 0px;
+            margin-top: 10px;
+            font-weight: 700;
+            font-size: 125%;
+            color: white;
+            -webkit-text-fill-color: white;
+            /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: black;
+            font-family: var(--font-body);
+        }
+
+        .roomtag-image {
+            position: absolute;
+            margin-left: -45px;
+            margin-top: 0px;
+        }
+
+        .icon-image {
+            position: absolute;
+            margin-left: -25px;
+            margin-top: -25px;
+        }
+
+        .icon-label {
+            position: absolute;
+            font-weight: 900;
+            font-size: 100%;
+            color: white;
+            -webkit-text-fill-color: white;
+            /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: black;
+        }
+
+        .icon-tooltip {
+            position: absolute;
+            margin-left: -8px;
+            margin-top: -22px;
+            font-weight: 900;
+            font-size: 150%;
+            color: white;
+            -webkit-text-fill-color: white;
+            /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: black;
+        }
+
+        .overlay-label {
+            position: relative;
+            width: 150px;
+            height: 36px;
+            margin-top: 11px;
+            margin-bottom: 11px;
+        }
+
+        /* UI stuff */
+        .side-panel {
+            position: absolute;
+            top: 24px;
+            max-height: calc(100vh - 54px);
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            background: #0c0c0c;
+            z-index: 1000;
+            color: #cccccc;
+        }
+
+        /* Difficulty select and layers panel */
+        .right-panel {
+            right: 24px;
+        }
+
+        .difficulty-select {
+            padding-bottom: 6px;
+            width: 150px;
+            position: relative;
+            /* re-center after wrap */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 4px;
+            transition: width 0.4s;
+        }
+
+        .difficulty-btn {
+            display: inline-block;
+            width: 38px;
+            height: 38px;
+            margin: 4px;
+            position: relative;
+        }
+
+        #layer-content {
+            padding: 8px;
+        }
+
+        .left-panel {
+            left: 24px;
+        }
+
+        .toggleLanguage-ckb {
+            position: relative;
+            top: 3px;
+            padding-left: 6px;
+            margin-left: auto;
+        }
+
+        #toggleLanguage {
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+
+        #toggleLanguage~label {
+            left: 4px;
+            top: -3px;
+        }
+
+        #toggleLanguage::before {
+            font-size: 1rem;
+        }
+
+        .region-btn {
+            font-size: 0.8rem;
+            width: 230px;
+            height: 24px;
+            position: relative;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #999;
+        }
+
+        input[type='radio'].rw-ui+span {
+            top: calc(50% - 10px);
+            /* proof that CSS is stupid, cant fucking vertical center text */
+        }
+
+        #region-select {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        .scroll-ish {
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 24px !important;
+            margin-right: -16px !important;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .collapse-tab {
+            display: none;
+            width: 30px;
+            height: 30px;
+            user-select: none;
+            background: #0c0c0c;
+            background-image: url(./resources/hamburger.png);
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        @media (max-width: 899px) {
+            .side-panel {
+                transition: left ease 0.3s, right ease 0.3s;
+            }
+
+            .collapse-tab {
+                display: block;
+                cursor: pointer;
+            }
+
+            .left-panel.collapsed {
+                left: var(--hide-pos);
+            }
+
+            .right-panel.collapsed {
+                right: var(--hide-pos);
+            }
+
+            .left-panel .collapse-tab {
+                position: absolute;
+                right: -30px;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+
+            .right-panel .collapse-tab {
+                position: absolute;
+                left: -30px;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+            }
+
+            .collapsed .scroll-ish {
+                overflow-y: hidden;
+            }
+        }
+    </style>
+
+
+    <style id="spawnfilters">
+        .spawn-filter {
+            display: initial
+        }
+    </style>
+
+    <style id="objectfilters">
+        .object-filter {
+            display: initial
+        }
+    </style>
+
+    <style id="roomtagfilters">
+        .roomtag-filter {
+            display: initial
+        }
+    </style>
+
+    <style id="hoverlabels">
+        .hover-label {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="mapid"></div>
+
+    <div class="side-panel left-panel rw-text collapsible collapsed">
+        <div style="padding-left: 8px; padding-bottom: 8px;">
+            <a href="/mod-map" class="rw-text">&lt; 返回索引</a>
+            <hr />
+            <span>区域</span>
+            <span class="toggleLanguage-ckb">
+                <input type="checkbox" class="rw-ui rw-ui-ckb toggleLanguage-ckb" id="toggleLanguage"
+                    onclick="toggleLanguage()">
+                <label class="rw-text">显示中文</label>
+            </span>
+        </div>
+
+        <form name="regionselect" id="region-select" class="scroll-ish"></form>
+
+        <div class="collapse-tab"></div>
+    </div>
+
+    <div class="side-panel right-panel rw-text collapsible collapsed">
+        <div>蛞蝓猫</div>
+        <form name="difficulty" class="difficulty-select" id="scug-selector">
+        </form>
+
+        <div>图层</div>
+        <div id="layer-content" class="scroll-ish"></div>
+
+        <div class="collapse-tab"></div>
+    </div>
+
+    <script>
+        'use strict';
+        var loadedCount = 1;
+
+        // Dynamic navigation
+        var dynamicNavigation; // Stupid browsers
+        if ('pushState' in window.history) {
+            dynamicNavigation = true;
+        }
+
+        (function (w) {
+            w.URLSearchParams = w.URLSearchParams || function (searchString) {
+                //w.URLSearchParamsAlt = function (searchString) {
+                var self = this;
+                self.searchString = searchString;
+                self.values = {};
+                let result;
+                let exp = new RegExp('[\?&]([^=]*)=([^&#]*)', 'g');
+                while ((result = exp.exec(self.searchString)) != null) {
+                    console.log(result);
+                    self.values[result[1]] = decodeURI(result[2]);
+                }
+                // todo valueless
+                self.get = function (name) { return self.values[name]; };
+                self.set = function (name, value) { self.values[name] = value; };
+                self.delete = function (name) { delete self.values[name]; };
+                self.toString = function () {
+                    let str;
+                    for (var name in self.values) {
+                        if (str) str += '&'; else str = '';
+                        str += name + '=' + self.values[name];
+                    }
+                    if (!str) return '';
+                    return '?' + str;
+                };
+                return self;
+            }
+        })(window) // URLSearchParams Polyfill-ish
+
+        // Params, navigation, state
+        var params = new URLSearchParams(document.location.search);
+        var region;
+        var difficulty;
+        var room;
+        function pushState(noNavigation) {
+            let changes = false;
+            let difficulty_param = params.get("slugcat");
+            let region_param = params.get("region");
+            let room_param = params.get("room");
+
+            params.delete("slugcat");
+            params.delete("region");
+            params.delete("room");
+
+            params.set("slugcat", difficulty);
+            params.set("region", region);
+            if (room)
+                params.set("room", room);
+
+            if (difficulty != difficulty_param || region != region_param || room != room_param) {
+                // actually changed anything
+                let newstr = params.toString();
+                if (dynamicNavigation) {
+                    window.history.pushState(null, '', window.location.pathname + '?' + newstr);
+                } else if (!noNavigation) document.location.search = newstr;
+                if (!noNavigation) newState();
+            }
+
+            if (region != region_param) {
+                for (let i = 0; i < slugcats.length; i++) {
+                    document.getElementById("scug-" + slugcats[i]).classList.toggle("hidden", regions[region]["slugcats"].indexOf(slugcats[i].toLowerCase()) == -1);
+                }
+            }
+        }
+        function newState() {
+            //console.log("newState");
+            params = new URLSearchParams(document.location.search);
+            region = params.get("region");
+            difficulty = params.get("slugcat") ?? "white";
+            if (region == null) {
+                window.location.href = "index.html";
+                return;
+            }
+            room = params.get("room");
+            loadRegion(difficulty, region);
+            selectDifficulty(difficulty);
+        }
+
+        window.onpopstate = newState;
+        window.onload = newState;
+
+
+        // Setup or something like that
+        var regions = {};
+        var slugcats = [];
+        var poRules = {};
+        var displayChinese = false;  // 控制是否显示中文的标记
+
+        // 加载初始语言选择状态
+        window.addEventListener("load", () => {
+            displayChinese = localStorage.getItem('displayChinese') === 'true';
+            const checkbox = document.getElementById("toggleLanguage");
+            checkbox.checked = displayChinese;
+            renderRegions();
+            renderSlugcats();
+        });
+
+        // 切换语言显示并记住用户的选择
+        function toggleLanguage() {
+            displayChinese = document.getElementById("toggleLanguage").checked;
+            localStorage.setItem('displayChinese', displayChinese);
+            renderRegions();
+            renderSlugcats();
+        }
+
+        getJsonObject("regions.json", function (json) {
+            regions = json;
+            renderRegions();
+        }, false);
+
+        getJsonObject("slugcats.json", function (json) {
+            slugcats = json;
+        }, false);
+
+        getJsonObject("placedobjectsdata.json", function (json) { poRules = json; }, false);
+
+        function renderRegions() {
+            var html = "";
+            var regionListSorted = Object.keys(regions).sort((a, b) => regions[a]["name"].toUpperCase().localeCompare(regions[b]["name"].toUpperCase()));
+
+            for (const r of regionListSorted) {
+                const regionName = displayChinese ? (regions[r]["cname"] || regions[r]["name"] || "UNKNOWN") : (regions[r]["name"] || "UNKNOWN");
+                html += `
+<label>
+    <div class="region-btn">
+        <input type="radio" class="rw-ui" name="regions" onclick="selectRegion(this.value);" value="${r}"${r == region ? ' checked' : ''} autocomplete = "off">
+        <span>${regionName.toUpperCase()} (${r})</span>
+    </div>
+</label>`;
+            }
+            document.getElementById('region-select').innerHTML = html;
+        }
+
+        var html = "";
+        for (const slugcatName of slugcats) {
+            html += `
+<label class="difficulty-btn" id="scug-${slugcatName}">
+    <input type="radio" class="rw-ui" name="difficulties" onclick="selectDifficulty('${slugcatName}');" value="${slugcatName}"${slugcatName == difficulty ? ' checked' : ''} autocomplete="off">
+    <img src="./resources/slugcats/${slugcatName}.png">
+</label>`;
+            document.getElementById('scug-selector').innerHTML = html;
+        }
+
+        function selectRegion(value) {
+            if (region != value) {
+                room = null;
+                region = value;
+                if (regions[region]["slugcats"].indexOf(difficulty) == -1) {
+                    difficulty = regions[region]["slugcats"][0];
+                }
+                pushState();
+            }
+        }
+
+        function selectDifficulty(n) {
+            for (var i = 0; i < document.difficulty.difficulties.length; i++) {
+                if (document.difficulty.difficulties[i].value == n) {
+                    document.difficulty.difficulties[i].checked = true;
+                }
+            }
+            if (difficulty != n) {
+                difficulty = n;
+                pushState();
+            }
+        }
+
+        // Control with poor control options, whodvathot
+        // layer control with control over the classnames
+        L.Control.Layers.UnstupidLayer = L.Control.Layers.extend(
+            {
+                options: {
+                    collapsed: false,
+                    containerClass: "",
+                    sectionClass: "",
+                    overlaysListClass: "",
+                    overlayInputClass: "",
+                    overlayInputDivClass: "",
+                    overlayInputLabelClass: "",
+                    hideBaseLayers: true
+                },
+                _addItem: function (obj) {
+                    let h = L.Control.Layers.prototype._addItem.call(this, obj);
+                    h.className = this.options.overlayInputDivClass;
+                    h.children[0].className = this.options.overlayInputLabelClass;
+                    h.children[0].children[0].className = this.options.overlayInputClass;
+                    return h;
+                },
+                _initLayout: function () {
+                    L.Control.Layers.prototype._initLayout.call(this);
+                    this._container.className = this.options.containerClass;
+                    this._section.className = this.options.sectionClass;
+                    if (this.options.hideBaseLayers) {
+                        this._baseLayersList.style.display = "none";
+                        this._layersLink.style.display = "none";
+                    }
+                    this._overlaysList.className = this.options.overlaysListClass;
+                },
+                expand: function () { }
+            }
+        );
+
+        // Room hover & select stuff
+        var hilightedRoom;
+        function hilightRoom(e) {
+            if (e.target) e = e.target;
+            resetHilight();
+            hilightedRoom = e;
+            if (map.getZoom() < 0 && hilightedRoom != focusedRoom) {
+                e.setStyle({
+                    fillOpacity: 0.2
+                });
+            }
+        }
+
+        function updateHilight() {
+            if (hilightedRoom == null) return;
+            if (map.getZoom() < 0 && hilightedRoom != focusedRoom) {
+                hilightedRoom.setStyle({
+                    fillOpacity: 0.2
+                });
+            } else {
+                hilightedRoom.setStyle({
+                    fillOpacity: 0
+                });
+            }
+        }
+
+        function resetHilight() {
+            if (hilightedRoom == null) return;
+            hilightedRoom.setStyle({
+                fillOpacity: 0
+            });
+            hilightedRoom = null;
+        }
+
+        var focusedRoom;
+        function focusRoom(e) {
+            if (e.target) e = e.target;
+            if (e != focusedRoom && focusedRoom) focusedRoom.setStyle(
+                {
+                    weight: 0
+                });
+            focusedRoom = e;
+            console.log(focusedRoom.feature.properties.name + " focused")
+            map.fitBounds(e.getBounds());
+            updateHilight(); // might not move
+            focusedRoom.setStyle(
+                {
+                    weight: 6
+                });
+
+            room = e.feature.properties.name;
+            pushState();
+        }
+
+        function updateFocus() {
+            if (focusedRoom == null) return;
+            if (!map.getBounds().overlaps(focusedRoom.getBounds())) {
+                resetFocus();
+            }
+        }
+
+        function resetFocus() {
+            if (focusedRoom == null) return;
+            console.log(focusedRoom.feature.properties.name + " no longer focused")
+            focusedRoom.setStyle(
+                {
+                    weight: 0
+                });
+            focusedRoom = null;
+
+            room = null;
+            pushState(true); // no navigation so no zoom change
+        }
+
+        // Map
+        var map = L.map('mapid', {
+            minZoom: -7,
+            maxZoom: 3, // 8x
+            crs: L.CRS.Simple,
+            zoomControl: false,
+        });
+        map.attributionControl.setPrefix('基于<a href="https://leafletjs.com" title="一个用于交互式地图的JS库">Leaflet</a>, <a href="https://github.com/henpemaz" title="游戏开发及相关艺术爱好者">Henpemaz</a>, &amp; <a href="https://github.com/alduris" title="程序员和狐狸爱好者">Alduris</a>')
+        map.setView([0, 0], -5);
+
+        // Events
+        map.on('click', function (e) { if (e.originalEvent.target == map._container) resetFocus(); });
+        // remove room highlight on maxed zoom
+        map.on('zoomend', updateHilight);
+        map.on('moveend', updateFocus);
+        L.Tooltip.include({
+            setOpacity: function (o) { } // fuck you, don't style my elements unless I tell you to.
+        });
+        // on Room Names view, prevent hover popups from displaying
+        map.on('overlayadd', function (e) {
+            if (e.name == "Room Names") {
+                document.getElementById('hoverlabels').sheet.cssRules[0].style.display = 'none';
+            }
+        });
+        map.on('overlayremove', function (e) {
+            if (e.name == "Room Names") {
+                document.getElementById('hoverlabels').sheet.cssRules[0].style.removeProperty("display");
+            }
+        });
+
+        // Overlay control
+        var overlays = new L.Control.Layers.UnstupidLayer(null, null, {
+            overlayInputClass: "rw-ui",
+            overlayInputLabelClass: "overlay-label",
+        });
+        overlays.addTo(map);
+        document.getElementById('layer-content').appendChild(overlays.getContainer());
+
+        // Region stuff
+        var tileLayer;
+        var roomsLayer;
+        var roomNames;
+        var lastRoomFocused;
+        var connectionsLayer;
+        var geometryLayer;
+        var densLayer;
+        var placedObjectsLayer;
+        var roomTagsLayer;
+        var loadedDifficulty = null;
+        var loadedRegion = null;
+        function loadRegion(pdifficulty, pregion) {
+            if (loadedDifficulty == pdifficulty && loadedRegion == pregion) {
+                // Region isn't changing, double-check focused room
+                let foundRoom = false;
+                if (room != null && roomsLayer != null) {
+                    for (let l of roomsLayer.getLayers()) {
+                        if (l.feature.properties.name == room) {
+                            //map.fitBounds(l.getBounds());
+                            focusRoom(l);
+                            foundRoom = true;
+                            break;
+                        }
+                    }
+                }
+                if (!foundRoom) {
+                    console.log("newState err");
+                    resetFocus();
+                    map.setView([0, 0], -5);
+                }
+                return;
+            }
+            region = pregion; // chaos
+            console.log("Loading: region {" + region + "} on slugcat {" + pdifficulty + "}");
+            try {
+                if (regions[region]["slugcats"].indexOf(pdifficulty) == -1) {
+                    console.warn(pdifficulty + " does not exist for region! Picking first available slugcat for region.");
+                    if (regions[region]["slugcats"].length > 0) {
+                        pdifficulty = regions[region]["slugcats"][0];
+                    }
+                }
+            } catch (e) {
+                console.error(e);
+            }
+            let rdifficulty = pdifficulty;
+            if (["white", "yellow", "red", "night", "artificer", "rivulet", "spear", "gourmand", "saint", "inv"].indexOf(rdifficulty.toLowerCase()) == -1) rdifficulty = "modcats/" + rdifficulty;
+            let roompath = `https://alduris.github.io/modmap-data-${rdifficulty}/${region}`;
+            getJsonObject(`${roompath}/region.json`, function (json) {
+                var roomjson = json;
+                if ('copyingrooms' in json) {
+                    getJsonObject(`${roompath}/${region}/region.json`, function (copyjson) {
+                        roomjson = copyjson;
+                        roompath = `${roompath}/${region}`;
+                    }, false);
+                }
+
+                // Background color
+                map.getContainer().style.backgroundColor = 'rgb(' + json["bgcolor"].join(',') + ')'; // I hate this with passion, but such is the way of the CSS
+
+                // Tileset layer
+                if (tileLayer != null) map.removeLayer(tileLayer);
+                tileLayer = L.tileLayer(`${roompath}/{z}/{x}_{y}.png`, {
+                    attribution: "<a href=\"https://store.steampowered.com/app/312520/Rain_World/\">雨世界</a> 由 <a href=\"https://twitter.com/VideocultMedia\">Videocult</a>制作",
+                    minZoom: -7,
+                    maxZoom: 3,
+                    maxNativeZoom: 0, // important, stop requesting tiles at this point
+                });
+                tileLayer.addTo(map);
+
+                // Room features and name popups
+                let hadNames = map.hasLayer(roomNames) || loadedRegion == null;
+                if (roomNames != null) {
+                    overlays.removeLayer(roomNames);
+                    map.removeLayer(roomNames);
+                }
+                let hadRooms = map.hasLayer(roomsLayer) || loadedRegion == null;
+                if (roomsLayer != null) {
+                    overlays.removeLayer(roomsLayer);
+                    map.removeLayer(roomsLayer);
+                }
+                roomNames = L.layerGroup();
+                roomsLayer = L.geoJSON(roomjson["room_features"], {
+                    style: {
+                        weight: 0,
+                        color: 'rgb(' + json["highlightcolor"].join(',') + ')',
+                        fillOpacity: 0
+                    },
+                    onEachFeature: function (feature, layer) {
+                        // Room focus stuff
+                        layer.on({
+                            mouseover: hilightRoom,
+                            mouseout: resetHilight,
+                            click: focusRoom,
+                            tooltipopen: function (e) {
+                                e.tooltip.setLatLng(L.latLng([].concat(e.target.feature.properties.popupcoords).reverse()));
+                                e.tooltip.getElement().style.removeProperty('opacity'); // 'defaults' amirite
+                            },
+                        });
+
+                        L.tooltip({ direction: "center", offset: [0, -14], permanent: true, className: "rw-text room-labels" }, layer).setContent(feature.properties.name).setLatLng(L.latLng([].concat(feature.properties.popupcoords).reverse())).addTo(roomNames);
+
+                        layer.bindTooltip(feature.properties.name, { direction: "center", offset: [0, -14], interactive: true, className: "rw-text room-labels hover-label" });
+                    }
+                });
+                if (hadRooms) roomsLayer.addTo(map);
+                overlays.addOverlay(roomsLayer, "房间聚焦");
+                if (hadNames) roomNames.addTo(map);
+                overlays.addOverlay(roomNames, "房间名称");
+
+                // Connections
+                let hadConnections = map.hasLayer(connectionsLayer) || loadedRegion == null;
+                if (connectionsLayer != null) {
+                    overlays.removeLayer(connectionsLayer);
+                    map.removeLayer(connectionsLayer);
+                }
+                connectionsLayer = new L.BezierGeoJSON(roomjson["connection_features"], {
+                    color: 'rgba(' + json["shortcutcolor"].join(',') + ',0.72)', // so the white looks better
+                    weight: 2,
+                    lineCap: "butt", // hehe
+                    dashArray: "5 8",
+                    interactive: false,
+                });
+                if (hadConnections) connectionsLayer.addTo(map);
+                overlays.addOverlay(connectionsLayer, "管道连接");
+
+                // Geometry
+                let hadGeometry = map.hasLayer(geometryLayer) || loadedRegion == null;
+                if (geometryLayer != null) {
+                    overlays.removeLayer(geometryLayer);
+                    map.removeLayer(geometryLayer);
+                }
+                geometryLayer = L.geoJSON(roomjson["geo_features"], {
+                    interactive: false,
+                    color: 'rgb(' + json["geocolor"].join(',') + ')',
+                    weight: 2,
+                    lineCap: "butt", // im easily entertained
+                    lineJoin: "miter",
+                });
+                if (hadGeometry) geometryLayer.addTo(map);
+                overlays.addOverlay(geometryLayer, "房间轮廓");
+
+                // Spawns
+                let hadSpawns = map.hasLayer(densLayer) || loadedRegion == null;
+                if (densLayer != null) {
+                    overlays.removeLayer(densLayer);
+                    map.removeLayer(densLayer);
+                }
+                densLayer = L.geoJSON(json["spawn_features"], {
+                    pointToLayer: function (feature, latlng) {
+                        // Spawns are organized by dens, dens list spawns in it, flexbox stacks them visually on the den location, filter classes control visib
+                        let divhtml = "";
+                        for (let spawn of feature.properties.spawns) {
+                            let spawn_filter = " spawn-filter";
+                            if (spawn.is_lineage) {
+                                // lineages are vertical stacks
+                                divhtml += '<div class="spawn-entry ' + spawn_filter + '">';
+                                for (let i = 0; i < spawn.lineage.length; i++) {
+                                    var tooltip = "";
+                                    if ((spawn.spawnData?.indexOf("Night") ?? -1) > -1) {
+                                        tooltip += "🌙";
+                                    }
+                                    if ((spawn.spawnData?.indexOf("PreCycle") ?? -1) > -1) {
+                                        tooltip += "🚿";
+                                    }
+
+                                    var path = "./resources/creatures/" + spawn.lineage[i].toLowerCase() + ".png";
+                                    if (spawn.lineage[i] == "") path = "./resources/none.png";
+                                    divhtml += `<div class="lineage-entry">
+                                        <img class="icon-image" src="${path}"/>
+                                        <div class="icon-label">${Math.trunc(Number.parseFloat(spawn.lineage_probs[i]) * 100)}</div>
+                                        <div class="icon-tooltip">${tooltip}</div>
+                                        </div>`;
+                                }
+                                divhtml += '</div>';
+                            } else {
+                                var tooltip = "";
+                                if (spawn.night) {
+                                    tooltip += "🌙";
+                                }
+                                if (spawn.pre_cycle) {
+                                    tooltip += "🚿";
+                                }
+                                divhtml += `<div class="spawn-entry${spawn_filter}">
+                                    <img class="icon-image" src="./resources/creatures/${spawn.creature.toLowerCase()}.png"/>
+                                    <div class="icon-label">x${spawn.amount}</div>
+                                    <div class="icon-tooltip">${tooltip}</div>
+                                    </div>`;
+                            }
+                        }
+                        return L.marker(latlng, {
+                            icon: L.divIcon({
+                                className: 'spawn-divs',
+                                html: divhtml,
+                            }),
+                            interactive: false,
+                        });
+                    },
+                });
+                if (hadSpawns) densLayer.addTo(map);
+                overlays.addOverlay(densLayer, "生物生成");
+
+                // Placed Objects
+                let hadPlacedObjects = map.hasLayer(placedObjectsLayer) || loadedRegion == null;
+                if (placedObjectsLayer != null) {
+                    overlays.removeLayer(placedObjectsLayer);
+                    map.removeLayer(placedObjectsLayer);
+                }
+                placedObjectsLayer = L.geoJSON(json["placedobject_features"], {
+                    pointToLayer: function (feature, latlng) {
+                        let objecthtml = "";
+                        let object = feature.properties.object;
+                        let data = feature.properties.settings;
+
+                        // Parse thingy
+                        let rules = poRules[object];
+                        rules ??= poRules[object.toLowerCase()];
+                        if (rules != undefined && "use" in rules) {
+                            console.log("Using " + rules["use"] + " for object " + object);
+                            object = rules[use];
+                        }
+
+                        // Data!
+                        let icon = "./resources/objects/" + object.toLowerCase() + ".png";
+                        let tooltip = "";
+                        let display = true;
+
+                        if (rules != undefined) {
+                            if ("icon" in rules) {
+                                let val = parseRule(rules["icon"], new Map([["default", icon], ["slugcat", pdifficulty], ["settings", data]]));
+                                if (typeof val != "string") {
+                                    throw new SyntaxError("Expected string for icon!");
+                                }
+                                icon = val;
+                            }
+                            if ("displayif" in rules) {
+                                let val = parseRule(rules["displayif"], new Map([["default", display], ["slugcat", pdifficulty], ["settings", data]]));
+                                if (typeof val != "boolean") {
+                                    throw new SyntaxError("Expected boolean for display!");
+                                }
+                                display = val;
+                            }
+                            if ("text" in rules) {
+                                let strs = [];
+                                for (const rule of rules["text"]) {
+                                    strs.push(parseRule(rule, new Map([["slugcat", pdifficulty], ["settings", data]])));
+                                }
+                                for (let i = 0; i < strs.length; i++) {
+                                    strs[i] = strs[i].replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;').replaceAll("\n", "<br/>");
+                                }
+                                tooltip = strs.join("<br/>");
+                            }
+                        }
+
+                        // The resulting HTML
+                        if (display) {
+                            objecthtml += `<div class="object-entry">
+                                        <img class="object-image" src="${icon}"/>
+                                        <div class="object-tooltip">${tooltip}</div>
+                                        </div>`;
+                        }
+
+                        return L.marker(latlng, {
+                            icon: L.divIcon({
+                                className: 'object-divs',
+                                html: objecthtml,
+                            }),
+                            interactive: false,
+                        });
+                    },
+                });
+                //if (hadPlacedObjects) placedObjectsLayer.addTo(map);
+                //overlays.addOverlay(placedObjectsLayer, "放置物品");
+
+                // Room Tags
+                let hadRoomTags = map.hasLayer(roomTagsLayer) || loadedRegion == null;
+                if (roomTagsLayer != null) {
+                    overlays.removeLayer(roomTagsLayer);
+                    map.removeLayer(roomTagsLayer);
+                }
+                roomTagsLayer = L.geoJSON(json["roomtag_features"], {
+                    pointToLayer: function (feature, latlng) {
+                        let taghtml = "";
+                        let roomtag = feature.properties;
+                        let icons = [];
+                        let tooltips = [];
+
+                        for (const tag of roomtag.tags) {
+                            if (tag == "SHELTER") {
+                                tooltips.push("Shelter");
+                                icons.push("Shelter_icon");
+                            } else if (tag == "ANCIENTSHELTER") {
+                                tooltips.push("Ancient Shelter");
+                                icons.push("AncientShelter_icon");
+                            } else if (tag == "GATE") {
+                                tooltips.push("Gate");
+                                icons.push("Gate_icon");
+                            } else if (tag == "SWARMROOM") {
+                                tooltips.push("Swarm Room");
+                                icons.push("SwarmRoom_icon");
+                            } else if (tag == "PERF_HEAVY") {
+                                tooltips.push("Performance Heavy");
+                            } else if (tag == "SCAVOUTPOST") {
+                                tooltips.push("Scavenger Toll");
+                                icons.push("ScavOutpost_icon");
+                            } else if (tag == "SCAVTRADER") {
+                                tooltips.push("Scavenger Merchant");
+                                icons.push("ScavTrader_icon");
+                            } else if (tag == "NOTRACKERS") {
+                                tooltips.push("No Trackers");
+                            } else if (tag == "ARENA") {
+                                tooltips.push("Arena");
+                            } else {
+                                tooltips.push(tag);
+                                icons.push("unknown-white");
+                            }
+                        }
+
+                        // Put together the HTML
+                        taghtml += "<div class=\"roomtag-entry roomtag-filter\">";
+                        for (const icon of icons) {
+                            taghtml += `<img class="roomtag-image" src="./resources/${icon}.png"/>`;
+                        }
+                        for (const tooltip of tooltips) {
+                            taghtml += `<div class="roomtag-label">${tooltip}</div>`;
+                        }
+                        taghtml += "</div>";
+
+                        return L.marker(latlng, {
+                            icon: L.divIcon({
+                                className: 'roomtag-divs',
+                                html: taghtml,
+                            }),
+                            interactive: false,
+                        });
+                    },
+                });
+                //if (hadRoomTags) roomTagsLayer.addTo(map);
+                //overlays.addOverlay(roomTagsLayer, "房间标签");
+
+                // Zoom to room on rooms loaded
+                let foundRoom = false;
+                if (room != null && roomsLayer != null) {
+                    for (let l of roomsLayer.getLayers()) {
+                        if (l.feature.properties.name == room) {
+                            //map.fitBounds(l.getBounds());
+                            focusRoom(l);
+                            foundRoom = true;
+                            break;
+                        }
+                    }
+                }
+                if (!foundRoom) {
+                    if (room != null) {
+                        room = null;
+                        pushState();
+                    }
+                    console.log(`regionLoad err coming from ${loadedDifficulty} to ${pdifficulty}, layers len = ${roomsLayer.getLayers().length}`);
+                    resetFocus();
+                    map.setView([0, 0], -5);
+                }
+
+                loadedDifficulty = pdifficulty;
+                loadedRegion = pregion;
+
+                // Don't enable certain layers when loaded for the first time
+                if (loadedCount == 1) {
+                    map.removeLayer(placedObjectsLayer);
+                    map.removeLayer(roomTagsLayer);
+                };
+                loadedCount++;
+            }, true);
+
+            if (Object.keys(regions).indexOf(region) != -1) {
+                for (let i = 0; i < slugcats.length; i++) {
+                    document.getElementById("scug-" + slugcats[i]).classList.toggle("hidden", regions[region]["slugcats"].indexOf(slugcats[i].toLowerCase()) == -1);
+                }
+            }
+        }
+
+        // My weird lisp parsing system for the placed object data
+        /**
+         * Rule parser thingy. Secretly has very loose parsing, not that it's intended, just that I was too lazy to fill in some of it.
+         * @param {string} rule A rule parenthesis or string
+         * @param {Map<string, string>} values The values for some instructions
+         * @returns {*} Whatever the result of the rule is
+         */
+        function parseRule(rule, values) {
+            if (typeof rule != "string") {
+                throw new SyntaxError("Error parsing rule! Not of type string");
+            }
+
+            rule = rule.trim();
+            if (rule.length == 0) return "";
+            if (rule[0] == "(" && rule[rule.length - 1] == ")") {
+                // Parenthesis
+                rule = rule.substring(1, rule.length - 1);
+                let keyword = rule.indexOf(" ") != -1 ? rule.substring(0, rule.indexOf(" ")) : rule;
+                let args = [];
+
+                // Split the thingy
+                let inWhitespace = true;
+                let tempValue = "";
+                let stack = [];
+                for (let i = keyword.length + 1; i < rule.length; i++) {
+                    if (stack.length > 0) {
+                        switch (stack[0]) {
+                            case "'": {
+                                if (rule[i] == "'") {
+                                    stack.shift();
+                                    tempValue += rule[i];
+                                } else if (rule[i] == "\\") {
+                                    // Skip the next value in processing but add both to tempValue
+                                    tempValue += rule[i] + rule[i + 1];
+                                    i++;
+                                } else {
+                                    tempValue += rule[i];
+                                }
+                                break;
+                            }
+                            case "(": {
+                                if (rule[i] == "(") {
+                                    stack.unshift("(");
+                                } else if (rule[i] == "'") {
+                                    stack.unshift("'");
+                                } else if (rule[i] == ")") {
+                                    stack.shift();
+                                }
+                                tempValue += rule[i];
+                                break;
+                            }
+                            default: {
+                                throw new TypeError("Unknown string in stack! (" + stack[0] + ")");
+                            }
+                        }
+                    } else {
+                        if (rule[i] == " ") {
+                            if (!inWhitespace) {
+                                inWhitespace = true;
+                                args.push(tempValue);
+                            }
+                        } else {
+                            if (inWhitespace) {
+                                inWhitespace = false;
+                                tempValue = "";
+                            }
+
+                            if (rule[i] == "(") {
+                                stack.unshift("(");
+                            } else if (rule[i] == "'") {
+                                stack.unshift("'");
+                            }
+                            tempValue += rule[i];
+                        }
+                    }
+                }
+                args.push(tempValue);
+                if (stack.length > 0) {
+                    throw new SyntaxError("Mismatched parenthesis!");
+                }
+
+                // Parse the arguments (this will also weed out any syntax errors)
+                args = args.map(x => parseRule(x, values));
+
+                // Okay ! yippee now we can do code stuff
+                switch (keyword) {
+                    case "": {
+                        return "";
+                    }
+                    case "default": {
+                        if (!values.has("default")) {
+                            throw new SyntaxError("The use of 'default' is not allowed here!");
+                        }
+                        return values.get("default");
+                    }
+                    case "slugcat": {
+                        if (!values.has("slugcat")) {
+                            throw new SyntaxError("The use of 'slugcat' is not allowed here!");
+                        }
+                        return values.get("slugcat");
+                    }
+                    case "setting": {
+                        if (!values.has("settings")) {
+                            throw new SyntaxError("The use of 'settings' is not allowed here!");
+                        }
+                        let settings = values.get("settings");
+                        if (args.length < 1) {
+                            throw new SyntaxError("(settings num) requires at least 1 argument!");
+                        }
+                        let num = parseInt(args[0]);
+                        if (isNaN(num)) {
+                            throw new SyntaxError("(settings num) expects an integer as first argument!");
+                        } else if (num < 0 || num > settings.length) {
+                            throw new RangeError("(settings num) expects a number [0, length of settings)! (this is range syntax for you uncultured people)")
+                        }
+                        return settings[num];
+                    }
+                    case "true": return true;
+                    case "false": return false;
+                    case "array": return args; // this can return empty array. that's intended.
+                    case "string": {
+                        if (args.length == 1) return args[0].toString();
+                        else throw new SyntaxError("(string arg) expects exactly one argument!");
+                    }
+                    case "number": {
+                        if (args.length == 1) return Number(args[0]);
+                        else throw new SyntaxError("(number arg) expects exactly one argument!");
+                    }
+                    case "+": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(+ args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(+ args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev + curr);
+                    }
+                    case "-": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(- args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(- args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev - curr);
+                    }
+                    case "*": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(* args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(* args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev * curr);
+                    }
+                    case "/": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(/ args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(/ args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev / curr);
+                    }
+                    case "%": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(% args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(% args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev % curr);
+                    }
+                    case "**": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(** args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(** args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev ** curr);
+                    }
+                    case "&": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(& args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(& args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev & curr);
+                    }
+                    case "|": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(| args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(| args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev | curr);
+                    }
+                    case "^": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(^ args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(^ args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev ^ curr);
+                    }
+                    case "~": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(~ arg) expects at least one argument!");
+                        } else if (typeof args[0] != "number") {
+                            throw new SyntaxError("(~ arg) expects a number as first argument!");
+                        }
+                        return ~args[0];
+                    }
+                    case ">": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(> args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(> args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev > curr);
+                    }
+                    case "<": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(< args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(< args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev < curr);
+                    }
+                    case ">=": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(>= args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(>= args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev >= curr);
+                    }
+                    case "<=": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(<= args...) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "number")) {
+                            throw new SyntaxError("(<= args...) expects all its arguments to be numbers! Argument " + (args.findIndex(x => typeof x != "number") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev <= curr);
+                    }
+                    case "==": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(== args...) requires at least two arguments!");
+                        }
+                        return args.reduce((prev, curr) => prev == curr);
+                    }
+                    case "!=": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(!= args...) requires at least two arguments!");
+                        }
+                        return args.reduce((prev, curr) => prev != curr);
+                    }
+                    case "&&":
+                    case "and": {
+                        if (args.some(x => typeof x != "boolean")) {
+                            throw new SyntaxError("(and args...) expects all its arguments to be booleans! Argument " + (args.findIndex(x => typeof x != "boolean") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev && curr);
+                    }
+                    case "||":
+                    case "or": {
+                        if (args.some(x => typeof x != "boolean")) {
+                            throw new SyntaxError("(or args...) expects all its arguments to be booleans! Argument " + (args.findIndex(x => typeof x != "boolean") + 1) + " was not.");
+                        }
+                        return args.reduce((prev, curr) => prev || curr);
+                    }
+                    case "!":
+                    case "not": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(not arg) expects at least one argument!");
+                        } else if (typeof args[0] != "boolean") {
+                            throw new SyntaxError("(not arg) expects a boolean as first argument!");
+                        }
+                        return !args[0];
+                    }
+                    case "if": {
+                        if (typeof args[0] != "boolean") {
+                            throw new SyntaxError("(if condition valueIfTrue valueIfFalse?) expects a boolean as first argument!");
+                        } else if (args.length < 2) {
+                            throw new SyntaxError("(if condition valueIfTrue valueIfFalse?) requires at least 2 arguments!")
+                        } else {
+                            return args[0] ? args[1] : (args[2] ?? "");
+                        }
+                    }
+                    case "round": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(round arg) expects at least one argument!");
+                        } else if (typeof args[0] != "number") {
+                            throw new SyntaxError("(round arg) expects a number as first argument!");
+                        }
+                        return Math.round(args[0]);
+                    }
+                    case "floor": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(floor arg) expects at least one argument!");
+                        } else if (typeof args[0] != "number") {
+                            throw new SyntaxError("(floor arg) expects a number as first argument!");
+                        }
+                        return Math.floor(args[0]);
+                    }
+                    case "ceil": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(ceil arg) expects at least one argument!");
+                        } else if (typeof args[0] != "number") {
+                            throw new SyntaxError("(ceil arg) expects a number as first argument!");
+                        }
+                        return Math.ceil(args[0]);
+                    }
+                    case "trunc": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(trunc arg) expects at least one argument!");
+                        } else if (typeof args[0] != "number") {
+                            throw new SyntaxError("(trunc arg) expects a number as first argument!");
+                        }
+                        return Math.trunc(args[0]);
+                    }
+                    case "sqrt": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(sqrt arg) expects at least one argument!");
+                        } else if (typeof args[0] != "number") {
+                            throw new SyntaxError("(sqrt arg) expects a number as first argument!");
+                        }
+                        return Math.sqrt(args[0]);
+                    }
+                    case "lower": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(lower arg) expects at least one argument!");
+                        } else if (typeof args[0] != "string") {
+                            throw new SyntaxError("(lower arg) expects a string as first argument!");
+                        }
+                        return args[0].toLowerCase();
+                    }
+                    case "upper": {
+                        if (args.length < 1) {
+                            throw new SyntaxError("(upper arg) expects at least one argument!");
+                        } else if (typeof args[0] != "string") {
+                            throw new SyntaxError("(upper arg) expects a string as first argument!");
+                        }
+                        return args[0].toUpperCase();
+                    }
+                    case "split": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(split string delimiter) requires at least two arguments!");
+                        } else if (args.some(x => typeof x != "string")) {
+                            throw new SyntaxError("(split string delimiter) expects all its arguments to be strings! Argument " + (args.findIndex(x => typeof x != "string") + 1) + " was not.");
+                        }
+                        return args[0].split(args[1]);
+                    }
+                    case "join": {
+                        if (args.some(x => typeof x != "string")) {
+                            throw new SyntaxError("(join args...) expects all its arguments to be strings! Argument " + (args.findIndex(x => typeof x != "string") + 1) + " was not.");
+                        }
+                        return args.join("");
+                    }
+                    case "joinwith": {
+                        if (args.some(x => typeof x != "string")) {
+                            throw new SyntaxError("(joinwith separator args...) expects all its arguments to be strings! Argument " + (args.findIndex(x => typeof x != "string") + 1) + " was not.");
+                        }
+                        return args.slice(1).join(args[0]);
+                    }
+                    case "contains": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(contains container item) requires at least two arguments!");
+                        } else if (typeof args[1] != "string") {
+                            throw new SyntaxError("(contains container item) expects a string as second argument!");
+                        } else if (typeof args[0] == "string" || args[0] instanceof Array) {
+                            return args[0].indexOf(args[1]) > -1;
+                        } else {
+                            throw new SyntaxError("(contains container item) expects a string or array as first argument!");
+                        }
+                    }
+                    case "index": {
+                        if (args.length < 2) {
+                            throw new SyntaxError("(index container item) requires at least two arguments!");
+                        } else if (typeof args[1] != "string") {
+                            throw new SyntaxError("(index container item) expects a string as second argument!");
+                        } else if (typeof args[0] == "string" || args[0] instanceof Array) {
+                            return args[0].indexOf(args[1]);
+                        } else {
+                            throw new SyntaxError("(index container item) expects a string or array as first argument!");
+                        }
+                    }
+                    default: {
+                        return parseRule(rule, values); // maybe it's unnecessary parenthesis?
+                    }
+                }
+            }
+            else if (rule[0] == "'" && rule[rule.length - 1] == "'") {
+                // String
+                rule = rule.substring(1, rule.length - 1);
+                let str = "";
+                for (let i = 0; i < rule.length; i++) {
+                    if (rule[i] == "'") {
+                        throw new SyntaxError("Error parsing string: too many ' characters");
+                    } else if (rule[i] == "\\") {
+                        if (i == rule.length - 1) {
+                            throw new SyntaxError("Expected character after escape in string!");
+                        } else {
+                            switch (rule[i + 1]) {
+                                case "\\":
+                                case "'":
+                                    str += rule[i + 1];
+                                    break;
+                                case "n":
+                                    str += "\n";
+                                    break;
+                                default:
+                                    console.warn("Unknown escape sequence: \\" + rule[i + 1]);
+                                    break;
+                            }
+                        }
+                    } else {
+                        str += rule[i];
+                    }
+                }
+                return str;
+            }
+            else if (/^(?:\d+\.?|\d*\.\d+)$/m.test(rule) && !isNaN(Number(rule))) {
+                return Number(rule);
+            }
+            else {
+                throw new SyntaxError("Error parsing rule {" + rule + "}: either did not begin with (, ', or number or end with the corresponding matching character!");
+            }
+        }
+
+        // Collapsible things
+        var uncollapsed = null;
+        var collapsible = document.querySelectorAll(".collapsible");
+
+        for (const el of collapsible) {
+            // 设置固定的 --hide-pos 值
+            if (el.classList.contains("left-panel")) {
+                el.style.setProperty("--hide-pos", "-262px");
+            } else if (el.classList.contains("right-panel")) {
+                el.style.setProperty("--hide-pos", "-182px");
+            }
+
+            var button = el.querySelector(".collapse-tab");
+            button.addEventListener("click", (e) => {
+                if (uncollapsed != null) {
+                    uncollapsed.classList.add("collapsed");
+                }
+                if (uncollapsed == el) {
+                    uncollapsed = null;
+                } else {
+                    uncollapsed = el;
+                    el.classList.remove("collapsed");
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

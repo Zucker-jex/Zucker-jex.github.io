@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>雨世界观望者地图</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <meta name="description" content="雨世界观望着DLC 中各地区的在线互动地图。">
+    <meta name="keywords" content="雨世界地图, 雨世界观望者地图, 雨世界守望者地图, rain world map, rain world watcher, rain world watcher map, rain world watcher regions">
+
+    <meta property="og:image" content="https://rain-world-map-sc.github.io/watcher-map/embed.png" />
+    <meta property="og:type" content="object" />
+    <meta property="og:title" content="雨世界观望者地图" />
+    <meta property="og:url" content="https://rain-world-map-sc.github.io/watcher-map/" />
+    <meta property="og:description" content="包含了雨世界观望者 DLC 中各地区的在线交互地图." />
+    <link rel="stylesheet" href="./rw.css" />
+
+    <script src="./global.js"></script>
+
+    <style>
+        :root {
+            --cols: 1;
+        }
+
+        /* big flex block of darkness */
+        body,
+        html {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* floaty in the center */
+        #main-menu {
+            margin: auto;
+        }
+
+        /* stuck to the bottom, custom link colors */
+        #main-menu-footer {
+            margin-bottom: 1rem;
+            text-align: center;
+            font-family: var(--font-body);
+            font-size: 0.8em;
+            font-weight: 500;
+            color: #A9A4B2;
+            /* menu lightgray */
+            background-color: black;
+        }
+
+        #main-menu-footer a:link {
+            color: white;
+        }
+
+        #main-menu-footer a:visited {
+            color: #A9A4B2;
+            /* menu lightgray */
+        }
+
+        .rw-title {
+            margin-top: min(10vw, 10vh);
+        }
+
+        #regionlist {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 1.6em;
+            margin-bottom: 1.6em;
+            max-width: 90vw;
+
+            display: grid;
+            grid-template-columns: repeat(var(--cols), auto);
+            justify-items: center;
+            gap: 16px;
+        }
+
+        details.rw-ui {
+            border-radius: 8px;
+            border: 2px solid white;
+            width: calc(var(--region-btn-width) + 12px);
+        }
+
+        details.rw-ui>summary {
+            background: white;
+            color: black;
+            padding: 4px 8px;
+            font-family: var(--font-body);
+            font-weight: 600;
+        }
+
+        .region-sublist {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            padding: 6px;
+        }
+
+
+        button.region-button {
+            position: relative;
+            width: var(--region-btn-width);
+            height: 40px;
+            background: black;
+        }
+
+        .difficulty-btn {
+            display: inline-block;
+            width: 38px;
+            height: 38px;
+            margin: 4px;
+            position: relative;
+        }
+
+
+        @media screen and (max-width: 640px) {
+            button.region-button {
+                height: 32px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <form id="main-menu" action="map.html" method="get">
+        <div class="rw-title">Rain World: Watcher</div>
+        <div class="rw-bigtext" style="text-align: center; margin-top:0.5em;">我迷失在...</div>
+        <div id="regionlist">
+            <details open class="rw-ui">
+                <summary>序言区域</summary>
+                <div class="region-sublist">
+                    <button class="region-button rw-ui rw-text" name="region" value="HI">工业区 (HI)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="SU">郊区 (SU)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="CC">烟囱顶篷 (CC)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="SH">阴影城堡 (SH)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="LF">农场阵列 (LF)</button>
+                </div>
+            </details>
+            <details open class="rw-ui">
+                <summary>活动区域</summary>
+                <div class="region-sublist">
+                    <button class="region-button rw-ui rw-text" name="region" value="WARF">以太山脊 (WARF)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WBLA">不毛之地 (WBLA)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WARD">冷库 (WARD)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WRFA">珊瑚洞穴 (WRFA)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WTDB">凄凉地带 (WTDB)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WARC">腐臭幽谷 (WARC)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WARE">供热管道 (WARE)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WRRA">锈蚀残骸 (WRRA)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WARB">盐化区 (WARB)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WSKD">雾罩海岸 (WSKD)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WPTA">信号尖塔 (WPTA)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WSKC">风暴海岸 (WSKC)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WSKB">普照港 (WSKB)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WARG">表面 (WARG)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WSKA">暴雨铁路 (WSKA)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WTDA">炎热沙漠 (WTDA)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WRFB">涡流泵 (WRFB)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WVWA">翠绿水道 (WVWA)</button>
+                </div>
+            </details>
+            <details open class="rw-ui">
+                <summary>腐化免疫区域</summary>
+                <div class="region-sublist">
+                    <button class="region-button rw-ui rw-text" name="region" value="WARA">破碎露台 (WARA)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WRSA">恶魔 (WRSA)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WAUA">上古城市 (WAUA)</button>
+                </div>
+            </details>
+            <details open class="rw-ui">
+                <summary>腐化区域</summary>
+                <div class="region-sublist">
+                    <button class="region-button rw-ui rw-text" name="region" value="WHIR">腐化工厂 (WHIR)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WSUR">欲坠边缘 (WSUR)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WDSR">衰败隧道 (WDSR)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WGWR">受侵染的废土 (WGWR)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WSSR">不幸演化 (WSSR)</button>
+                    <button class="region-button rw-ui rw-text" name="region" value="WORA">外缘（观望者） (WORA)</button>
+                </div>
+            </details>
+        </div>
+
+        <script>
+            let regions = {};
+            const gap = 4;
+
+            function organizeColumns() {
+                return;
+                const buttons = document.getElementsByClassName("region-button");
+                let numRegions = buttons.length;
+
+                // Return 1 if no regions
+                if (numRegions == 0) {
+                    console.log("No regions!");
+                    document.documentElement.style.setProperty("--cols", "1");
+                    return;
+                }
+
+                // Compute body size
+                const maxWidth = window.innerWidth * 0.9;
+                const idealHeight = window.innerHeight * 0.6;
+
+                // Compute size of buttons
+                const buttonBox = buttons[0].getBoundingClientRect();
+                const buttonWidth = buttonBox.width + gap;
+                const buttonHeight = buttonBox.height + gap;
+                const maxColumns = Math.floor(maxWidth / buttonWidth);
+                const idealMaxRows = Math.floor(idealHeight / buttonHeight);
+
+                // Figure out how many columns we can get away with
+                const idealColumns = Math.ceil(numRegions * buttonHeight / idealHeight);
+                document.documentElement.style.setProperty("--cols", Math.max(1, idealColumns > maxColumns ? maxColumns : idealColumns));
+
+                console.log(`Num regions: ${numRegions}
+Possible columns: ${maxColumns}
+Possible rows: ${idealMaxRows}
+Ideal number of columns: ${idealColumns}`);
+            }
+            window.addEventListener("resize", () => organizeColumns());
+
+            /*getJsonObject("regions.json", function(json) {
+                console.log(json);
+                regions = json;
+                let html = "";
+                for (const r of Object.keys(regions)) {
+                    html += '<button class="region-button rw-ui rw-text" name="region" value="' + r + '">' + regions[r]["name"].toUpperCase() + ' (' + r + ')</button>';
+                }
+                document.getElementById('regionlist').innerHTML = html;
+            }, true);*/
+            organizeColumns();
+        </script>
+    </form>
+    <div id="main-menu-footer"><a href="https://github.com/alduris/MapExporter">GitHub</a> 上的代码 |
+        <a href="https://henpemaz.github.io/Rain-World-Interactive-Map/" target="_blank"> 最初 </a>
+        由 <a href="https://github.com/henpemaz/" target="_blank">Henpemaz</a> 制作 |
+        由 <a href="https://github.com/Dual-Iron/" target="_blank">Dual</a> 移植 |
+        由 <a href="https://github.com/NobleCat57/" target="_blank">JuliaCat</a> 改良 |
+        当前为 <a href="https://github.com/alduris/" target="_blank">Alduris</a> 版本 |
+        预览图片由 <a href="https://github.com/MagicaJaphet" target="_blank">MagicaJaphet</a> 绘制 |
+        <a href="https://store.steampowered.com/app/312520/Rain_World/" target="_blank">雨世界</a> 是 <a
+            href="https://twitter.com/VideocultMedia" target="_blank">Videocult</a> 的财产
+    </div>
+</body>
+
+</html>

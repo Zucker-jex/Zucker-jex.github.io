@@ -36,13 +36,13 @@ header:
   #   url: /page/game_of_life.html
 
   - titles:
-      en    : &EN       RS
-      zh-Hans: &ZH_HANS 随选
-      zh-Hant: &ZH_HANT 隨選
-      ja    : &JA       ラセ
-      fr    : &FR       SA
-      de    : &DE       ZA
-    url: /page/random.html
+      en    : &EN       RWM
+      zh-Hans: &ZH_HANS RWM
+      zh-Hant: &ZH_HANT RWM
+      ja    : &JA       RWM
+      fr    : &FR       RWM
+      de    : &DE       RWM
+    url: /page/RWM/index.html
 
   - titles:
       en    : &EN       x86doc

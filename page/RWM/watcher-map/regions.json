@@ -1,0 +1,290 @@
+{
+	"HI": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "工业区",
+		"specificNames": [
+			"Industrial Complex"
+		]
+	},
+	"SU": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "郊区",
+		"specificNames": [
+			"Outskirts"
+		]
+	},
+	"CC": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "烟囱顶篷",
+		"specificNames": [
+			"Chimney Canopy"
+		]
+	},
+	"SH": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "阴影城堡",
+		"specificNames": [
+			"Shaded Citadel"
+		]
+	},
+	"LF": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "农场阵列",
+		"specificNames": [
+			"Farm Arrays"
+		]
+	},
+	"WBLA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "不毛之地",
+		"specificNames": [
+			"Badlands"
+		]
+	},
+	"WPTA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "信号尖塔",
+		"specificNames": [
+			"Signal Spires"
+		]
+	},
+	"WRRA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "锈蚀残骸",
+		"specificNames": [
+			"Rusted Wrecks"
+		]
+	},
+	"WTDA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "炎热沙漠",
+		"specificNames": [
+			"Torrid Desert"
+		]
+	},
+	"WTDB": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "凄凉地带",
+		"specificNames": [
+			"Desolate Tract"
+		]
+	},
+	"WRFA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "珊瑚洞穴",
+		"specificNames": [
+			"Coral Caves"
+		]
+	},
+	"WRFB": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "涡流泵",
+		"specificNames": [
+			"Turbulent Pump"
+		]
+	},
+	"WSKA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "暴雨铁路",
+		"specificNames": [
+			"Torrential Railways"
+		]
+	},
+	"WSKB": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "普照港",
+		"specificNames": [
+			"Sunlit Port"
+		]
+	},
+	"WSKC": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "风暴海岸",
+		"specificNames": [
+			"Stormy Coast"
+		]
+	},
+	"WSKD": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "雾罩海岸",
+		"specificNames": [
+			"Shrouded Coast"
+		]
+	},
+	"WVWA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "翠绿水道",
+		"specificNames": [
+			"Verdant Waterways"
+		]
+	},
+	"WARA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "破碎露台",
+		"specificNames": [
+			"Shattered Terrace"
+		]
+	},
+	"WARB": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "盐化区",
+		"specificNames": [
+			"Salination"
+		]
+	},
+	"WARC": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "腐臭幽谷",
+		"specificNames": [
+			"Fetid Glen"
+		]
+	},
+	"WARD": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "冷库",
+		"specificNames": [
+			"Cold Storage"
+		]
+	},
+	"WARE": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "供热管道",
+		"specificNames": [
+			"Heat Ducts"
+		]
+	},
+	"WARF": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "以太山脊",
+		"specificNames": [
+			"Aether Ridge"
+		]
+	},
+	"WARG": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "表面",
+		"specificNames": [
+			"The Surface"
+		]
+	},
+	"WAUA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "上古城市",
+		"specificNames": [
+			"Ancient Urban"
+		]
+	},
+	"WRSA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "恶魔",
+		"specificNames": [
+			"Daemon"
+		]
+	},
+	"WSSR": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "不幸演化",
+		"specificNames": [
+			"Unfortunate Evolution"
+		]
+	},
+	"WSUR": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "欲坠边缘",
+		"specificNames": [
+			"Crumbling Fringes"
+		]
+	},
+	"WHIR": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "腐化工厂",
+		"specificNames": [
+			"Corrupted Factories"
+		]
+	},
+	"WDSR": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "衰败隧道",
+		"specificNames": [
+			"Decaying Tunnels"
+		]
+	},
+	"WGWR": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "受侵染的废土",
+		"specificNames": [
+			"Infested Wastes"
+		]
+	},
+	"WORA": {
+		"slugcats": [
+			"watcher"
+		],
+		"name": "外缘（观望者）",
+		"specificNames": [
+			"Outer Rim"
+		]
+	}
+}
