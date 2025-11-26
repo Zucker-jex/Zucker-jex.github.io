@@ -1,5 +1,5 @@
 ---
-layout: articles
+layout: page
 titles:
   # @start locale config
   en      : &EN       Home
@@ -24,19 +24,71 @@ titles:
   fr-LU   : *FR
   # @end locale config
 show_title: false
-articles:
-  data_source: paginator.posts
-  article_type: BlogPosting
-  show_cover: false
-  show_excerpt: true
-  show_readmore: true
-  show_info: true
 ---
-<div class="layout--home">
+
+<!-- Hero Section -->
+<div class="hero-section animate__animated animate__fadeIn">
+  <div class="hero-content">
+    <div class="hero-avatar">
+      <img src="{{ site.author.avatar | relative_url }}" alt="{{ site.author.name }}">
+    </div>
+    <h1 class="hero-title">Hi, I'm <span class="highlight-text">{{ site.author.name }}</span></h1>
+    <div class="hero-subtitle">
+      <span id="typing-text"></span><span class="cursor">|</span>
+    </div>
+    <p class="hero-bio">{{ site.author.bio }}</p>
+  </div>
+</div>
+
+<!-- Recent Posts Title -->
+<div class="section-title animate__animated animate__fadeInUp">
+  <h2><i class="fas fa-feather-alt"></i> 最新文章</h2>
+</div>
+
+<!-- Article List -->
+<div class="layout--articles animate__animated animate__fadeInUp">
+  {%- assign _articles = paginator.posts -%}
+  {%- include article-list.html articles=_articles type='item' show_info=true show_excerpt=true show_readmore=true -%}
+</div>
+
+<!-- Paginator -->
+<div class="layout--home animate__animated animate__fadeInUp">
   {%- include paginator.html -%}
 </div>
-<script>
-  {%- include scripts/home.js -%}
-</script>
 
-{{ content }}
+<script>
+  // Typing Effect
+  const textToType = ["Computer Science Student", "Amateur Programmer", "Otaku Culture Lover", "Rhythm Game Player"];
+  const typingElement = document.getElementById('typing-text');
+  let textIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typeSpeed = 100;
+
+  function type() {
+    const currentText = textToType[textIndex];
+    
+    if (isDeleting) {
+      typingElement.textContent = currentText.substring(0, charIndex - 1);
+      charIndex--;
+      typeSpeed = 50;
+    } else {
+      typingElement.textContent = currentText.substring(0, charIndex + 1);
+      charIndex++;
+      typeSpeed = 100;
+    }
+
+    if (!isDeleting && charIndex === currentText.length) {
+      isDeleting = true;
+      typeSpeed = 2000; // Pause at end
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      textIndex = (textIndex + 1) % textToType.length;
+      typeSpeed = 500; // Pause before typing next
+    }
+
+    setTimeout(type, typeSpeed);
+  }
+
+  document.addEventListener('DOMContentLoaded', type);
+</script>
