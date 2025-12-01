@@ -56,16 +56,27 @@ sources:
     # # mathjax: 'https://cdn.bootcss.com/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML'
     # mermaid: 'https://cdn.bootcss.com/mermaid/8.0.0-rc.8/mermaid.min.js'
 
-    font_awesome: 'https://use.fontawesome.com/releases/v5.15.4/css/all.css'
-    jquery: 'https://unpkg.com/jquery@3.7.1/dist/jquery.min.js'
-    leancloud_js_sdk: 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av.min.js'
-    chart: 'https://unpkg.com/chart.js@4.4.7/dist/chart.umd.js'
+    # font_awesome: 'https://use.fontawesome.com/releases/v5.15.4/css/all.css'
+    # jquery: 'https://unpkg.com/jquery@3.7.1/dist/jquery.min.js'
+    # leancloud_js_sdk: 'https://cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av.min.js'
+    # chart: 'https://unpkg.com/chart.js@4.4.7/dist/chart.umd.js'
+    # gitalk:
+    #   js: 'https://cdn.bootcss.com/gitalk/1.8.0/gitalk.min.js'
+    #   css: 'https://cdn.bootcss.com/gitalk/1.8.0/gitalk.css'
+    # valine: 'https://unpkg.com/valine/dist/Valine.min.js'
+    # mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js'
+    # mermaid: 'https://unpkg.com/browse/mermaid@11.4.1/dist/mermaid.min.js'
+
+    font_awesome: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css'
+    jquery: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
+    leancloud_js_sdk: 'https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av.min.js'
+    chart: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.min.js'
     gitalk:
-      js: 'https://cdn.bootcss.com/gitalk/1.8.0/gitalk.min.js'
-      css: 'https://cdn.bootcss.com/gitalk/1.8.0/gitalk.css'
-    valine: 'https://unpkg.com/valine/dist/Valine.min.js'
+      js: 'https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js'
+      css: 'https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css'
+    valine: 'https://cdnjs.cloudflare.com/ajax/libs/valine/1.5.3/Valine.min.js'
     mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js'
-    mermaid: 'https://unpkg.com/browse/mermaid@11.4.1/dist/mermaid.min.js'
+    mermaid: 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/11.12.0/mermaid.min.js'
 
   unpkg:
     # font_awesome: 'https://use.fontawesome.com/releases/v5.0.13/css/all.css'
