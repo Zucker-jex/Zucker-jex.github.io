@@ -1,13 +1,18 @@
 
+
 <!-- start custom pageview snippet (for Home layout) -->
 {%- include snippets/get-sources.html -%}
 {%- assign _sources = __return -%}
 <script>
   window.Lazyload.js(['{{ _sources.jquery }}'], function() {
     $(function() {
-      // Load Busuanzi script for home page tracking
-      $.getScript("//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js");
+      // Logic for home page if needed. Busuanzi handles page/URL detection.
+      // If user adds markup with id="busuanzi_site_pv", it will automate.
     });
   });
+</script>
+
+<script>
+{%- include pageview-providers/custom/busuanzi.min.js -%}
 </script>
 <!-- end custom pageview snippet (for Home layout) -->
