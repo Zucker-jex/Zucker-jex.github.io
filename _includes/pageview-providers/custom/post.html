@@ -1,3 +1,16 @@
 <!-- start custom pageview snippet (for the post) -->
-
+{%- include snippets/get-sources.html -%}
+{%- assign _sources = __return -%}
+<script>
+  window.Lazyload.js(['{{ _sources.jquery }}'], function() {
+    $(function() {
+      var $pv = $('.js-pageview');
+      if ($pv.length > 0) {
+        $pv.attr("id", "busuanzi_value_page_pv");
+        $pv.parent().attr("id", "busuanzi_container_page_pv");
+      }
+      $.getScript("//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js");
+    });
+  });
+</script>
 <!-- end custom pageview snippet (for the post) -->
