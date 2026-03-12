@@ -1,27 +1,20 @@
+
+<!-- start custom pageview snippet (for the post) -->
+{%- include snippets/get-sources.html -%}
+{%- assign _sources = __return -%}
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // 替换为你的 Windows 服务器公网 IP 或域名
-    const API_URL = 'http://fuckyou.zuckertech.cn:3000/api/views';
-    
-    const pvElement = document.querySelector('.js-pageview');
-    if (!pvElement) return;
-
-    const pageKey = pvElement.getAttribute('data-page-key');
-
-    // 发送 POST 请求，让该文章阅读量 +1
-    fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ page_key: pageKey })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data && data.view_count !== undefined) {
-        pvElement.innerText = data.view_count;
+  window.Lazyload.js(['{{ _sources.jquery }}'], function() {
+    $(function() {
+      // Set ID for Busuanzi page view count (V3.6.9 logic: id="busuanzi_page_pv")
+      var $pv = $('.js-pageview');
+      if ($pv.length > 0) {
+        $pv.attr("id", "busuanzi_page_pv");
       }
-    })
-    .catch(err => console.error('Increase pageview error:', err));
+    });
   });
 </script>
+
+<script>
+{%- include pageview-providers/custom/busuanzi.min.js -%}
+</script>
+<!-- end custom pageview snippet (for the post) -->
