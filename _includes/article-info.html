@@ -68,11 +68,7 @@
           {%- endif -%}
 
           {%- if _pageview -%}
-            {%- assign _show_pv = true -%}
-            {%- if site.pageview.provider == 'custom' and page.url != include.article.url -%}
-              {%- assign _show_pv = false -%}
-            {%- endif -%}
-            {%- if site.pageview.provider and _show_pv -%}
+            {%- if site.pageview.provider -%}
               {%- include snippets/get-locale-string.html key='VIEWS' -%}
               {%- assign _locale_views = __return -%}
               <li><i class="far fa-eye"></i> <span class="js-pageview" data-page-key="{{ include.article.key }}">0</span> {{ _locale_views }}</li>

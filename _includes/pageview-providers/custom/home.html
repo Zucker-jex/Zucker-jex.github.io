@@ -1,5 +1,26 @@
-
-
 <!-- start custom pageview snippet (for Home layout) -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const API_URL = 'https://fuckyou.zuckertech.cn:3000/api/views';
+    
+    const pvElements = document.querySelectorAll('.js-pageview');
+    if (pvElements.length === 0) return;
 
+    // 提取所有的 page_key
+    const keys = Array.from(pvElements).map(el => el.getAttribute('data-page-key'));
+
+    // 发起 GET 请求批量获取阅读量
+    fetch(`${API_URL}?keys=${keys.join(',')}`)
+      .then(res => res.json())
+      .then(data => {
+        pvElements.forEach(el => {
+          const key = el.getAttribute('data-page-key');
+          if (data[key] !== undefined) {
+            el.innerText = data[key];
+          }
+        });
+      })
+      .catch(err => console.error('Fetch pageviews error:', err));
+  });
+</script>
 <!-- end custom pageview snippet (for Home layout) -->
