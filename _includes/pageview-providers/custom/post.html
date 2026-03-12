@@ -1,20 +1,58 @@
-
 <!-- start custom pageview snippet (for the post) -->
 {%- include snippets/get-sources.html -%}
 {%- assign _sources = __return -%}
 <script>
   window.Lazyload.js(['{{ _sources.jquery }}'], function() {
     $(function() {
-      // Set ID for Busuanzi page view count (V3.6.9 logic: id="busuanzi_page_pv")
-      var $pv = $('.js-pageview');
-      if ($pv.length > 0) {
-        $pv.attr("id", "busuanzi_page_pv");
+      var key = '{{ page.key }}';
+      var title = {{ page.title | jsonify }};
+      var url = window.location.href;
+
+      // 1. Increment view for current page
+      var $mainPv = $('.js-pageview[data-page-key="' + key + '"]');
+      if ($mainPv.length > 0) {
+        $mainPv.text('...');
+        $.ajax({
+          url: "https:///api/pageview",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ url: url, key: key, title: title }),
+          success: function(response) {
+             if(response && response.views !== undefined) {
+               $mainPv.text(response.views);
+             } else {
+               $mainPv.text('?');
+             }
+          },
+          error: function(xhr, status, error) {
+            console.error("PageView Error:", error);
+            $mainPv.text('Err');
+          }
+        });
       }
+
+      // 2. Fetch views for other articles on the page (e.g. read next/prev)
+      $('.js-pageview').not('[data-page-key="' + key + '"]').each(function() {
+        var $pv = $(this);
+        var otherKey = $pv.attr('data-page-key');
+        if (otherKey) {
+           $pv.text('...');
+           $.ajax({
+            url: "https:///api/pageview",
+            type: "GET",
+            data: { key: otherKey },
+            success: function(response) {
+               if(response && response.views !== undefined) {
+                 $pv.text(response.views);
+               } else {
+                 $pv.text('0');
+               }
+            }
+          });
+        }
+      });
+
     });
   });
-</script>
-
-<script>
-{%- include pageview-providers/custom/busuanzi.min.js -%}
 </script>
 <!-- end custom pageview snippet (for the post) -->

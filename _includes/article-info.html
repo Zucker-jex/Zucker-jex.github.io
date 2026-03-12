@@ -69,7 +69,7 @@
 
           {%- if _pageview -%}
             {%- assign _show_pv = true -%}
-            {%- if site.pageview.provider == 'custom' and page.url != include.article.url -%}
+            {%- if site.pageview.provider == 'busuanzi' and page.url != include.article.url -%}
               {%- assign _show_pv = false -%}
             {%- endif -%}
             {%- if site.pageview.provider and _show_pv -%}

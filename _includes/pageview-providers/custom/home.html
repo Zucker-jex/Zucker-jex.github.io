@@ -1,3 +1,37 @@
-<!-- start custom pageview snippet (for Home layout) -->
 
+<!-- start custom pageview snippet (for Home layout) -->
+{%- include snippets/get-sources.html -%}
+{%- assign _sources = __return -%}
+<script>
+  window.Lazyload.js(['{{ _sources.jquery }}'], function() {
+    $(function() {
+      // Find all pageview elements on the home page
+      var $pageviews = $('.js-pageview');
+      $pageviews.each(function() {
+        var $pv = $(this);
+        var key = $pv.attr('data-page-key');
+        if (key) {
+           $pv.text('...');
+           $.ajax({
+            url: "https:///api/pageview",
+            type: "GET",
+            data: { key: key }, // Check if key is URL or unique key
+            success: function(response) {
+               if(response && response.views !== undefined) {
+                 $pv.text(response.views);
+               } else {
+                 $pv.text('0');
+               }
+            },
+            error: function(err) {
+              console.error("PageView Error:", err);
+              // Silent fail or show default
+              $pv.text('?');
+            }
+          });
+        }
+      });
+    });
+  });
+</script>
 <!-- end custom pageview snippet (for Home layout) -->

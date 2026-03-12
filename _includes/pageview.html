@@ -7,6 +7,8 @@
   {%- if jekyll.environment != "development" -%}
     {%- if site.pageview.provider == 'leancloud' -%}
       {%- include pageview-providers/leancloud/home.html -%}
+    {%- elsif site.pageview.provider == 'busuanzi' -%}
+      {%- include pageview-providers/busuanzi/home.html -%}
     {%- elsif site.pageview.provider == 'custom' -%}
       {%- include pageview-providers/custom/home.html -%}
     {%- endif -%}
@@ -20,6 +22,8 @@
       jekyll.environment != "beta" -%}
       {%- if site.pageview.provider == 'leancloud' -%}
         {%- include pageview-providers/leancloud/post.html -%}
+      {%- elsif site.pageview.provider == 'busuanzi' -%}
+        {%- include pageview-providers/busuanzi/post.html -%}
       {%- elsif site.pageview.provider == 'custom' -%}
         {%- include pageview-providers/custom/post.html -%}
       {%- endif -%}

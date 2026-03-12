@@ -1,0 +1,20 @@
+
+<!-- start custom pageview snippet (for the post) -->
+{%- include snippets/get-sources.html -%}
+{%- assign _sources = __return -%}
+<script>
+  window.Lazyload.js(['{{ _sources.jquery }}'], function() {
+    $(function() {
+      // Set ID for Busuanzi page view count (V3.6.9 logic: id="busuanzi_page_pv")
+      var $pv = $('.js-pageview');
+      if ($pv.length > 0) {
+        $pv.attr("id", "busuanzi_page_pv");
+      }
+    });
+  });
+</script>
+
+<script>
+{%- include pageview-providers/busuanzi/busuanzi.min.js -%}
+</script>
+<!-- end custom pageview snippet (for the post) -->
