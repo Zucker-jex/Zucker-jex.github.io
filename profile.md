@@ -8,41 +8,38 @@ show_title: false
 
 ### Personal Introduction
 
-- I am a college student majoring in computer science.
-- As an amateur programmer, I enjoy tinkering with Linux and hardware.
-- I am a fan of otaku culture, passionate about Japanese animation, light novels, and more.
-- I'm also a beginner player of music games.
+- Amateur programmer who enjoys tinkering with Linux and hardware  
+- Fan of otaku culture (Japanese animation, light novels, etc.)  
+- Beginner player of music games
 
 ### Educational Background
 
-- University: Beijing Institute of Technology, Zhuhai College
+- **Beijing Institute of Technology, Zhuhai College** — Computer Science
 
 ### Programming Languages
 
 - **Skilled**
-  - Shell
-  - Python
   - C/C++
+  - Python
+  - Go
+  - x86_64 Assembly
+- **General**
+  - TypeScript
+  - Cython
   - Verilog
   - VHDL
   - Lua
-- **General**
-  - Cython
-  - MATLAB
-  - SQL
-  - RenPy
-  - Go
 - **Basic**
-  - Ruby
+  - LoongArch Assembly
   - Rust
-  - php
-  - Java
+  - SQL
   - C#
 - **Previously Used**
   - Brainfuck (BF)
   - Basic (VB, QB, FB)
   - D
   - R
+  - Java
 
 ### Contact Information
 
