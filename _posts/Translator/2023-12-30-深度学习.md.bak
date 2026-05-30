@@ -1,0 +1,81 @@
+---
+title: Deep Learning
+key: 深度学习
+tags: ["Translate"]
+aside:
+    toc: true
+---
+
+深度学习 <!--more-->
+
+![Image](/assets/images/Translator/Deep%20Learning.jpeg){:.shadow}
+
+## 关于
+
+### 作者
+
+Ian Goodfellow & Yoshua Bengio & Aaron Courville
+
+### 译者
+
+Google翻译
+
+## 译文摘抄
+
+Probability and Information Theory\
+概率与信息论
+
+In this chapter, we describe probability theory and information theory.\
+在本章中，我们描述概率论和信息论。
+
+Probability theory is a mathematical framework for representing uncertain statements. It provides a means of quantifying uncertainty as well as axioms for deriving new uncertain statements. In artificial intelligence applications, we use probability theory in two major ways. First, the laws of probability tell us how AI systems should reason, so we design our algorithms to compute or approximate various expressions derived using probability theory. Second, we can use probability and statistics to theoretically analyze the behavior of proposed AI systems.\
+概率论是表示不确定陈述的数学框架。它提供了一种量化不确定性的方法以及导出新的不确定性陈述的公理。在人工智能应用中，我们主要通过两种方式使用概率论。首先，概率定律告诉我们人工智能系统应该如何推理，因此我们设计算法来计算或近似使用概率论导出的各种表达式。其次，我们可以使用概率和统计来从理论上分析所提出的人工智能系统的行为。
+
+Probability theory is a fundamental tool of many disciplines of science and engineering. We provide this chapter to ensure that readers whose background is primarily in software engineering, with limited exposure to probability theory, can understand the material in this book.\
+概率论是许多科学和工程学科的基本工具。我们提供本章是为了确保主要具有软件工程背景、对概率论了解有限的读者能够理解本书中的内容。
+
+While probability theory allows us to make uncertain statements and to reason in the presence of uncertainty, information theory enables us to quantify the amount of uncertainty in a probability distribution.\
+概率论使我们能够做出不确定的陈述并在存在不确定性的情况下进行推理，而信息论使我们能够量化概率分布中的不确定性。
+
+If you are already familiar with probability theory and information theory, you may wish to skip this chapter except for section 3.14, which describes the graphs we use to describe structured probabilistic models for machine learning. If you have absolutely no prior experience with these subjects, this chapter should be sufficient to successfully carry out deep learning research projects, but we do suggest that you consult an additional resource, such as Jaynes (2003).\
+如果您已经熟悉概率论和信息论，您可能希望跳过本章，但第 3.14 节除外，该节描述了我们用来描述机器学习的结构化概率模型的图表。如果您之前完全没有这些主题的经验，本章应该足以成功开展深度学习研究项目，但我们建议您查阅其他资源，例如 Jaynes (2003)。
+
+3.1 Why Probability?\
+3.1 为什么是概率？
+
+Many branches of computer science deal mostly with entities that are entirely deterministic and certain. A programmer can usually safely assume that a CPU will execute each machine instruction flawlessly. Errors in hardware do occur but are rare enough that most software applications do not need to be designed to account for them. Given that many computer scientists and software engineers work in a relatively clean and certain environment, it can be surprising that machine learning makes heavy use of probability theory.\
+计算机科学的许多分支主要处理完全确定性和确定性的实体。程序员通常可以放心地假设 CPU 将完美地执行每条机器指令。硬件中的错误确实会发生，但很少见，因此大多数软件应用程序不需要设计来解决这些错误。鉴于许多计算机科学家和软件工程师在相对干净和确定的环境中工作，机器学习大量使用概率论可能会令人惊讶。
+
+Machine learning must always deal with uncertain quantities and sometimes stochastic (nondeterministic) quantities. Uncertainty and stochasticity can arise from many sources. Researchers have made compelling arguments for quantifying uncertainty using probability since at least the 1980s. Many of the arguments presented here are summarized from or inspired by Pearl (1988).\
+机器学习必须始终处理不确定的量，有时甚至是随机（非确定性）量。不确定性和随机性可能有多种来源。至少从 20 世纪 80 年代起，研究人员就使用概率量化不确定性提出了令人信服的论据。这里提出的许多论点都是来自 Pearl (1988) 的总结或启发。
+
+Nearly all activities require some ability to reason in the presence of uncertainty. In fact, beyond mathematical statements that are true by definition, it is difficult to think of any proposition that is absolutely true or any event that is absolutely guaranteed to occur.\
+几乎所有的活动都需要一定的在不确定性存在的情况下进行推理的能力。事实上，除了定义上正确的数学陈述之外，很难想到任何绝对正确的命题或绝对保证发生的任何事件。
+
+There are three possible sources of uncertainty:\
+不确定性可能来自三个方面：
+
+Inherent stochasticity in the system being modeled. For example, most interpretations of quantum mechanics describe the dynamics of subatomic particles as being probabilistic. We can also create theoretical scenarios that we postulate to have random dynamics, such as a hypothetical card game where we assume that the cards are truly shuffled into a random order.\
+建模系统固有的随机性。例如，量子力学的大多数解释都将亚原子粒子的动力学描述为概率性的。我们还可以创建假设具有随机动态的理论场景，例如假设的纸牌游戏，我们假设纸牌确实被洗成随机顺序。
+
+Incomplete observability. Even deterministic systems can appear stochastic when we cannot observe all the variables that drive the behavior of the system. For example, in the Monty Hall problem, a game show contestant is asked to choose between three doors and wins a prize held behind the chosen door. Two doors lead to a goat while a third leads to a car. The outcome given the contestant’s choice is deterministic, but from the contestant’s point of view, the outcome is uncertain.\
+可观测性不完全。当我们无法观察驱动系统行为的所有变量时，即使是确定性系统也可能显得随机。例如，在 Monty Hall 问题中，游戏节目参赛者被要求在三扇门之间进行选择，并赢得所选门后面的奖品。两扇门通向一只山羊，第三扇门通向一辆汽车。参赛者的选择的结果是确定性的，但从参赛者的角度来看，结果是不确定的。
+
+Incomplete modeling. When we use a model that must discard some of the information we have observed, the discarded information results in uncertainty in the model’s predictions. For example, suppose we build a robot that can exactly observe the location of every object around it. If the robot discretizes space when predicting the future location of these objects, then the discretization makes the robot immediately become uncertain about the precise position of objects: each object could be anywhere within the discrete cell that it was observed to occupy.\
+建模不完整。当我们使用的模型必须丢弃我们观察到的一些信息时，丢弃的信息会导致模型预测的不确定性。例如，假设我们建造了一个机器人，它可以精确观察周围每个物体的位置。如果机器人在预测这些物体的未来位置时对空间进行离散化，那么离散化会使机器人立即变得不确定物体的精确位置：每个物体可能位于观察到的离散单元内的任何位置。
+
+In many cases, it is more practical to use a simple but uncertain rule rather than a complex but certain one, even if the true rule is deterministic and our modeling system has the fidelity to accommodate a complex rule. For example, the simple rule “Most birds fly” is cheap to develop and is broadly useful, while a rule of the form, “Birds fly, except for very young birds that have not yet learned to fly, sick or injured birds that have lost the ability to fly, flightless species of birds including the cassowary, ostrich and kiwi… ” is expensive to develop, maintain and communicate and, after all this effort, is still brittle and prone to failure.\
+在许多情况下，使用简单但不确定的规则比使用复杂但确定的规则更实用，即使真正的规则是确定性的并且我们的建模系统具有适应复杂规则的保真度。例如，简单的规则“大多数鸟类会飞”的开发成本低廉且用途广泛，而这种形式的规则“鸟类会飞，除了尚未学会飞行的非常幼小的鸟类、已经学会飞行的生病或受伤的鸟类”。失去了飞行的能力，不会飞的鸟类，包括食火鸡、鸵鸟和几维鸟……”开发、维护和交流的成本很高，而且在付出了所有这些努力之后，它仍然很脆弱，容易失败。
+
+While it should be clear that we need a means of representing and reasoning about uncertainty, it is not immediately obvious that probability theory can provide all the tools we want for artificial intelligence applications. Probability theory was originally developed to analyze the frequencies of events. It is easy to see how probability theory can be used to study events like drawing a certain hand of cards in a poker game. These kinds of events are often repeatable. When we say that an outcome has a probability p of occurring, it means that if we repeated the experiment (e.g., drawing a hand of cards) infinitely many times, then a proportion p of the repetitions would result in that outcome. This kind of reasoning does not seem immediately applicable to propositions that are not repeatable. If a doctor analyzes a patient and says that the patient has a 40 percent chance of having the flu, this means something very different—we cannot make infinitely many replicas of the patient, nor is there any reason to believe that different replicas of the patient would present with the same symptoms yet have varying underlying conditions. In the case of the doctor diagnosing the patient, we use probability to represent a degree of belief, with 1 indicating absolute certainty that the patient has the flu and 0 indicating absolute certainty that the patient does not have the flu. The former kind of probability, related directly to the rates at which events occur, is known as frequentist probability, while the latter, related to qualitative levels of certainty, is known as Bayesian probability.\
+虽然很明显我们需要一种表示和推理不确定性的方法，但概率论能否为人工智能应用提供我们想要的所有工具还不是很明显。概率论最初是为了分析事件的频率而发展的。很容易看出如何使用概率论来研究诸如在扑克游戏中抽出某一手牌之类的事件。此类事件通常是可重复的。当我们说某个结果发生的概率为 p 时，这意味着如果我们无限次重复该实验（例如，抽一手牌），那么重复的比例 p 将导致该结果。这种推理似乎不能立即适用于不可重复的命题。如果医生分析一名患者并说该患者有 40% 的几率患上流感，这意味着非常不同的事情——我们不能制造无限多个患者的复制品，也没有任何理由相信该患者的不同复制品会表现出相同的症状，但基础条件不同。在医生诊断患者的情况下，我们用概率来表示置信程度，1表示绝对确定患者患有流感，0表示绝对确定患者没有感染流感。前一种概率与事件发生的速率直接相关，称为频率概率，而后者与定性的确定性水平相关，称为贝叶斯概率。
+
+If we list several properties that we expect common sense reasoning about uncertainty to have, then the only way to satisfy those properties is to treat Bayesian probabilities as behaving exactly the same as frequentist probabilities. For example, if we want to compute the probability that a player will win a poker game given that she has a certain set of cards, we use exactly the same formulas as when we compute the probability that a patient has a disease given that she has certain symptoms. For more details about why a small set of common sense assumptions implies that the same axioms must control both kinds of probability, see Ramsey (1926).\
+如果我们列出了我们期望关于不确定性的常识推理所具有的几个属性，那么满足这些属性的唯一方法就是将贝叶斯概率视为与频率概率完全相同。例如，如果我们想要计算一名玩家在拥有一组特定牌的情况下赢得扑克游戏的概率，我们使用与计算患者患有某种疾病的概率完全相同的公式（假设她患有某种疾病）某些症状。有关为什么一小组常识假设意味着相同的公理必须控制两种概率的更多详细信息，请参阅 Ramsey (1926)。
+
+Probability can be seen as the extension of logic to deal with uncertainty. Logic provides a set of formal rules for determining what propositions are implied to be true or false given the assumption that some other set of propositions is true or false. Probability theory provides a set of formal rules for determining the likelihood of a proposition being true given the likelihood of other propositions.\
+概率可以被视为处理不确定性的逻辑的延伸。逻辑提供了一组形式规则，用于在假定其他命题集是真或假的情况下确定哪些命题是真或假。概率论提供了一组正式规则，用于在给定其他命题的可能性的情况下确定一个命题为真的可能性。
+
+## 下载
+
+- [EPUB](https://zuckertech-my.sharepoint.com/:u:/g/personal/jex_zuckertech_onmicrosoft_com/ERy8VpN4sDFKto5ZPrlf4A4BtsrvgWE_hwMf9kbpsRSumQ?e=fawSaH)

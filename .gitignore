@@ -2,7 +2,6 @@
 ~*
 *.diff
 *.patch
-*.bak
 .DS_Store
 *.swp
 *.swo

@@ -1,0 +1,117 @@
+---
+title: Intel x86 Opcode Table and Reference
+key: x86doc
+tags: ["Daily"]
+aside:
+  toc: true
+---
+
+英特尔 x86 操作码表和参考 <!--more-->
+
+## 概述
+
+本文档提供了 **Intel x86 指令集操作码表** 的参考指南，分为以下两个版本供用户选择：
+
+- **[在线版](https://blog.zuckertech.cn/x86doc/)**
+- **电子书版**：
+  - [下载 EPUB 格式](https://zuckertech-my.sharepoint.com/:u:/g/personal/jex_zuckertech_onmicrosoft_com/EZYhjqb8hMpGtxFiXUPDBqwBzL2w7nnp7l2jKFSjXI7CYw?e=p4ScSL)
+  - [下载 AZW3 格式](https://zuckertech-my.sharepoint.com/:u:/g/personal/jex_zuckertech_onmicrosoft_com/EX9UniAGaLpDsZvYUaiRhPEBHKQi-x71ywubJ0cDQU5BUQ?e=yEPZLv)
+
+在电子书版本的生成过程中，由于 **index.html** 文件中的表格数据量较大，直接加载可能会导致部分电子书阅读器（如 Kindle）性能下降。为了解决这一问题，以下 Python 脚本用于将大型表格文件拆分为多个小文件，并生成索引页面，以提升用户体验。
+
+---
+
+## Python 脚本：HTML 拆分与索引生成
+
+该脚本利用 **BeautifulSoup** 解析 HTML 表格内容，将数据按指定行数拆分，并为每个部分生成独立的 HTML 文件。最终，脚本会生成多个拆分后的 HTML 文件与一个索引文件（`start.html`），方便在阅读器中快速定位到具体内容。
+
+以下是完整代码：
+
+```python
+from bs4 import BeautifulSoup
+
+def split_html_and_create_index(input_file, output_prefix, instructions_per_file=50):
+    # 打开并解析 HTML 文件
+    with open(input_file, "r", encoding="utf-8") as file:
+        soup = BeautifulSoup(file, "html.parser")
+
+    # 获取表格中的所有行（忽略标题行）
+    rows = soup.find_all("tr")[1:]
+
+    index_links = []  # 索引链接集合
+    part = 0
+
+    # 按指定行数拆分表格
+    for i in range(0, len(rows), instructions_per_file):
+        chunk = rows[i:i + instructions_per_file]
+
+        # 获取当前块的起止指令
+        first_instruction = chunk[0].find_all("td")[0].text.strip()
+        last_instruction = chunk[-1].find_all("td")[0].text.strip()
+
+        # 定义 HTML 文件标题和文件名
+        title = f"{first_instruction} - {last_instruction}"
+        filename = f"{output_prefix}_{part}.html".replace("/", "-")
+        part += 1
+
+        # 生成 HTML 内容
+        html_content = f"""<?xml version='1.0' encoding='utf-8'?>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<link href="style.css" type="text/css" rel="stylesheet"/>
+<title>{title}</title>
+</head>
+<body>
+<a href="start.xhtml">Back to Index</a>
+<table>
+<tbody>
+<tr>
+<th align="left" style="background-color:lightgray" width="480">Instruction</th>
+<th align="left" style="background-color:lightgray" width="280">Opcode</th>
+<th align="left" style="background-color:lightgray" width="30">CPU Ext.</th>
+<th align="left" style="background-color:lightgray">Description</th>
+</tr>
+"""
+        for row in chunk:
+            html_content += str(row) + "\n"
+
+        html_content += """
+</tbody>
+</table>
+</body>
+</html>
+"""
+        # 写入拆分的 HTML 文件
+        with open(filename, "w", encoding="utf-8") as out_file:
+            out_file.write(html_content)
+
+        # 添加索引链接
+        index_links.append(f'<li><a href="{filename}">{title}</a></li>')
+
+    # 生成索引页面
+    with open("start.html", "w", encoding="utf-8") as index_file:
+        index_file.write(
+            "<!DOCTYPE html>\n<html>\n<head><title>Index</title></head>\n<body>\n<h1>Index</h1>\n<ul>\n")
+        index_file.write("\n".join(index_links))
+        index_file.write("\n</ul>\n</body>\n</html>")
+
+    print("文件拆分完成，索引页面已生成：start.html")
+
+# 调用函数进行 HTML 文件拆分
+split_html_and_create_index("index.html", "section", instructions_per_file=50)
+```
+
+---
+
+## 使用说明
+
+1. **输入文件**：将待拆分的 HTML 文件命名为 `index.html` 并放置在脚本的同一目录下。
+2. **输出文件**：运行脚本后，生成的拆分文件将命名为 `section_0.html`、`section_1.html` 等，索引文件为 `start.html`。
+3. **参数配置**：可根据需要修改 `instructions_per_file` 参数，调整每个拆分文件中包含的指令数。
+
+---
+
+## 注意事项
+
+- 该脚本仅适用于此工程中的 `index.html` 文件，可能无法直接应用于其他 HTML 文件。
+- 为了确保生成的电子书在各种阅读器上的兼容性，建议保留 **style.css** 文件以实现统一的样式。
+- 批注由 AI 生成

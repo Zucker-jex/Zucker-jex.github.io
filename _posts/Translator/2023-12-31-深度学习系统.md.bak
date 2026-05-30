@@ -1,0 +1,57 @@
+---
+title: Deep Learning Systems - Algorithms, Compilers, and Processors for Large-Scale Production
+key: 深度学习系统
+tags: ["Translate"]
+aside:
+    toc: true
+---
+
+深度学习系统——大规模生产的算法、编译器和处理器 <!--more-->
+
+![Image](/assets/images/Translator/Deep%20Learning%20Systems_%20Algorithms,%20Compilers,%20and%20Processors%20for%20Large-Scale%20Production.jpeg){:.shadow}
+
+## 关于
+
+### 作者
+
+Andres Rodriguez
+
+### 译者
+
+Google翻译
+
+## 译文摘抄
+
+CHAPTER 1\
+第1章
+
+Introduction\
+介绍
+
+A deep learning (DL) model is a function that maps input data to an output prediction. To improve the accuracy of the prediction in complex tasks, DL models are increasingly requiring more compute, memory, bandwidth, and power, particularly during training. The number of computations required to train and deploy state-of-the-art models doubles every ~3.4 months [DH18]. The required computation scales at least as a fourth-order polynomial with respect to the accuracy and, for some tasks, as a nineth-order polynomial [TGL+20]. This appetite for more compute far outstrips the compute growth trajectory in hardware and is unsustainable. In addition, the main memory bandwidth is becoming a more significant bottleneck; computational capacity is growing much faster than memory bandwidth, and many algorithms are already bandwidth bound.\
+深度学习 (DL) 模型是将输入数据映射到输出预测的函数。为了提高复杂任务中的预测准确性，深度学习模型越来越需要更多的计算、内存、带宽和功率，特别是在训练期间。训练和部署最先进模型所需的计算量每约 3.4 个月就会翻一番 [DH18]。就准确性而言，所需的计算至少可缩放为四阶多项式，对于某些任务，可缩放为九阶多项式 [TGL+20]。这种对更多计算的需求远远超过了硬件的计算增长轨迹，并且是不可持续的。此外，主存带宽正成为更显着的瓶颈；计算能力的增长速度远远快于内存带宽的增长，并且许多算法已经受到带宽限制。
+
+The evolution of computational growth is driving innovations in DL architectures. Improvements in transistor design and manufacturing no longer result in the previously biennial 2× general-purpose computational growth. The amount of dark silicon, where transistors cannot operate at the nominal voltage, is increasing. This motivates the exploitation of transistors for domain-specific circuitry.\
+计算增长的演变正在推动深度学习架构的创新。晶体管设计和制造的改进不再导致之前两年一次的 2 倍通用计算增长。晶体管无法在标称电压下工作的暗硅的数量正在增加。这激发了晶体管在特定领域电路中的应用。
+
+Data scientists, optimization (performance) engineers, and hardware architects must collaborate on designing DL systems to continue the current pace of innovation. They need to be aware of the algorithmic trends and design DL systems with a 3–5 year horizon. These designs should balance general-purpose and domain-specific computing and accommodate for unknown future models.\
+数据科学家、优化（性能）工程师和硬件架构师必须合作设计深度学习系统，以继续当前的创新步伐。他们需要了解算法趋势并设计 3-5 年范围内的深度学习系统。这些设计应该平衡通用和特定领域的计算，并适应未知的未来模型。
+
+The characteristics of DL systems vary widely depending on the end-user and operating environment. Researchers experimenting with a broad spectrum of new topologies (also known as DL algorithms or neural networks) require higher flexibility and programmability than engineers training and deploying established topologies. Furthermore, even established topologies have vastly different computational profiles. For instance, an image classification model may have a compute-to-data ratio three orders of magnitude higher than that of a language translation model.\
+深度学习系统的特性因最终用户和操作环境的不同而有很大差异。与培训和部署现有拓扑的工程师相比，试验各种新拓扑（也称为深度学习算法或神经网络）的研究人员需要更高的灵活性和可编程性。此外，即使已建立的拓扑也具有截然不同的计算配置文件。例如，图像分类模型的计算与数据比率可能比语言翻译模型高三个数量级。
+
+A mixture of specialized hardware, higher bandwidth, compression, sparsity, smaller numerical representations, multichip communication, and other innovations is required to satisfy the appetite for DL compute. Each 2× in performance gain requires new hardware, compiler, and algorithmic co-innovations.\
+需要结合专用硬件、更高的带宽、压缩、稀疏性、更小的数值表示、多芯片通信和其他创新来满足深度学习计算的需求。每 2 倍的性能提升都需要新的硬件、编译器和算法共同创新。
+
+Advances in software compilers are critical to support the Cambrian explosion in DL hardware and to effectively compile models to different hardware targets. Compilers are essential to mitigate the cost of evaluating or adopting various hardware designs. A good compiler generates code that runs efficiently and speedily executes. That is, the generated code takes advantage of the computational capacity and memory hierarchy of the hardware so the compute units have high utilization. Several efforts, detailed in Chapter 9, are ongoing toward making this possible.\
+软件编译器的进步对于支持深度学习硬件的寒武纪爆发以及有效地将模型编译到不同的硬件目标至关重要。编译器对于降低评估或采用各种硬件设计的成本至关重要。一个好的编译器生成的代码可以高效运行并快速执行。也就是说，生成的代码利用了硬件的计算能力和存储器层次结构，因此计算单元具有高利用率。为了实现这一目标，我们正在进行多项努力，详见第 9 章。
+
+The purposes of this book are (1) to provide a solid understanding of the design, training, and applications of DL algorithms, the compiler techniques, and the critical processor features to accelerate DL systems, and (2) to facilitate co-innovation and advancement of DL systems.\
+本书的目的是（1）提供对深度学习算法的设计、训练和应用、编译器技术以及加速深度学习系统的关键处理器功能的扎实理解，以及（2）促进共同创新和深度学习系统的进步。
+
+In this chapter, we introduce the fundamental concepts detailed throughout the book. We review the history, applications, and types of DL algorithms. We provide an example of training a simple model and introduce some of the architectural design considerations. We also introduce the mathematical notation used throughout parts of the books.\
+在本章中，我们将介绍全书详细介绍的基本概念。我们回顾了深度学习算法的历史、应用和类型。我们提供了一个训练简单模型的示例，并介绍了一些架构设计注意事项。我们还介绍了本书各部分中使用的数学符号。
+
+## 下载
+
+- [EPUB](https://zuckertech-my.sharepoint.com/:u:/g/personal/jex_zuckertech_onmicrosoft_com/ETFA2OIkeRVArV4B3rmOOoEBt6_259d7Lg4zlMeoznYGIw?e=G466Ck)
