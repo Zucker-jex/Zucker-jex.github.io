@@ -46,7 +46,7 @@ key: tools-mobaxterm-keygen
             margin: 1.5em 0 0 120px;
         }
 
-        .pure-button-primary {
+        /* .pure-button-primary {
             background-color: #0078e7;
             border-radius: 4px;
             padding: 10px 20px;
@@ -57,25 +57,32 @@ key: tools-mobaxterm-keygen
 
         .pure-button-primary:hover {
             background-color: #005baf;
-        }
+        } */
 
         input, select {
-            border: 1px solid #ddd !important;
+            border: 1px solid var(--border-color, #ddd) !important;
             border-radius: 4px !important;
             padding: 8px !important;
             box-shadow: none !important;
             width: 220px;
+            background-color: transparent !important;
+            color: var(--text-color) !important;
         }
 
-        input:focus, select:focus {
-            border-color: #0078e7 !important;
+        option {
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
+
+        /* input:focus, select:focus {
+            border-color: #0078e7 !important;
+        } */
 
         .content-main {
             padding-right: 30px;
         }
 
-        .my-input {
+        .my-input-wrap {
             position: relative;
             display: inline-block;
         }
@@ -164,7 +171,7 @@ key: tools-mobaxterm-keygen
                                 <label for="licenseType">License Type:</label>
                                 <select name="licenseType" id="licenseType" v-model="licenseType">
                                     <option value="">Please Select</option>
-                                    <option v-for="(val, key) in LICENSE_TYPES" :value="val">{{key}}</option>
+                                    <option v-for="(val, key) in LICENSE_TYPES" :value="val" v-text="key"></option>
                                 </select>
                             </div>
                             <div class="pure-control-group pure-u-1">
@@ -186,7 +193,7 @@ key: tools-mobaxterm-keygen
                                 </my-input>
                             </div>
                             <div class="pure-controls pure-u-1">
-                                <button type="submit" class="pure-button pure-button-primary"
+                                <button type="submit" class="button button--outline-info button--rounded"
                                     @click.stop="generate">Generate</button>
                             </div>
                         </div>
@@ -250,8 +257,8 @@ key: tools-mobaxterm-keygen
             },
             components: {
                 'my-input': {
-                    template: `<div class="my-input">
-                                    <input :id="idattr" :placeholder="placeholderattr" v-model="value" required/>
+                    template: `<div class="my-input-wrap">
+                                    <input :id="idattr" :class="'my-input'" :placeholder="placeholderattr" v-model="value" required/>
                                     <div :class="validationTipsDiplay" class="my-input-tips-wrap">
                                         <span class="my-input-tips">{{validationtips}}</span>
                                         <div class="my-input-arrow"></div>

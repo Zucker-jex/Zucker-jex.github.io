@@ -76,13 +76,11 @@ body {
 
 .cursor {
   display: inline-block;
-  width: 2px;
-  background-color: #333;
+  width: 10px;
+  height: 1.1em;
+  vertical-align: text-bottom;
+  background-color: var(--text-color);
   animation: blink 1s infinite;
-}
-
-[data-theme="dark"] .cursor {
-  background-color: #ccc;
 }
 
 @keyframes blink {

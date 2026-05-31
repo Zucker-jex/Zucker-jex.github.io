@@ -146,19 +146,21 @@ key: tools-game-of-life
 
       function drawGrid(grid) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cellColor = getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim() || 'black';
+        const lineColor = getComputedStyle(document.documentElement).getPropertyValue('--border-color').trim() || '#ddd';
         for (let y = 0; y < height; y++) {
           for (let x = 0; x < width; x++) {
             if (grid[y][x] === 1) {
-              ctx.fillStyle = "black";
+              ctx.fillStyle = cellColor;
               ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
             }
           }
         }
-        drawGridLines();
+        drawGridLines(lineColor);
       }
 
-      function drawGridLines() {
-        ctx.strokeStyle = "#ddd";
+      function drawGridLines(color) {
+        ctx.strokeStyle = color;
         for (let x = 0; x <= width; x++) {
           ctx.beginPath();
           ctx.moveTo(x * cellSize, 0);

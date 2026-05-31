@@ -34,7 +34,7 @@ show_title: false
     </div>
     <h1 class="hero-title">Hi, I'm <span class="highlight-text">{{ site.author.name }}</span></h1>
     <div class="hero-subtitle">
-      <span id="typing-text"></span><span class="cursor">|</span>
+      <span id="typing-text"></span><span class="cursor"></span>
     </div>
     <p class="hero-bio">{{ site.author.bio }}</p>
   </div>
@@ -67,7 +67,7 @@ show_title: false
 
   function type() {
     const currentText = textToType[textIndex];
-    
+
     if (isDeleting) {
       typingElement.textContent = currentText.substring(0, charIndex - 1);
       charIndex--;
