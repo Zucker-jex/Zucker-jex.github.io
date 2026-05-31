@@ -186,6 +186,8 @@ permalink   : date
 
 exclude:
   - "*.bak"
+  - "*.tmp"
+  - "*.bat"
   - CHANGELOG.md
   - HOW_TO_RELEASE.md
   - Gemfile
