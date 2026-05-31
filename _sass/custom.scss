@@ -77,10 +77,13 @@ body {
 .cursor {
   display: inline-block;
   width: 10px;
+  min-width: 10px;
   height: 1.1em;
+  min-height: 1.1em;
   vertical-align: text-bottom;
   background-color: var(--text-color);
-  animation: blink 1s infinite;
+  animation: blink 1s step-end infinite;
+  content: "";
 }
 
 @keyframes blink {

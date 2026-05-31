@@ -34,7 +34,7 @@ show_title: false
     </div>
     <h1 class="hero-title">Hi, I'm <span class="highlight-text">{{ site.author.name }}</span></h1>
     <div class="hero-subtitle">
-      <span id="typing-text"></span><span class="cursor"></span>
+      <span id="typing-text"></span><span class="cursor" style="color: transparent;">&nbsp;</span>
     </div>
     <p class="hero-bio">{{ site.author.bio }}</p>
   </div>
@@ -58,7 +58,13 @@ show_title: false
 
 <script>
   // Typing Effect
-  const textToType = ["Computer Science Student", "Amateur Programmer", "Otaku Culture Lover", "Rhythm Game Player"];
+  const textToType = [
+    "Computer Science Student",
+    "Amateur Programmer",
+    "Linux & Hardware Enthusiast",
+    "Fan of Otaku Culture",
+    "Music Game Beginner"
+  ];
   const typingElement = document.getElementById('typing-text');
   let textIndex = 0;
   let charIndex = 0;

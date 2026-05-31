@@ -70,7 +70,7 @@ sources:
     font_awesome: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css'
     jquery: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'
     leancloud_js_sdk: 'https://cdn.jsdelivr.net/npm/leancloud-storage/dist/av.min.js'
-    chart: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.min.js'
+    chart: 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.0/chart.umd.min.js'
     gitalk:
       js: 'https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.min.js'
       css: 'https://cdnjs.cloudflare.com/ajax/libs/gitalk/1.8.0/gitalk.css'
