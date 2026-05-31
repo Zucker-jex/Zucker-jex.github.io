@@ -17,14 +17,14 @@ header:
   #     de    : &DE       Gästebuch
   #   url: /guestbook.html
 
-  - titles:
-      en    : &EN       LifeViewer
-      zh-Hans: *EN
-      zh-Hant: *EN
-      ja    : *EN
-      fr    : *EN
-      de    : *EN
-    url: /page/LifeViewer.html
+  # - titles:
+  #     en    : &EN       LifeViewer
+  #     zh-Hans: *EN
+  #     zh-Hant: *EN
+  #     ja    : *EN
+  #     fr    : *EN
+  #     de    : *EN
+  #   url: /page/LifeViewer.html
 
   # - titles:
   #     en    : &EN       GOL
@@ -35,14 +35,23 @@ header:
   #     de    : &DE       SDL
   #   url: /page/game_of_life.html
 
+  # - titles:
+  #     en    : &EN       MXK
+  #     zh-Hans: *EN
+  #     zh-Hant: *EN
+  #     ja    : *EN
+  #     fr    : *EN
+  #     de    : *EN
+  #   url: /page/MobaXtermKeygen.html
+
   - titles:
-      en    : &EN       MXK
+      en    : &EN       Tools
       zh-Hans: *EN
       zh-Hant: *EN
       ja    : *EN
       fr    : *EN
       de    : *EN
-    url: /page/MobaXtermKeygen.html
+    url: /tools/index.html
 
   - titles:
       en    : &EN       x86doc
