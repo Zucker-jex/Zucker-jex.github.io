@@ -1,5 +1,5 @@
 ---
-title: EventTrigger (ET) 模组介绍与完整使用指南
+title: EventTrigger Module Introduction And Complete User Guide
 key: etmodhelp
 tags: ["Daily"]
 aside:
