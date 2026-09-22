@@ -8,10 +8,12 @@ aside:
 
 # PZ 服务器联 Ban 接入说明书 <!--more-->
 
-
 **版本**：v1.2
+
 **更新**：2026-09-22
+
 **适用**：僵尸毁灭工程（Project Zomboid）专用服务器
+
 **目标**：让 PZ 服务器的封禁列表自动与中心 Ban 服器（banserver）保持同步，并提供完整的网页端管理界面
 
 ---
@@ -54,11 +56,11 @@ aside:
 - **服主/管理员** → 网页端添加/修改/撤销封禁 → **banserver**
 - **banserver** → 脚本每 5 分钟拉取 → **PZ 服务器**（通过 RCON）
 
-| 差异类型 | 含义 | 脚本动作 |
-|---|---|---|
-| API 有、PZ 无 | banserver 新增了封禁 | 执行 `banid <SteamID>` |
-| PZ 有、API 无 | banserver 上已解封 | 执行 `unbanid <SteamID>`（仅 full 模式） |
-| 两边都有 / 都没有 | 已一致 | 不做任何操作 |
+| 差异类型          | 含义                 | 脚本动作                                 |
+| ----------------- | -------------------- | ---------------------------------------- |
+| API 有、PZ 无     | banserver 新增了封禁 | 执行 `banid <SteamID>`                   |
+| PZ 有、API 无     | banserver 上已解封   | 执行 `unbanid <SteamID>`（仅 full 模式） |
+| 两边都有 / 都没有 | 已一致               | 不做任何操作                             |
 
 **执行周期**：默认 5 分钟一次（`SYNC_INTERVAL = 300`）
 
@@ -76,10 +78,10 @@ aside:
 
 **示例**：
 
-| 场景 | banserver | PZ 当前 | 执行后 PZ |
-|---|---|---|---|
-| 新增 | `[A, B]` | `[B, C]` | `[A, B]` |
-| 解封 | `[A]` | `[A, B]` | `[A]` |
+| 场景 | banserver | PZ 当前  | 执行后 PZ |
+| ---- | --------- | -------- | --------- |
+| 新增 | `[A, B]`  | `[B, C]` | `[A, B]`  |
+| 解封 | `[A]`     | `[A, B]` | `[A]`     |
 
 ### 2.2 `add_only` —— 只增不减
 
@@ -92,19 +94,19 @@ aside:
 
 **示例**：
 
-| 场景 | banserver | PZ 当前 | 执行后 PZ |
-|---|---|---|---|
-| 新增 | `[A, B]` | `[B, C]` | `[A, B, C]` |
-| 解封 | `[A]` | `[A, B]` | `[A, B]`（不动） |
+| 场景 | banserver | PZ 当前  | 执行后 PZ        |
+| ---- | --------- | -------- | ---------------- |
+| 新增 | `[A, B]`  | `[B, C]` | `[A, B, C]`      |
+| 解封 | `[A]`     | `[A, B]` | `[A, B]`（不动） |
 
 ### 2.3 模式选择建议
 
-| 你的场景 | 推荐模式 |
-|---|---|
-| banserver 中心管控，PZ 被动接收 | `full` |
-| PZ 有历史封禁，不想被清 | 先 `add_only`，稳定后切 `full` |
-| 担心脚本误删 | `add_only` |
-| 多人协作，要保持一致 | `full` |
+| 你的场景                        | 推荐模式                       |
+| ------------------------------- | ------------------------------ |
+| banserver 中心管控，PZ 被动接收 | `full`                         |
+| PZ 有历史封禁，不想被清         | 先 `add_only`，稳定后切 `full` |
+| 担心脚本误删                    | `add_only`                     |
+| 多人协作，要保持一致            | `full`                         |
 
 ---
 
@@ -112,10 +114,10 @@ aside:
 
 ### 3.1 banserver 侧
 
-| 项 | 要求 |
-|---|---|
-| 可访问地址 | 如 `https://fuckyou.zuckertech.cn:8088` |
-| 有效账号 | 建议单独建只读账号，不要用 admin |
+| 项         | 要求                                       |
+| ---------- | ------------------------------------------ |
+| 可访问地址 | 如 `https://fuckyou.zuckertech.cn:8088`    |
+| 有效账号   | 建议单独建只读账号，不要用 admin           |
 | HTTPS 证书 | 必须被 PZ 服务器信任（Let's Encrypt 即可） |
 
 **验证方法**（在 PZ 服务器上执行）：
@@ -127,13 +129,13 @@ curl -s https://fuckyou.zuckertech.cn:8088/health
 
 ### 3.2 PZ 服务器侧
 
-| 项 | 要求 | 检查命令 |
-|---|---|---|
-| Python 3.9+ | 内置即可，无需 pip | `python3 --version` |
-| RCON 已开启 | `.ini` 里有 `RCONPort` 和 `RCONPassword` | `grep -i rcon ~/Zomboid/Server/*.ini` |
-| RCON 端口可达 | `127.0.0.1:27015` | `nc -zv 127.0.0.1 27015` |
-| 数据库可读 | `~/Zomboid/db/servertest.db` | `ls -la ~/Zomboid/db/servertest.db` |
-| `sqlite3` 命令 | 可选（人工核查用） | `sqlite3 --version` |
+| 项             | 要求                                     | 检查命令                              |
+| -------------- | ---------------------------------------- | ------------------------------------- |
+| Python 3.9+    | 内置即可，无需 pip                       | `python3 --version`                   |
+| RCON 已开启    | `.ini` 里有 `RCONPort` 和 `RCONPassword` | `grep -i rcon ~/Zomboid/Server/*.ini` |
+| RCON 端口可达  | `127.0.0.1:27015`                        | `nc -zv 127.0.0.1 27015`              |
+| 数据库可读     | `~/Zomboid/db/servertest.db`             | `ls -la ~/Zomboid/db/servertest.db`   |
+| `sqlite3` 命令 | 可选（人工核查用）                       | `sqlite3 --version`                   |
 
 ### 3.3 开启 RCON（如未开启）
 
@@ -150,13 +152,13 @@ RCONPassword=改成你的强密码（≥32 位随机字符）
 
 本次验证使用的环境：
 
-| 项 | 值 |
-|---|---|
-| RCON 端口 | `27015` |
-| 数据库路径 | `/home/debian/Zomboid/db/servertest.db` |
+| 项                | 值                                          |
+| ----------------- | ------------------------------------------- |
+| RCON 端口         | `27015`                                     |
+| 数据库路径        | `/home/debian/Zomboid/db/servertest.db`     |
 | `bannedid` 表结构 | `(steamid TEXT NOT NULL, reason TEXT NULL)` |
-| `banid` 命令 | ✅ 支持，返回 `System banned SteamID xxx()` |
-| `unbanid` 命令 | ✅ 支持，返回 `SteamID xxx is now unbanned` |
+| `banid` 命令      | ✅ 支持，返回 `System banned SteamID xxx()` |
+| `unbanid` 命令    | ✅ 支持，返回 `SteamID xxx is now unbanned` |
 
 ---
 
@@ -492,18 +494,18 @@ if __name__ == "__main__":
 
 修改脚本顶部 **配置区**：
 
-| 变量 | 说明 | 示例 |
-|---|---|---|
-| `API_BASE` | banserver HTTPS 地址，**末尾不带斜杠** | `https://fuckyou.zuckertech.cn:8088` |
-| `API_USERNAME` | banserver 登录用户名 | `sync_bot` |
-| `API_PASSWORD` | 对应密码 | — |
-| `RCON_HOST` | PZ 的 RCON 地址，本机填 `127.0.0.1` | `127.0.0.1` |
-| `RCON_PORT` | 与 `.ini` 里 `RCONPort` 一致 | `27015` |
-| `RCON_PASS` | 与 `.ini` 里 `RCONPassword` 一致 | — |
-| `PZ_DB` | PZ 的 SQLite 绝对路径 | `/home/debian/Zomboid/db/servertest.db` |
-| `SYNC_INTERVAL` | 同步间隔（秒） | `300` |
-| `SYNC_MODE` | 同步模式 | `full` 或 `add_only` |
-| `LOG_FILE` | 日志文件路径 | `/home/debian/pz-bansync/pz-bansync.log` |
+| 变量            | 说明                                   | 示例                                     |
+| --------------- | -------------------------------------- | ---------------------------------------- |
+| `API_BASE`      | banserver HTTPS 地址，**末尾不带斜杠** | `https://fuckyou.zuckertech.cn:8088`     |
+| `API_USERNAME`  | banserver 登录用户名                   | `sync_bot`                               |
+| `API_PASSWORD`  | 对应密码                               | —                                        |
+| `RCON_HOST`     | PZ 的 RCON 地址，本机填 `127.0.0.1`    | `127.0.0.1`                              |
+| `RCON_PORT`     | 与 `.ini` 里 `RCONPort` 一致           | `27015`                                  |
+| `RCON_PASS`     | 与 `.ini` 里 `RCONPassword` 一致       | —                                        |
+| `PZ_DB`         | PZ 的 SQLite 绝对路径                  | `/home/debian/Zomboid/db/servertest.db`  |
+| `SYNC_INTERVAL` | 同步间隔（秒）                         | `300`                                    |
+| `SYNC_MODE`     | 同步模式                               | `full` 或 `add_only`                     |
+| `LOG_FILE`      | 日志文件路径                           | `/home/debian/pz-bansync/pz-bansync.log` |
 
 ### 4.4 赋权
 
@@ -576,14 +578,14 @@ sudo systemctl status pz-bansync
 
 ### 5.3 常用命令
 
-| 操作 | 命令 |
-|---|---|
-| 查看状态 | `sudo systemctl status pz-bansync` |
-| 实时日志 | `sudo journalctl -u pz-bansync -f` |
+| 操作     | 命令                                             |
+| -------- | ------------------------------------------------ |
+| 查看状态 | `sudo systemctl status pz-bansync`               |
+| 实时日志 | `sudo journalctl -u pz-bansync -f`               |
 | 文件日志 | `tail -f /home/debian/pz-bansync/pz-bansync.log` |
-| 重启 | `sudo systemctl restart pz-bansync` |
-| 停止 | `sudo systemctl stop pz-bansync` |
-| 关闭自启 | `sudo systemctl disable pz-bansync` |
+| 重启     | `sudo systemctl restart pz-bansync`              |
+| 停止     | `sudo systemctl stop pz-bansync`                 |
+| 关闭自启 | `sudo systemctl disable pz-bansync`              |
 
 ---
 
@@ -633,17 +635,17 @@ sudo journalctl -u pz-bansync -f
 
 ## 7. 日志解读
 
-| 日志 | 含义 | 处理 |
-|---|---|---|
-| `RCON connected` | RCON 认证成功 | 正常 |
-| `[+] ban xxx -> 'System banned...'` | 新封禁成功 | 正常 |
-| `[-] unban xxx -> 'SteamID xxx is now unbanned'` | 解封成功 | 正常 |
-| `（add_only 模式：N 条待移除记录已忽略）` | add_only 模式跳过移除 | 正常 |
-| `API 登录失败` | 账号密码错 / 网络不通 | 检查 `API_*` |
-| `RCON 连接失败` | RCON 未开 / 端口错 / 密码错 | 检查 `.ini` 和 `RCON_PASS` |
-| `读 PZ 数据库失败` | 路径错 / 权限不足 | 检查 `PZ_DB` |
-| `待新增: N \| 待移除: M` | 同步前差异统计 | 0/0 表示一致 |
-| `SYNC_MODE 值非法` | 配置写错 | 改成 `full` 或 `add_only` |
+| 日志                                             | 含义                        | 处理                       |
+| ------------------------------------------------ | --------------------------- | -------------------------- |
+| `RCON connected`                                 | RCON 认证成功               | 正常                       |
+| `[+] ban xxx -> 'System banned...'`              | 新封禁成功                  | 正常                       |
+| `[-] unban xxx -> 'SteamID xxx is now unbanned'` | 解封成功                    | 正常                       |
+| `（add_only 模式：N 条待移除记录已忽略）`        | add_only 模式跳过移除       | 正常                       |
+| `API 登录失败`                                   | 账号密码错 / 网络不通       | 检查 `API_*`               |
+| `RCON 连接失败`                                  | RCON 未开 / 端口错 / 密码错 | 检查 `.ini` 和 `RCON_PASS` |
+| `读 PZ 数据库失败`                               | 路径错 / 权限不足           | 检查 `PZ_DB`               |
+| `待新增: N \| 待移除: M`                         | 同步前差异统计              | 0/0 表示一致               |
+| `SYNC_MODE 值非法`                               | 配置写错                    | 改成 `full` 或 `add_only`  |
 
 ---
 
@@ -841,14 +843,14 @@ curl -s https://fuckyou.zuckertech.cn:8088/api/public/bans | head -c 500
 
 ## 11. 安全建议
 
-| 项 | 建议 |
-|---|---|
-| API 账号 | 单独建只读账号，**不要用 admin** |
-| RCON 密码 | ≥32 位随机字符，不与其他密码重复 |
-| RCON 端口 | 只监听 `127.0.0.1` 或内网，**不对公网开放** |
-| HTTPS 证书 | 用 Let's Encrypt 等公共 CA，不用自签名 |
-| 日志脱敏 | 不打印密码；`pz-bansync.log` 目录不要公开 |
-| 脚本权限 | `chmod 600`，防止其他用户读取配置 |
+| 项         | 建议                                        |
+| ---------- | ------------------------------------------- |
+| API 账号   | 单独建只读账号，**不要用 admin**            |
+| RCON 密码  | ≥32 位随机字符，不与其他密码重复            |
+| RCON 端口  | 只监听 `127.0.0.1` 或内网，**不对公网开放** |
+| HTTPS 证书 | 用 Let's Encrypt 等公共 CA，不用自签名      |
+| 日志脱敏   | 不打印密码；`pz-bansync.log` 目录不要公开   |
+| 脚本权限   | `chmod 600`，防止其他用户读取配置           |
 
 **加固示例**：
 
@@ -883,12 +885,12 @@ sqlite3 /home/debian/Zomboid/db/servertest.db "DELETE FROM bannedid;"
 
 ### 13.1 网页入口
 
-| 项 | 值 |
-|---|---|
-| 访问地址 | `https://fuckyou.zuckertech.cn:8088` |
-| 登录页 | `https://fuckyou.zuckertech.cn:8088/login` |
-| 注册页 | `https://fuckyou.zuckertech.cn:8088/register` |
-| 协议 | HTTPS（Let's Encrypt 证书） |
+| 项       | 值                                            |
+| -------- | --------------------------------------------- |
+| 访问地址 | `https://fuckyou.zuckertech.cn:8088`          |
+| 登录页   | `https://fuckyou.zuckertech.cn:8088/login`    |
+| 注册页   | `https://fuckyou.zuckertech.cn:8088/register` |
+| 协议     | HTTPS（Let's Encrypt 证书）                   |
 
 ⚠️ **首次访问**：浏览器地址栏应显示 🔒 锁标；如提示证书风险，检查 DNS 是否指向正确 IP。
 
@@ -906,13 +908,13 @@ https://fuckyou.zuckertech.cn:8088/register
 
 #### 步骤 2：填写注册信息
 
-| 字段 | 要求 | 说明 |
-|---|---|---|
-| 用户名 | 3~30 字符 | 支持字母、数字、下划线、中文 |
-| 密码 | 8~128 字符 | 建议混合大小写 + 数字 + 符号 |
-| 确认密码 | 同上 | 二次输入 |
-| QQ 号 | 5~12 位数字 | 用于联系和身份核验 |
-| 邮箱 | 可选 | 便于密码重置（若开启） |
+| 字段     | 要求        | 说明                         |
+| -------- | ----------- | ---------------------------- |
+| 用户名   | 3~30 字符   | 支持字母、数字、下划线、中文 |
+| 密码     | 8~128 字符  | 建议混合大小写 + 数字 + 符号 |
+| 确认密码 | 同上        | 二次输入                     |
+| QQ 号    | 5~12 位数字 | 用于联系和身份核验           |
+| 邮箱     | 可选        | 便于密码重置（若开启）       |
 
 > **用户名命名建议**：用 Steam 昵称或服务器名，方便其他服主识别。
 
@@ -944,9 +946,9 @@ https://fuckyou.zuckertech.cn:8088/login
 
 #### 步骤 2：输入凭据
 
-| 字段 | 可填 |
-|---|---|
-| 账号 | 用户名 或 QQ 号 |
+| 字段 | 可填             |
+| ---- | ---------------- |
+| 账号 | 用户名 或 QQ 号  |
 | 密码 | 注册时设置的密码 |
 
 #### 步骤 3：登录成功
@@ -961,23 +963,23 @@ https://fuckyou.zuckertech.cn:8088/login
 
 #### 普通用户可见
 
-| 菜单 | 路径 | 功能 |
-|---|---|---|
-| 仪表盘 | `/dashboard` | 统计概览、最近动态 |
-| 我的封禁 | `/bans` | 管理自己提交的封禁记录 |
-| 添加封禁 | `/bans/create` | 提交新的封禁 |
-| 介入申请 | `/interventions` | 查看/提交管理员介入申请 |
-| 我的服务器 | `/servers` | 管理自己名下的服务器 |
-| 个人设置 | `/profile` | 修改密码、查看账号信息 |
+| 菜单       | 路径             | 功能                    |
+| ---------- | ---------------- | ----------------------- |
+| 仪表盘     | `/dashboard`     | 统计概览、最近动态      |
+| 我的封禁   | `/bans`          | 管理自己提交的封禁记录  |
+| 添加封禁   | `/bans/create`   | 提交新的封禁            |
+| 介入申请   | `/interventions` | 查看/提交管理员介入申请 |
+| 我的服务器 | `/servers`       | 管理自己名下的服务器    |
+| 个人设置   | `/profile`       | 修改密码、查看账号信息  |
 
 #### 管理员/服主可见（额外）
 
-| 菜单 | 路径 | 功能 |
-|---|---|---|
-| 服主管理 | `/admin/users` | 审批用户、禁用/启用、重置密码 |
-| 介入处理 | `/admin/interventions` | 处理别人的介入申请 |
-| 联系方式 | `/admin/contacts` | 维护公开显示的管理员联系方式 |
-| 所有封禁 | `/admin/bans` | 查看全站所有封禁记录 |
+| 菜单     | 路径                   | 功能                          |
+| -------- | ---------------------- | ----------------------------- |
+| 服主管理 | `/admin/users`         | 审批用户、禁用/启用、重置密码 |
+| 介入处理 | `/admin/interventions` | 处理别人的介入申请            |
+| 联系方式 | `/admin/contacts`      | 维护公开显示的管理员联系方式  |
+| 所有封禁 | `/admin/bans`          | 查看全站所有封禁记录          |
 
 ### 13.5 添加封禁
 
@@ -987,14 +989,14 @@ https://fuckyou.zuckertech.cn:8088/login
 
 #### 步骤 2：填写信息
 
-| 字段 | 必填 | 说明 |
-|---|---|---|
-| SteamID64 | ✅ | 17 位数字，如 `76561198000000000` |
-| 游戏用户名 | ✅ | 被封禁玩家的游戏内昵称 |
-| 封禁原因 | ✅ | 简短描述（如"作弊"、"恶意破坏"） |
-| 封禁时间 | ✅ | 默认当前时间 |
-| 解封时间 | 可选 | 留空 = 永久封禁 |
-| 所属服务器 | ✅ | 从下拉列表选择自己的服务器 |
+| 字段       | 必填 | 说明                              |
+| ---------- | ---- | --------------------------------- |
+| SteamID64  | ✅   | 17 位数字，如 `76561198000000000` |
+| 游戏用户名 | ✅   | 被封禁玩家的游戏内昵称            |
+| 封禁原因   | ✅   | 简短描述（如"作弊"、"恶意破坏"）  |
+| 封禁时间   | ✅   | 默认当前时间                      |
+| 解封时间   | 可选 | 留空 = 永久封禁                   |
+| 所属服务器 | ✅   | 从下拉列表选择自己的服务器        |
 
 #### 步骤 3：提交
 
@@ -1004,10 +1006,10 @@ https://fuckyou.zuckertech.cn:8088/login
 
 **如果该 SteamID 已被封禁**，会出现红色提示：
 
-| 提示 | 含义 | 操作 |
-|---|---|---|
-| `你已提交过该 SteamID 的封禁记录` | 自己的重复封禁 | 点"编辑现有记录"修改 |
-| `该 SteamID 已被其他服主封禁` | 别人封过了 | 点"申请管理员介入"（如需申诉） |
+| 提示                              | 含义           | 操作                           |
+| --------------------------------- | -------------- | ------------------------------ |
+| `你已提交过该 SteamID 的封禁记录` | 自己的重复封禁 | 点"编辑现有记录"修改           |
+| `该 SteamID 已被其他服主封禁`     | 别人封过了     | 点"申请管理员介入"（如需申诉） |
 
 **冲突处理流程**：
 
@@ -1026,31 +1028,31 @@ https://fuckyou.zuckertech.cn:8088/login
 
 侧边栏 → 「**我的封禁**」，显示自己提交的所有记录。
 
-| 列 | 说明 |
-|---|---|
-| 游戏用户名 | 被封玩家的昵称 |
-| SteamID | 17 位 ID |
-| 原因 | 封禁理由 |
-| 服务器 | 提交时选的服务器 |
-| 状态 | 生效中 / 已过期 / 已解封 |
-| 录入时间 | 提交时间 |
-| 解封时间 | 到期时间（颜色表示状态） |
+| 列         | 说明                     |
+| ---------- | ------------------------ |
+| 游戏用户名 | 被封玩家的昵称           |
+| SteamID    | 17 位 ID                 |
+| 原因       | 封禁理由                 |
+| 服务器     | 提交时选的服务器         |
+| 状态       | 生效中 / 已过期 / 已解封 |
+| 录入时间   | 提交时间                 |
+| 解封时间   | 到期时间（颜色表示状态） |
 
 #### 状态颜色说明
 
-| 显示 | 含义 |
-|---|---|
-| 🟡 黄色 + 时间 | 未过期（临时封禁） |
-| 🔴 红色 + 时间 | 已过期 |
-| 🔴 红色 + "永久封禁" | 无解封时间 |
+| 显示                 | 含义               |
+| -------------------- | ------------------ |
+| 🟡 黄色 + 时间       | 未过期（临时封禁） |
+| 🔴 红色 + 时间       | 已过期             |
+| 🔴 红色 + "永久封禁" | 无解封时间         |
 
 #### 操作按钮
 
-| 图标 | 功能 | 说明 |
-|---|---|---|
+| 图标    | 功能         | 说明                            |
+| ------- | ------------ | ------------------------------- |
 | ✏️ 编辑 | 修改封禁信息 | 可改用户名、原因、封禁/解封时间 |
-| ❌ 解封 | 撤销封禁 | 需填写解封原因 |
-| 👁️ 详情 | 查看完整信息 | — |
+| ❌ 解封 | 撤销封禁     | 需填写解封原因                  |
+| 👁️ 详情 | 查看完整信息 | —                               |
 
 #### 编辑封禁
 
@@ -1094,11 +1096,11 @@ https://fuckyou.zuckertech.cn:8088/login
 
 #### 查看申请状态
 
-| 状态 | 含义 |
-|---|---|
-| 🟡 待审批 | 等待管理员处理 |
+| 状态      | 含义                       |
+| --------- | -------------------------- |
+| 🟡 待审批 | 等待管理员处理             |
 | 🟢 已解决 | 管理员认可申诉，封禁被撤销 |
-| 🔴 已拒绝 | 管理员驳回申诉 |
+| 🔴 已拒绝 | 管理员驳回申诉             |
 
 点"👁️"图标可查看申请详情。
 
@@ -1113,10 +1115,10 @@ https://fuckyou.zuckertech.cn:8088/login
 
 #### 管理服务器
 
-| 操作 | 方法 |
-|---|---|
+| 操作   | 方法               |
+| ------ | ------------------ |
 | 重命名 | 点卡片上的 ✏️ 图标 |
-| 删除 | 点卡片上的 🗑️ 图标 |
+| 删除   | 点卡片上的 🗑️ 图标 |
 
 ⚠️ **删除服务器前注意**：该服务器下的封禁记录会失去关联，建议先处理。
 
@@ -1132,15 +1134,15 @@ https://fuckyou.zuckertech.cn:8088/login
 
 #### 账号信息（只读）
 
-| 字段 | 说明 |
-|---|---|
-| 用户名 | 注册时的用户名 |
-| QQ 号 | 用于联系 |
-| 邮箱 | — |
-| 角色 | 服主 / 管理员 |
-| 状态 | 正常 / 待审批 / 已禁用 |
-| 注册时间 | — |
-| 最后登录 | — |
+| 字段     | 说明                   |
+| -------- | ---------------------- |
+| 用户名   | 注册时的用户名         |
+| QQ 号    | 用于联系               |
+| 邮箱     | —                      |
+| 角色     | 服主 / 管理员          |
+| 状态     | 正常 / 待审批 / 已禁用 |
+| 注册时间 | —                      |
+| 最后登录 | —                      |
 
 #### 修改密码
 
@@ -1163,10 +1165,10 @@ https://fuckyou.zuckertech.cn:8088/login
 
 **其他操作**：
 
-| 操作 | 说明 |
-|---|---|
-| 禁用 | 临时冻结账号（用户不能登录） |
-| 启用 | 恢复账号 |
+| 操作     | 说明                           |
+| -------- | ------------------------------ |
+| 禁用     | 临时冻结账号（用户不能登录）   |
+| 启用     | 恢复账号                       |
 | 重置密码 | 管理员可强制改密码，需告知用户 |
 
 #### 13.10.2 介入处理（`/admin/interventions`）
@@ -1205,20 +1207,20 @@ https://fuckyou.zuckertech.cn:8088/login
 
 ### 13.11 常见操作速查
 
-| 我要做什么 | 路径 |
-|---|---|
-| 注册账号 | `/register` |
-| 登录 | `/login` |
-| 添加封禁 | `/bans/create` |
-| 查看我的封禁 | `/bans` |
-| 编辑封禁 | `/bans/:id/edit` |
-| 申请介入 | `/interventions` |
-| 添加服务器 | `/servers` |
-| 改密码 | `/profile` |
-| 审批用户 | `/admin/users` |
-| 处理介入 | `/admin/interventions` |
-| 维护联系方式 | `/admin/contacts` |
-| 查看所有封禁 | `/admin/bans` |
+| 我要做什么   | 路径                   |
+| ------------ | ---------------------- |
+| 注册账号     | `/register`            |
+| 登录         | `/login`               |
+| 添加封禁     | `/bans/create`         |
+| 查看我的封禁 | `/bans`                |
+| 编辑封禁     | `/bans/:id/edit`       |
+| 申请介入     | `/interventions`       |
+| 添加服务器   | `/servers`             |
+| 改密码       | `/profile`             |
+| 审批用户     | `/admin/users`         |
+| 处理介入     | `/admin/interventions` |
+| 维护联系方式 | `/admin/contacts`      |
+| 查看所有封禁 | `/admin/bans`          |
 
 ### 13.12 网页端常见问题
 
@@ -1267,13 +1269,13 @@ https://fuckyou.zuckertech.cn:8088/login
 
 ### 13.13 网页端安全建议
 
-| 项 | 建议 |
-|---|---|
-| 密码 | ≥12 位，混合大小写 + 数字 + 符号，勿与其他站点重复 |
-| 账号共享 | 禁止多人共用一个账号，操作无法追溯 |
-| 登录设备 | 尽量在受信任设备登录，公共电脑用完退出 |
-| 浏览器 | 用现代浏览器（Chrome / Firefox / Edge 最新版） |
-| 书签 | 收藏 `https://fuckyou.zuckertech.cn:8088`，警惕钓鱼域名 |
+| 项       | 建议                                                    |
+| -------- | ------------------------------------------------------- |
+| 密码     | ≥12 位，混合大小写 + 数字 + 符号，勿与其他站点重复      |
+| 账号共享 | 禁止多人共用一个账号，操作无法追溯                      |
+| 登录设备 | 尽量在受信任设备登录，公共电脑用完退出                  |
+| 浏览器   | 用现代浏览器（Chrome / Firefox / Edge 最新版）          |
+| 书签     | 收藏 `https://fuckyou.zuckertech.cn:8088`，警惕钓鱼域名 |
 
 ---
 
@@ -1281,40 +1283,40 @@ https://fuckyou.zuckertech.cn:8088/login
 
 ### 14.1 核心文件清单
 
-| 文件 | 位置 | 作用 |
-|---|---|---|
-| 脚本 | `/home/debian/pz-bansync/pz-bansync.py` | 主程序 |
-| 日志 | `/home/debian/pz-bansync/pz-bansync.log` | 运行日志 |
-| 服务 | `/etc/systemd/system/pz-bansync.service` | systemd 定义 |
-| PZ 数据库 | `/home/debian/Zomboid/db/servertest.db` | 被同步目标 |
-| PZ 配置 | `/home/debian/Zomboid/Server/servertest.ini` | RCON 来源 |
+| 文件      | 位置                                         | 作用         |
+| --------- | -------------------------------------------- | ------------ |
+| 脚本      | `/home/debian/pz-bansync/pz-bansync.py`      | 主程序       |
+| 日志      | `/home/debian/pz-bansync/pz-bansync.log`     | 运行日志     |
+| 服务      | `/etc/systemd/system/pz-bansync.service`     | systemd 定义 |
+| PZ 数据库 | `/home/debian/Zomboid/db/servertest.db`      | 被同步目标   |
+| PZ 配置   | `/home/debian/Zomboid/Server/servertest.ini` | RCON 来源    |
 
 ### 14.2 相关 API（banserver）
 
-| 接口 | 方法 | 说明 |
-|---|---|---|
-| `/health` | GET | 健康检查 |
-| `/api/auth/login` | POST | 登录获取 token |
-| `/api/bans?status=active&limit=100000` | GET | 获取所有 active 封禁 |
-| `/api/public/bans` | GET | 公开封禁列表（不含 SteamID） |
+| 接口                                   | 方法 | 说明                         |
+| -------------------------------------- | ---- | ---------------------------- |
+| `/health`                              | GET  | 健康检查                     |
+| `/api/auth/login`                      | POST | 登录获取 token               |
+| `/api/bans?status=active&limit=100000` | GET  | 获取所有 active 封禁         |
+| `/api/public/bans`                     | GET  | 公开封禁列表（不含 SteamID） |
 
 ### 14.3 相关 RCON 命令（PZ）
 
-| 命令 | 说明 |
-|---|---|
-| `players` | 列出在线玩家 |
-| `banid <SteamID>` | 封禁 SteamID |
+| 命令                | 说明         |
+| ------------------- | ------------ |
+| `players`           | 列出在线玩家 |
+| `banid <SteamID>`   | 封禁 SteamID |
 | `unbanid <SteamID>` | 解封 SteamID |
-| `kick <用户名>` | 踢出玩家 |
-| `save` | 保存游戏 |
+| `kick <用户名>`     | 踢出玩家     |
+| `save`              | 保存游戏     |
 
 ### 14.4 版本记录
 
-| 版本 | 日期 | 变化 |
-|---|---|---|
+| 版本 | 日期       | 变化                           |
+| ---- | ---------- | ------------------------------ |
 | v1.2 | 2026-09-22 | 增加"网页端注册与使用教程"章节 |
-| v1.1 | 2026-09-22 | 增加 `SYNC_MODE` 同步模式 |
-| v1.0 | 2026-09-22 | 初版，单向同步 |
+| v1.1 | 2026-09-22 | 增加 `SYNC_MODE` 同步模式      |
+| v1.0 | 2026-09-22 | 初版，单向同步                 |
 
 ### 14.5 部署前检查清单
 
