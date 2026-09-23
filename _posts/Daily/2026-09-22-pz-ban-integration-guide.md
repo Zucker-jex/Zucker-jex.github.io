@@ -48,7 +48,7 @@ aside:
         │                                  └── 读取 SQLite（bannedid 表）确认差异
         │
    网页端（服主/管理员操作）
-   https://fuckyou.zuckertech.cn:8088
+   https://banserver.zuckertech.cn:8088
 ```
 
 **数据流向**：
@@ -116,14 +116,14 @@ aside:
 
 | 项         | 要求                                       |
 | ---------- | ------------------------------------------ |
-| 可访问地址 | 如 `https://fuckyou.zuckertech.cn:8088`    |
+| 可访问地址 | 如 `https://banserver.zuckertech.cn:8088`    |
 | 有效账号   | 建议单独建只读账号，不要用 admin           |
 | HTTPS 证书 | 必须被 PZ 服务器信任（Let's Encrypt 即可） |
 
 **验证方法**（在 PZ 服务器上执行）：
 
 ```bash
-curl -s https://fuckyou.zuckertech.cn:8088/health
+curl -s https://banserver.zuckertech.cn:8088/health
 # 期望：{"status":"ok","timestamp":"..."}
 ```
 
@@ -200,9 +200,9 @@ import urllib.request
 from pathlib import Path
 
 # ==================== 配置区 ====================
-API_BASE     = "https://fuckyou.zuckertech.cn:8088"   # ban联服器 API 地址
-API_USERNAME = "your_api_username"                    # ban联服器 API 用户名
-API_PASSWORD = "your_api_password"                    # ban联服器 API 密码
+API_BASE     = "https://banserver.zuckertech.cn:8088"   # ban联服器 API 地址
+API_USERNAME = "your_api_username"                      # ban联服器 API 用户名
+API_PASSWORD = "your_api_password"                      # ban联服器 API 密码
 
 RCON_HOST = "127.0.0.1"
 RCON_PORT = 27015
@@ -496,7 +496,7 @@ if __name__ == "__main__":
 
 | 变量            | 说明                                   | 示例                                     |
 | --------------- | -------------------------------------- | ---------------------------------------- |
-| `API_BASE`      | banserver HTTPS 地址，**末尾不带斜杠** | `https://fuckyou.zuckertech.cn:8088`     |
+| `API_BASE`      | banserver HTTPS 地址，**末尾不带斜杠** | `https://banserver.zuckertech.cn:8088`     |
 | `API_USERNAME`  | banserver 登录用户名                   | `sync_bot`                               |
 | `API_PASSWORD`  | 对应密码                               | —                                        |
 | `RCON_HOST`     | PZ 的 RCON 地址，本机填 `127.0.0.1`    | `127.0.0.1`                              |
@@ -525,7 +525,7 @@ python3 pz-bansync.py
 ```
 2026-09-22 22:00:00 [INFO] ============================================================
 2026-09-22 22:00:00 [INFO] pz-bansync 启动
-2026-09-22 22:00:00 [INFO]   API:      https://fuckyou.zuckertech.cn:8088
+2026-09-22 22:00:00 [INFO]   API:      https://banserver.zuckertech.cn:8088
 2026-09-22 22:00:00 [INFO]   RCON:     127.0.0.1:27015
 2026-09-22 22:00:00 [INFO]   DB:       /home/debian/Zomboid/db/servertest.db
 2026-09-22 22:00:00 [INFO]   间隔:     300 秒
@@ -593,7 +593,7 @@ sudo systemctl status pz-bansync
 
 ### 6.1 添加封禁测试
 
-1. 打开 banserver 网页（如 `https://fuckyou.zuckertech.cn:8088`）
+1. 打开 banserver 网页（如 `https://banserver.zuckertech.cn:8088`）
 2. 登录 → 添加封禁 → SteamID 填 `76561198000000001`
 3. 提交
 
@@ -773,7 +773,7 @@ ls -la /home/debian/Zomboid/db/servertest.db
 **① 网络层**
 
 ```bash
-curl -s https://fuckyou.zuckertech.cn:8088/health
+curl -s https://banserver.zuckertech.cn:8088/health
 # 期望 {"status":"ok",...}
 ```
 
@@ -836,7 +836,7 @@ tail -100 /home/debian/pz-bansync/pz-bansync.log
 sqlite3 /home/debian/Zomboid/db/servertest.db "SELECT * FROM bannedid;"
 
 # banserver 侧数据
-curl -s https://fuckyou.zuckertech.cn:8088/api/public/bans | head -c 500
+curl -s https://banserver.zuckertech.cn:8088/api/public/bans | head -c 500
 ```
 
 ---
@@ -887,9 +887,9 @@ sqlite3 /home/debian/Zomboid/db/servertest.db "DELETE FROM bannedid;"
 
 | 项       | 值                                            |
 | -------- | --------------------------------------------- |
-| 访问地址 | `https://fuckyou.zuckertech.cn:8088`          |
-| 登录页   | `https://fuckyou.zuckertech.cn:8088/login`    |
-| 注册页   | `https://fuckyou.zuckertech.cn:8088/register` |
+| 访问地址 | `https://banserver.zuckertech.cn:8088`          |
+| 登录页   | `https://banserver.zuckertech.cn:8088/login`    |
+| 注册页   | `https://banserver.zuckertech.cn:8088/register` |
 | 协议     | HTTPS（Let's Encrypt 证书）                   |
 
 ⚠️ **首次访问**：浏览器地址栏应显示 🔒 锁标；如提示证书风险，检查 DNS 是否指向正确 IP。
@@ -901,7 +901,7 @@ sqlite3 /home/debian/Zomboid/db/servertest.db "DELETE FROM bannedid;"
 浏览器访问：
 
 ```
-https://fuckyou.zuckertech.cn:8088/register
+https://banserver.zuckertech.cn:8088/register
 ```
 
 或从登录页底部点击"**注册**"链接。
@@ -941,7 +941,7 @@ https://fuckyou.zuckertech.cn:8088/register
 #### 步骤 1：打开登录页
 
 ```
-https://fuckyou.zuckertech.cn:8088/login
+https://banserver.zuckertech.cn:8088/login
 ```
 
 #### 步骤 2：输入凭据
@@ -1275,7 +1275,7 @@ https://fuckyou.zuckertech.cn:8088/login
 | 账号共享 | 禁止多人共用一个账号，操作无法追溯                      |
 | 登录设备 | 尽量在受信任设备登录，公共电脑用完退出                  |
 | 浏览器   | 用现代浏览器（Chrome / Firefox / Edge 最新版）          |
-| 书签     | 收藏 `https://fuckyou.zuckertech.cn:8088`，警惕钓鱼域名 |
+| 书签     | 收藏 `https://banserver.zuckertech.cn:8088`，警惕钓鱼域名 |
 
 ---
 
