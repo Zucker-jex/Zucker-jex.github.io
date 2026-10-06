@@ -5,6 +5,19 @@ layout: none
 {%- include snippets/get-lang.html -%}
 <html lang="{{ __return }}">
   <head>
+    <script>
+      (function () {
+        var _theme = localStorage.getItem("theme");
+        if (_theme !== "dark" && _theme !== "light") {
+          _theme = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+        }
+        document.documentElement.setAttribute("data-theme", _theme);
+      })();
+    </script>
+    <style>
+      html { background-color: #f8f9fa; }
+      html[data-theme="dark"] { background-color: #121212; }
+    </style>
     {%- include analytics.html -%}
     {%- include head.html -%}
     <script>
