@@ -555,4 +555,16 @@ Service 层 `Create` 方法新增 `isAdmin bool` 参数：
 
 ---
 
+## v1.5 —— 获取ICP备案修改服务端口
+
+**发布时间**：2026-10-09
+
+**里程碑**：获取了ICP备案，算是正式的向外提供服务了
+
+### 服务端口更改
+
+将原有的临时端口 (8088) 改为了标准的网页服务端口 (443/80)
+
+---
+
 ## [PZ 服务器联 Ban 接入说明书](https://blog.zuckertech.cn/2026/09/22/pz-ban-integration-guide.html)

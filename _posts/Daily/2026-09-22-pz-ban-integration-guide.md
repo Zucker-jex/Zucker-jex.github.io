@@ -8,7 +8,8 @@ aside:
 
 # PZ 服务器联 Ban 接入说明书 <!--more-->
 
-**更新**：2026-09-25
+**更新**：2026-10-09
+**注意**：由于已获取ICP备案所以均使用标准端口提供服务（原8088现已改为443/80），请手动修改接入脚本或获取完整接入脚本并重新配置
 **适用**：僵尸毁灭工程（Project Zomboid）专用服务器（Linux / Windows 均可）
 **目标**：让 PZ 服务器的封禁列表自动与中心 Ban 服器（banserver）保持同步，并提供完整的网页端管理界面
 
@@ -52,9 +53,9 @@ aside:
 
 | 项       | 值                                              |
 | -------- | ----------------------------------------------- |
-| 访问地址 | `https://banserver.zuckertech.cn:8088`          |
-| 登录页   | `https://banserver.zuckertech.cn:8088/login`    |
-| 注册页   | `https://banserver.zuckertech.cn:8088/register` |
+| 访问地址 | `https://banserver.zuckertech.cn`          |
+| 登录页   | `https://banserver.zuckertech.cn/login`    |
+| 注册页   | `https://banserver.zuckertech.cn/register` |
 | 协议     | HTTPS（Let's Encrypt 证书）                     |
 
 ⚠️ **首次访问**：浏览器地址栏应显示 🔒 锁标；如提示证书风险，检查 DNS 是否指向正确 IP。
@@ -64,7 +65,7 @@ aside:
 打开：
 
 ```text
-https://banserver.zuckertech.cn:8088/register
+https://banserver.zuckertech.cn/register
 ```
 
 或从登录页底部点击“**注册**”链接。
@@ -102,7 +103,7 @@ https://banserver.zuckertech.cn:8088/register
 打开：
 
 ```text
-https://banserver.zuckertech.cn:8088/login
+https://banserver.zuckertech.cn/login
 ```
 
 输入凭据：
@@ -131,7 +132,7 @@ https://banserver.zuckertech.cn:8088/login
 
 | 配置项         | 值                                              |
 | -------------- | ----------------------------------------------- |
-| `API_BASE`     | `https://banserver.zuckertech.cn:8088`          |
+| `API_BASE`     | `https://banserver.zuckertech.cn`          |
 | `API_USERNAME` | 你的 banserver 用户名                           |
 | `API_PASSWORD` | 你的 banserver 密码                             |
 
@@ -181,21 +182,21 @@ https://banserver.zuckertech.cn:8088/login
 
 | 项         | 要求                                       |
 | ---------- | ------------------------------------------ |
-| 可访问地址 | 如 `https://banserver.zuckertech.cn:8088`  |
+| 可访问地址 | 如 `https://banserver.zuckertech.cn`  |
 | 有效账号   | 任意已审批通过的服主或管理员账号           |
 | HTTPS 证书 | 必须被 PZ 服务器信任（Let's Encrypt 即可） |
 
 **验证方法**（在 PZ 服务器上执行，Linux 示例）：
 
 ```bash
-curl -s https://banserver.zuckertech.cn:8088/health
+curl -s https://banserver.zuckertech.cn/health
 # 期望：{"status":"ok","timestamp":"..."}
 ```
 
 Windows PowerShell 等价：
 
 ```powershell
-Invoke-RestMethod -Uri "https://banserver.zuckertech.cn:8088/health"
+Invoke-RestMethod -Uri "https://banserver.zuckertech.cn/health"
 # 期望返回 status: ok
 ```
 
@@ -243,7 +244,7 @@ RCONPassword=改成你的强密码（≥32 位随机字符）
 | 项             | 域名版（推荐用于普通网络）             | IP 直连版（推荐用于受限网络）  |
 | -------------- | -------------------------------------- | ------------------------------ |
 | 文件名         | `pz-bansync.py`                        | `pz-bansync-ip.py`             |
-| API_BASE       | `https://banserver.zuckertech.cn:8088` | `https://47.95.157.144:8088`   |
+| API_BASE       | `https://banserver.zuckertech.cn` | `https://47.95.157.144`   |
 | HTTPS 证书校验 | ✅ 严格校验（CA 验证 + 域名匹配）      | ❌ 跳过校验（`CERT_NONE`）     |
 | 适用网络       | 可正常访问域名的网络                   | 对特定域名有阻断的网络         |
 | 安全性         | 高                                     | 中（可被中间人攻击）           |
@@ -275,20 +276,20 @@ Linux：
 
 ```bash
 # 用域名（若失败，说明存在 SNI 阻断）
-curl -kI https://banserver.zuckertech.cn:8088/health
+curl -kI https://banserver.zuckertech.cn/health
 
 # 用 IP（若成功，说明 IP 直连可行）
-curl -kI https://47.95.157.144:8088/health
+curl -kI https://47.95.157.144/health
 ```
 
 Windows PowerShell：
 
 ```powershell
 # 用域名
-Invoke-WebRequest -Uri "https://banserver.zuckertech.cn:8088/health" -Method Head
+Invoke-WebRequest -Uri "https://banserver.zuckertech.cn/health" -Method Head
 
 # 用 IP
-Invoke-WebRequest -Uri "https://47.95.157.144:8088/health" -Method Head
+Invoke-WebRequest -Uri "https://47.95.157.144/health" -Method Head
 ```
 
 - **两个都通** → 用**域名版**
@@ -299,7 +300,7 @@ Invoke-WebRequest -Uri "https://47.95.157.144:8088/health" -Method Head
 
 | 差异点         | 域名版                                      | IP 直连版                                  |
 | -------------- | ------------------------------------------- | ------------------------------------------ |
-| `API_BASE`     | `https://banserver.zuckertech.cn:8088`      | `https://47.95.157.144:8088`               |
+| `API_BASE`     | `https://banserver.zuckertech.cn`      | `https://47.95.157.144`               |
 | HTTPS 证书校验 | 严格校验（CA 验证 + 域名匹配）              | 跳过校验（`check_hostname=False`、`CERT_NONE`） |
 | 适用网络       | 可正常访问域名的网络                        | 域名被阻断、但 IP 可直连的网络              |
 | 维护方式       | 服务器换 IP 只需更新 DNS，脚本无需改动      | 服务器 IP 变更需手动更新配置                |
@@ -328,8 +329,8 @@ IP 直连版是临时方案，原因：
 
 | 版本           | 文件名            | 下载链接                                                                 | 适用场景                                      |
 | -------------- | ----------------- | ------------------------------------------------------------------------ | --------------------------------------------- |
-| 域名版（推荐） | `pz-bansync.py`   | [下载 pz-bansync.py（域名版）](https://raw.githubusercontent.com/Zucker-jex/BanServer_scripts/main/pz-bansync.py) | 可正常访问 `banserver.zuckertech.cn:8088`     |
-| IP 直连版      | `pz-bansync-ip.py` | [下载 pz-bansync-ip.py（IP 直连版）](https://raw.githubusercontent.com/Zucker-jex/BanServer_scripts/main/pz-bansync-ip.py) | 域名访问失败、但可直连 `47.95.157.144:8088`   |
+| 域名版（推荐） | `pz-bansync.py`   | [下载 pz-bansync.py（域名版）](https://raw.githubusercontent.com/Zucker-jex/BanServer_scripts/main/pz-bansync.py) | 可正常访问 `banserver.zuckertech.cn`     |
+| IP 直连版      | `pz-bansync-ip.py` | [下载 pz-bansync-ip.py（IP 直连版）](https://raw.githubusercontent.com/Zucker-jex/BanServer_scripts/main/pz-bansync-ip.py) | 域名访问失败、但可直连 `47.95.157.144`   |
 
 > **路径只是示例**：下文统一保存为 `/home/debian/pz-bansync/pz-bansync.py` 只是 Linux 示例路径。
 > Windows 可保存为 `C:\pz-bansync\pz-bansync.py`，其他 Linux 用户也可改成 `/opt/pz-bansync/`、`/srv/pz-bansync/` 等。后续 systemd、日志、权限路径都要同步替换。
@@ -372,7 +373,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Zucker-jex/BanServer_s
 
 | 变量            | 说明                                   | 示例                                     |
 | --------------- | -------------------------------------- | ---------------------------------------- |
-| `API_BASE`      | banserver HTTPS 地址，**末尾不带斜杠** | `https://banserver.zuckertech.cn:8088`   |
+| `API_BASE`      | banserver HTTPS 地址，**末尾不带斜杠** | `https://banserver.zuckertech.cn`   |
 | `API_USERNAME`  | banserver 登录用户名                   | `sync_bot`                               |
 | `API_PASSWORD`  | 对应密码                               | —                                        |
 | `RCON_HOST`     | PZ 的 RCON 地址，本机填 `127.0.0.1`    | `127.0.0.1`                              |
@@ -520,7 +521,7 @@ py pz-bansync.py
 ```text
 2026-09-25 17:26:00 [INFO] ============================================================
 2026-09-25 17:26:00 [INFO] pz-bansync 启动
-2026-09-25 17:26:00 [INFO]   API:      https://banserver.zuckertech.cn:8088
+2026-09-25 17:26:00 [INFO]   API:      https://banserver.zuckertech.cn
 2026-09-25 17:26:00 [INFO]   RCON:     127.0.0.1:27015
 2026-09-25 17:26:00 [INFO]   DB:       /home/debian/Zomboid/db/servertest.db
 2026-09-25 17:26:00 [INFO]   间隔:     300 秒
@@ -624,7 +625,7 @@ schtasks /Run /TN "pz-bansync"
 
 ### 9.1 添加封禁测试
 
-1. 打开 banserver 网页（如 `https://banserver.zuckertech.cn:8088`）。
+1. 打开 banserver 网页（如 `https://banserver.zuckertech.cn`）。
 2. 登录 → 添加封禁 → SteamID 填 `76561198000000001`。
 3. 提交。
 
@@ -796,14 +797,14 @@ Get-Content C:\pz-bansync\pz-bansync.log -Wait
 Linux：
 
 ```bash
-curl -s https://banserver.zuckertech.cn:8088/health
+curl -s https://banserver.zuckertech.cn/health
 # 期望 {"status":"ok",...}
 ```
 
 Windows：
 
 ```powershell
-Invoke-RestMethod -Uri "https://banserver.zuckertech.cn:8088/health"
+Invoke-RestMethod -Uri "https://banserver.zuckertech.cn/health"
 ```
 
 **② 接口层（手动测试导出接口）**
@@ -811,12 +812,12 @@ Invoke-RestMethod -Uri "https://banserver.zuckertech.cn:8088/health"
 Linux：
 
 ```bash
-TOKEN=$(curl -s -X POST https://banserver.zuckertech.cn:8088/api/auth/login \
+TOKEN=$(curl -s -X POST https://banserver.zuckertech.cn/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"identifier":"你的账号","password":"你的密码"}' \
   | python3 -c "import sys,json;print(json.load(sys.stdin)['access_token'])")
 
-curl -s "https://banserver.zuckertech.cn:8088/api/external/bans?limit=10" \
+curl -s "https://banserver.zuckertech.cn/api/external/bans?limit=10" \
   -H "Authorization: Bearer $TOKEN" | python3 -m json.tool
 ```
 
@@ -889,7 +890,7 @@ tail -100 /home/debian/pz-bansync/pz-bansync.log
 sqlite3 /home/debian/Zomboid/db/servertest.db "SELECT * FROM bannedid;"
 
 # banserver 侧数据
-curl -s https://banserver.zuckertech.cn:8088/api/public/bans | head -c 500
+curl -s https://banserver.zuckertech.cn/api/public/bans | head -c 500
 ```
 
 Windows：
@@ -898,7 +899,7 @@ Windows：
 nssm status pz-bansync
 Get-Content C:\pz-bansync\pz-bansync.log -Tail 100
 sqlite3.exe "C:\Users\debian\Zomboid\db\servertest.db" "SELECT * FROM bannedid;"
-Invoke-RestMethod -Uri "https://banserver.zuckertech.cn:8088/api/public/bans" | ConvertTo-Json -Depth 5
+Invoke-RestMethod -Uri "https://banserver.zuckertech.cn/api/public/bans" | ConvertTo-Json -Depth 5
 ```
 
 ---
@@ -1230,7 +1231,7 @@ sqlite3.exe "C:\Users\debian\Zomboid\db\servertest.db" "DELETE FROM bannedid;"
         │                                  └── 读取 SQLite（bannedid 表）确认差异
         │
    网页端（服主/管理员操作）
-   https://banserver.zuckertech.cn:8088
+   https://banserver.zuckertech.cn
 ```
 
 **数据流向：**
