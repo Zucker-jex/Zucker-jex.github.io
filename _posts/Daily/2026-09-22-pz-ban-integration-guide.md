@@ -9,8 +9,11 @@ aside:
 # PZ 服务器联 Ban 接入说明书 <!--more-->
 
 **更新**：2026-10-09
+
 **注意**：由于已获取ICP备案所以均使用标准端口提供服务（原8088现已改为443/80），请手动修改接入脚本或获取完整接入脚本并重新配置
+
 **适用**：僵尸毁灭工程（Project Zomboid）专用服务器（Linux / Windows 均可）
+
 **目标**：让 PZ 服务器的封禁列表自动与中心 Ban 服器（banserver）保持同步，并提供完整的网页端管理界面
 
 > **路径说明**：本文中出现的 `/home/debian/pz-bansync/`、`/home/debian/Zomboid/...`、`User=debian`、`/usr/bin/python3` 等均为 **Linux 示例路径/用户名**，不是强制路径。请按你的实际服务器系统和用户名替换。
