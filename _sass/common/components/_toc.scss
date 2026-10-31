@@ -1,32 +1,103 @@
 @use "sass:math";
 
+/* TOC CSS Custom Properties */
+:root {
+  --toc-top-offset: #{map-get($spacers, 4)};
+  --toc-bottom-offset: #{map-get($spacers, 4)};
+  --toc-max-height: calc(100vh - var(--toc-top-offset) - var(--toc-bottom-offset));
+  --toc-scrollbar-width: 6px;
+  --toc-scrollbar-thumb-color: var(--border-color);
+  --toc-scrollbar-thumb-hover-color: var(--text-color-l);
+  --toc-toggle-size: 1rem;
+  --toc-toggle-color: var(--text-color-l);
+  --toc-toggle-hover-color: var(--main-color-1);
+}
+
+/* Keep the whole aside pinned inside the tall aside column. */
+.has-aside .col-aside > .page__aside {
+  position: sticky;
+  top: var(--toc-top-offset);
+  max-height: var(--toc-max-height);
+}
+
+/* The TOC scrolls independently from the article. */
+.toc-aside {
+  max-height: var(--toc-max-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: map-get($spacers, 5) 0 map-get($spacers, 3) map-get($spacers, 5);
+  @include css-var(background-color, "var(--background-color)");
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--toc-scrollbar-thumb-color) transparent;
+
+  /* WebKit */
+  &::-webkit-scrollbar {
+    width: var(--toc-scrollbar-width);
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--toc-scrollbar-thumb-color);
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--toc-scrollbar-thumb-hover-color);
+  }
+}
+
 ul.toc {
   display: block;
   margin: 0;
+  padding-left: 0;
   @include css-var(color, "var(--text-color)");
   list-style-type: none;
-  & > li {
+
+  li {
     margin: math.div(map-get($spacers, 1), 2) 0;
-    a { /* stylelint-disable-line selector-max-type */
-      display: inline-block;
-      margin: math.div(map-get($spacers, 1), 4) 0;
-      text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
-    }
   }
-  .toc-h1,
-  .toc-h2,
-  .toc-h3,
-  .toc-h4,
-  .toc-h5,
-  .toc-h6 {
-    a {
-      @extend .link, .link--highlight-text;
-    }
-    &.active {
-      a {
-        @extend .link, .link--primary;
-      }
-    }
+
+  .toc-row {
+    display: flex;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .toc-row--leaf {
+    padding-left: var(--toc-toggle-size);
+  }
+
+  .toc-link {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    padding: 1px 0;
+    line-height: map-get($base, line-height-xs);
+    text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
+    @extend .link, .link--highlight-text;
+  }
+
+  /* Text layer: ellipsis by default, marquee only when actually truncated. */
+  .toc-label {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+
+  .toc-link.is-truncated:hover .toc-label {
+    width: max-content;
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+    animation: toc-marquee var(--toc-marquee-duration, 10s) ease-in-out infinite;
+    will-change: transform;
   }
 
   .toc-h2,
@@ -34,54 +105,122 @@ ul.toc {
   .toc-h4,
   .toc-h5,
   .toc-h6 {
-    &, a {
+    & > .toc-row .toc-link {
       font-size: map-get($base, font-size-xs);
       font-weight: map-get($base, font-weight);
       line-height: map-get($base, line-height-xs);
     }
   }
+
   .toc-h1 {
-    @include split-line(bottom);
-    padding: map-get($spacers, 2) 0 map-get($spacers, 1) 0;
-    margin-bottom: map-get($spacers, 2);
     @include css-var(color, "var(--text-color-d)");
-    &, a {
+
+    & > .toc-row {
+      @include split-line(bottom);
+      padding: map-get($spacers, 2) 0 map-get($spacers, 1) 0;
+      margin-bottom: map-get($spacers, 2);
+    }
+
+    & > .toc-row .toc-link {
       font-size: map-get($base, font-size-sm);
       font-weight: map-get($base, font-weight-bold);
       line-height: map-get($base, line-height-sm);
-    }
-    a {
       @extend .link, .link--highlight-text-d;
     }
   }
-  .toc-h2 {
-    &, a {
-      font-weight: map-get($base, font-weight-bold);
-    }
+
+  .toc-h2 > .toc-row .toc-link {
+    font-weight: map-get($base, font-weight-bold);
   }
-  .toc-h3 {
-    margin-left: map-get($spacers, 3);
-  }
-  .toc-h4 {
-    margin-left: map-get($spacers, 3) * 2;
-  }
-  .toc-h5,
-  .toc-h6 {
-    margin-left: map-get($spacers, 3) * 3;
-  }
-  .toc-h6 {
+
+  .toc-h6 > .toc-row .toc-link {
     @include css-var(color, "var(--text-color-l)");
-    a {
-      @extend .link, .link--highlight-text-l;
-    }
+    @extend .link, .link--highlight-text-l;
+  }
+
+  .active > .toc-row > .toc-link {
+    @extend .link, .link--primary;
   }
 }
 
-ul.toc--ellipsis {
-  & > li {
-    @include overflow(hidden);
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/* Nested levels */
+.toc-children {
+  margin: 0 0 0 3px;
+  padding-left: map-get($spacers, 2);
+  border-left: 1px solid transparent;
+  @include css-var(border-left-color, "var(--border-color-l)");
+  list-style-type: none;
+
+  li:first-child {
+    margin-top: math.div(map-get($spacers, 1), 2);
+  }
+}
+
+.toc-has-children.is-collapsed > .toc-children {
+  display: none;
+}
+
+/* Toggle button */
+.toc-toggle {
+  display: inline-flex;
+  flex: 0 0 var(--toc-toggle-size);
+  align-items: center;
+  justify-content: center;
+  width: var(--toc-toggle-size);
+  height: var(--toc-toggle-size);
+  margin: 0;
+  padding: 0;
+  color: var(--toc-toggle-color);
+  background: transparent;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.toc-toggle::before {
+  display: block;
+  width: 6px;
+  height: 6px;
+  content: "";
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translate(-1px, -1px);
+  transition: transform 0.2s ease;
+}
+
+.toc-toggle:hover {
+  color: var(--toc-toggle-hover-color);
+}
+
+.toc-toggle:focus-visible {
+  outline: 2px solid var(--main-color-1);
+  outline-offset: 1px;
+}
+
+.toc-has-children.is-collapsed > .toc-row .toc-toggle::before {
+  transform: rotate(-45deg);
+}
+
+/* Marquee keyframes: pause at both ends for readability. */
+@keyframes toc-marquee {
+  0%,
+  8% {
+    transform: translateX(0);
+  }
+  50%,
+  58% {
+    transform: translateX(calc(-1 * var(--toc-marquee-distance, 0px)));
+  }
+  92%,
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toc-link.is-truncated:hover .toc-label {
+    animation: none;
   }
 }
 

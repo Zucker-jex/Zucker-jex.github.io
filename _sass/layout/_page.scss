@@ -25,9 +25,7 @@ html,
   .col-aside {
     display: none;
     & > aside {
-      position: absolute;
       width: map-get($layout, aside-width);
-      @include overflow(hidden);
     }
   }
 }
@@ -108,12 +106,7 @@ html,
     position: relative;
     display: block;
     width: map-get($layout, aside-width);
-    & > aside {
-      &.fixed {
-        position: fixed;
-        -webkit-font-smoothing: subpixel-antialiased;
-      }
-    }
+    /* Do not set overflow here: it would break the sticky TOC. */
     @include media-breakpoint-down(lg) {
       display: none;
     }
