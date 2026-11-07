@@ -1,0 +1,37 @@
+name: Build and Push to gh-pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+# 需要写入权限，才能将构建产物 push 到 gh-pages 分支
+permissions:
+  contents: write
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2.2"
+          bundler-cache: true
+
+      - name: Build with Jekyll
+        # 注意：这里去掉了 --baseurl 参数。
+        # 因为部署到帽子云通常是在独立域名下，不需要像 GitHub Pages 那样带 /仓库名/ 的前缀。
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Push to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+          publish_branch: gh-pages
